@@ -145,6 +145,8 @@ class Pelaporan2 extends Utility
                 ->execute();
         }
 
+        $kode = parent::acak(6);
+
         $Pengajuan = self::$query->select('pengajuan', array(
             'uid'
         ))
@@ -201,23 +203,52 @@ class Pelaporan2 extends Utility
         $nama_kelurahan=$a[1];
 
 
-        if($kirim=='Y'){
-            $sql="INSERT INTO pengajuan (id_pelayanan, uid_member, waktu_input, id_status, uid_pengajuan_data, jenis, kode, id_provinsi, nama_provinsi, id_kabupaten,  nama_kabupaten, id_kecamatan, nama_kecamatan, id_kelurahan, nama_kelurahan, alamat_kirim, kode_pos, dikirim) VALUES ('3', '$_SESSION[login_user]', '$waktu_sekarang', '1', '$uid_data', '$jenis', '$kode', '$id_provinsi', '$nama_provinsi', '$id_kabupaten', '$nama_kabupaten', '$id_kecamatan', '$nama_kecamatan', '$id_kelurahan', '$nama_kelurahan', '$alamat', '$kode_pos', '$kirim') RETURNING id";
+        if($kirim=='Y') {
+            $TambahPengajuan = self::$query->insert('pengajuan', array(
+                'id_pelayanan' => 2,
+                'uid_member' => $UserData['data']->uid,
+                'waktu_input' => parent::format_date(),
+                'id_status' => 1,
+                'uid_pengajuan_data' => $uid_data,
+                'jenis' => $jenis,
+                'kode' => $kode,
+                'id_provinsi' => $id_provinsi,
+                'nama_provinsi' => $nama_provinsi,
+                'id_kabupaten' => $id_kabupaten,
+                'nama_kabupaten' => $nama_kabupaten,
+                'id_kecamatan' => $id_kecamatan,
+                'nama_kecamatan' => $nama_kecamatan,
+                'id_kelurahan' => $id_kelurahan,
+                'nama_kelurahan' => $nama_kelurahan,
+                'alamat_kirim' => $alamat,
+                'kode_pos' => $kode_pos,
+                'dikirim' => $kirim,
+            ))
+                ->returning('id')
+                ->execute();
+        } else {
+            $TambahPengajuan = self::$query->insert('pengajuan', array(
+                'id_pelayanan' => 2,
+                'uid_member' => $UserData['data']->uid,
+                'waktu_input' => parent::format_date(),
+                'id_status' => 1,
+                'uid_pengajuan_data' => $uid_data,
+                'jenis' => $jenis,
+                'kode' => $kode,
+                'dikirim' => $kirim,
+            ))
+                ->returning('id')
+                ->execute();
         }
-        else{
-            $sql="INSERT INTO pengajuan (id_pelayanan, uid_member, waktu_input, id_status, uid_pengajuan_data, jenis, kode, dikirim) VALUES ('3', '$_SESSION[login_user]', '$waktu_sekarang', '1', '$uid_data', '$jenis', '$kode', '$kirim') RETURNING id";
-        }
 
-        $result=pg_query($conn,$sql);
-        $d=pg_fetch_array($result);
-        $id_pengajuan=$d['id'];
+        $id_pengajuan = $TambahPengajuan['response_unique'];
 
-        $sql="INSERT INTO pengajuan_log(id_pengajuan, waktu, id_status) VALUES ('$id_pengajuan', '$waktu_sekarang', '1')";
-        pg_query($conn,$sql);
-
-
-
-
+        $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
+            'id_pengajuan' => $id_pengajuan,
+            'waktu' => parent::format_date(),
+            'id_status' => 1
+        ))
+            ->execute();
 
         $jenis = parent::encrypt($jenis);
         $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Kelahiran Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
