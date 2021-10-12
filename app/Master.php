@@ -103,12 +103,20 @@ class Master extends Utility
                 'N', $term
             ))
             ->execute();
+        $parsed = array();
+        foreach ($data['response_data'] as $key => $value) {
+            array_push($parsed, array(
+                'id' => strval($value['id']),
+                'name' => $value['nama'],
+            ));
+        }
+
         return array(
             'token' => null,
             'response_package' => array(
                 'response_result' => (count($data['response_data']) > 0) ? 1 : 0,
                 'response_message' => (count($data['response_data']) > 0) ? 'Nah datanya' : 'G ada data',
-                'response_data' => (count($data['response_data']) > 0) ? $data['response_data'] : array()
+                'response_data' => (count($data['response_data']) > 0) ? $parsed : array()
             )
         );
     }
