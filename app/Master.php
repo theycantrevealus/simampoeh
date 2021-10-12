@@ -27,9 +27,9 @@ class Master extends Utility
     public function __GET__($parameter = array())
     {
         switch ($parameter[1]) {
-            case 'nik':
-                return array();
-                break;
+
+            default:
+                return $parameter;
         }
     }
 
@@ -55,6 +55,14 @@ class Master extends Utility
             case 'kelurahan':
                 return self::get_kelurahan($parameter);
                 break;
+            case 'tempat_dilahirkan':
+                return self::term_data(6);
+                break;
+            case 'penolong_kelahiran':
+                return self::term_data(8);
+                break;
+            default:
+                return array();
 
         }
     }
@@ -74,9 +82,34 @@ class Master extends Utility
         curl_close ($ch);
 
         return array(
-            'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
-            'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
-            'response_data' => (isset($json_object->ERROR)) ? array() : array($json_object)
+            'token' => null,
+            'response_package' => array(
+                'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
+                'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
+                'response_data' => (isset($json_object->ERROR)) ? array() : array($json_object)
+            )
+        );
+    }
+
+    public function term_data($term) {
+        $data = self::$query->select('term', array(
+            'id', 'nama'
+        ))
+            ->where(array(
+                'term.status_hapus' => '= ?',
+                'AND',
+                'term.id_termusage' => '= ?'
+            ), array(
+                'N', $term
+            ))
+            ->execute();
+        return array(
+            'token' => null,
+            'response_package' => array(
+                'response_result' => (count($data['response_data']) > 0) ? 1 : 0,
+                'response_message' => (count($data['response_data']) > 0) ? 'Nah datanya' : 'G ada data',
+                'response_data' => (count($data['response_data']) > 0) ? $data['response_data'] : array()
+            )
         );
     }
 
@@ -94,9 +127,12 @@ class Master extends Utility
         curl_close ($ch);
 
         return array(
-            'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
-            'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
-            'response_data' => (isset($json_object->ERROR)) ? array() : array($json_object)
+            'token' => null,
+            'response_package' => array(
+                'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
+                'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
+                'response_data' => (isset($json_object->ERROR)) ? array() : array($json_object)
+            )
         );
     }
 
@@ -111,10 +147,24 @@ class Master extends Utility
 
         curl_close ($ch);
 
+        $parsed = array();
+
+        if(!isset($json_object->ERROR)) {
+            foreach ($json_object as $key => $value) {
+                array_push($parsed, array(
+                    'id' => $value->NO_PROP,
+                    'name' => $value->NAMA_PROP
+                ));
+            }
+        }
+
         return array(
-            'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
-            'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
-            'response_data' => (isset($json_object->ERROR)) ? array() : array($json_object)
+            'token' => null,
+            'response_package' => array(
+                'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
+                'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
+                'response_data' => (isset($json_object->ERROR)) ? array() : $parsed
+            )
         );
     }
 
@@ -131,10 +181,23 @@ class Master extends Utility
 
         curl_close ($ch);
 
+        $parsed = array();
+        if(!isset($json_object->ERROR)) {
+            foreach ($json_object as $key => $value) {
+                array_push($parsed, array(
+                    'id' => $value->NO_KAB,
+                    'name' => $value->NAMA_KAB
+                ));
+            }
+        }
+
         return array(
-            'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
-            'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
-            'response_data' => (isset($json_object->ERROR)) ? array() : $json_object
+            'token' => null,
+            'response_package' => array(
+                'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
+                'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
+                'response_data' => (isset($json_object->ERROR)) ? array() : $parsed
+            )
         );
     }
 
@@ -155,17 +218,30 @@ class Master extends Utility
 
         curl_close ($ch);
 
+        $parsed = array();
+        if(!isset($json_object->ERROR)) {
+            foreach ($json_object as $key => $value) {
+                array_push($parsed, array(
+                    'id' => $value->NO_KEC,
+                    'name' => $value->NAMA_KEC
+                ));
+            }
+        }
+
         return array(
-            'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
-            'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
-            'response_data' => (isset($json_object->ERROR)) ? array() : $json_object
+            'token' => null,
+            'response_package' => array(
+                'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
+                'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
+                'response_data' => (isset($json_object->ERROR)) ? array() : $parsed
+            )
         );
     }
 
     public function get_kelurahan($parameter) {
         $provinsi = parent::anti_injection($parameter['id_provinsi']);
         $kabupaten = parent::anti_injection($parameter['id_kabupaten']);
-        $kecamatan = parent::anti_injection($parameter['id_kecamatan']);
+        $kecamatan = parent::anti_injection($parameter['parent']);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,__TARGET_SYNC__ . '/lok-kelurahan');
@@ -178,14 +254,28 @@ class Master extends Utility
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
+
         $json_object = json_decode(curl_exec($ch));
+
+        $parsed = array();
+        if(!isset($json_object->ERROR)) {
+            foreach ($json_object as $key => $value) {
+                array_push($parsed, array(
+                    'id' => $value->NO_KEL,
+                    'name' => $value->NAMA_KEL
+                ));
+            }
+        }
 
         curl_close ($ch);
 
         return array(
-            'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
-            'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
-            'response_data' => (isset($json_object->ERROR)) ? array() : ((isset($json_object)) ? $json_object : array())
+            'token' => null,
+            'response_package' => array(
+                'response_result' => (isset($json_object->ERROR)) ? 0 : 1,
+                'response_message' => (isset($json_object->ERROR)) ? $json_object->ERROR : '',
+                'response_data' => (isset($json_object->ERROR)) ? array() : ((isset($json_object)) ? $parsed : array())
+            )
         );
     }
 }

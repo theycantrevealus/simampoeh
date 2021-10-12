@@ -4,9 +4,6 @@ namespace PondokCoder;
 
 use PondokCoder\Authorization as Authorization;
 use PondokCoder\Utility as Utility;
-use PondokCoder\Modul as Modul;
-use PondokCoder\Poli as Poli;
-use PondokCoder\Unit as Unit;
 use \Firebase\JWT\JWT;
 
 class Pelaporan2 extends Utility
@@ -35,17 +32,230 @@ class Pelaporan2 extends Utility
     public function __POST__($parameter = array())
     {
         switch ($parameter['request']) {
-            case 'tambah_aktaaku':
-                return self::tambah_aktaaku($parameter);
-                break;
-
             case 'tambah_aktalahir':
                 return self::tambah_aktalahir($parameter);
                 break;
 
-            case '':
+            case 'tambah_aktaaku':
+                return self::tambah_aktaaku($parameter);
+                break;
+
+            case 'tambah_sahanak':
+                return self::tambah_sahanak($parameter);
+                break;
+
+            case 'tambah_angkatanak':
+                return self::tambah_angkatanak($parameter);
+                break;
+
+            case 'tambah_aktakawin':
+                return self::tambah_aktakawin($parameter);
+                break;
+
+            case 'tambah_aktacerai':
+                return self::tambah_aktacerai($parameter);
+                break;
+
+            case 'tambah_aktamati':
+                return self::tambah_aktamati($parameter);
+                break;
+
+            case 'tambah_kartukeluarga':
+                return self::tambah_kartukeluarga($parameter);
+                break;
+
+            case 'tambah_ktp':
+                return self::tambah_ktp($parameter);
+                break;
+
+            case 'tambah_identitasanak':
+                return self::tambah_identitasanak($parameter);
+                break;
+
+            case 'tambah_suratpindah':
+                return self::tambah_suratpindah($parameter);
+                break;
+
+            default:
+                return array();
         }
     }
+
+
+
+
+
+
+    private function tambah_sahanak($parameter) {
+
+        $nik = parent::anti_injection($_POST['anak_nik']);
+        $Master = new Master(self::$pdo);
+        $hasil = $Master->get_nik($nik);
+
+        if($hasil['response_result'] > 0) {
+            $json_object = $hasil['response_data'][0];
+
+            $anak_nama = $json_object->NAMA_LGKP;
+            $anak_nama = str_replace("'","''",$anak_nama);
+            $anak_tempat_lahir = $json_object->TMPT_LHR;
+            $anak_tanggal_lahir = $json_object->TGL_LHR;
+            $anak_jenkel=$_POST['anak_jenkel'];
+            $anak_agama = $json_object->AGAMA;
+            $kk = $json_object->KARTU_KELUARGA;
+            $anak_alamat = $kk->ALAMAT;
+            $anak_rt = $kk->NO_RT;
+            $anak_rw = $kk->NO_RW;
+            $anak_provinsi = $json_object->NAMA_PROP;
+            $anak_kabupaten = $json_object->NAMA_KAB;
+            $anak_kecamatan = $json_object->NAMA_KEC;
+            $anak_kelurahan = $json_object->NAMA_KEL;
+            $anak_kodepos = $kk->KODE_POS;
+            $anak_telepon = $json_object->TELEPON;
+
+            $anak_kelahiran_ke = parent::anti_injection($_POST['anak_kelahiran_ke']);
+            $anak_nomor_akta = parent::anti_injection($_POST['anak_nomor_akta']);
+            $anak_tanggal_akta = parent::anti_injection($_POST['anak_tanggal_akta']);
+            $anak_dinas_akta = parent::anti_injection($_POST['anak_dinas_akta']);
+
+            $jenis = parent::anti_injection($_POST['jenis']);
+            $kirim = parent::anti_injection($_POST['kirim']);
+
+            //Todo : Lanjutan
+
+            $sql="INSERT INTO aktaesah (waktu_input, uid_member, anak_nik, anak_nama, anak_tempat_lahir, anak_tanggal_lahir, anak_jenkel, anak_agama, anak_alamat, anak_rt, anak_rw, anak_provinsi, anak_kabupaten, anak_kecamatan, anak_kelurahan, anak_kodepos, anak_telepon, anak_kelahiran_ke, anak_nomor_akta, anak_tanggal_akta, anak_dinas_akta) VALUES ('$waktu_sekarang', '$_SESSION[login_user]', '$nik', '$anak_nama', '$anak_tempat_lahir', '$anak_tanggal_lahir', '$anak_jenkel', '$anak_agama', '$anak_alamat', '$anak_rt', '$anak_rw', '$anak_provinsi', '$anak_kabupaten', '$anak_kecamatan', '$anak_kelurahan', '$anak_kodepos', '$anak_telepon', '$anak_kelahiran_ke', '$anak_nomor_akta', '$anak_tanggal_akta', '$anak_dinas_akta') RETURNING uid";
+
+            //echo $sql;
+
+            $result=pg_query($conn,$sql);
+            $d=pg_fetch_array($result);
+            $uid_data=$d['uid'];
+
+            $tampil=pg_query($conn,"SELECT * FROM pelayanan_jenis_syarat WHERE status_hapus='N' AND id_pelayanan_jenis='$jenis'");
+            while($r=pg_fetch_array($tampil)){
+                $berkas = "fupload_$r[id]";
+
+                $acak			 = rand(1,99);
+                $lokasi_file     = $_FILES[$berkas]['tmp_name'];
+                $tipe_file       = $_FILES[$berkas]['type'];
+                $nama_file       = $_FILES[$berkas]['name'];
+                $nama_file_unik  = $uid_data.$acak.$nama_file;
+
+                if ($_FILES[$berkas]["error"] > 0 OR empty($lokasi_file)){
+                    $nama_file_unik = "";
+                }
+
+                else{
+                    UploadBerkasAktaEsah($nama_file_unik, $lokasi_file);
+                }
+
+                $sql="INSERT INTO aktaesah_berkas (uid_aktaesah, nama_berkas, berkas) VALUES  ('$uid_data', '$r[nama]', '$nama_file_unik')";
+                pg_query($conn,$sql);
+            }
+
+            $kode = acak(6);
+
+            $c=pg_fetch_array(pg_query($conn,"SELECT COUNT(uid) AS ada FROM pengajuan WHERE kode='$kode' AND status_hapus='N'"));
+            if($c['ada']!=''){
+                $kode = acak(6);
+                $c=pg_fetch_array(pg_query($conn,"SELECT COUNT(uid) AS ada FROM pengajuan WHERE kode='$kode' AND status_hapus='N'"));
+                if($c['ada']!=''){
+                    $kode = acak(6);
+                }
+            }
+
+            $id_provinsi = parent::anti_injection($_POST['id_provinsi']);
+            $id_kabupaten = parent::anti_injection($_POST['id_kabupaten']);
+            $id_kecamatan = parent::anti_injection($_POST['id_kecamatan']);
+            $id_kelurahan = parent::anti_injection($_POST['id_kelurahan']);
+            $alamat = parent::anti_injection($_POST['alamat']);
+            $kode_pos = parent::anti_injection($_POST['kode_pos']);
+
+
+            $a=explode("|",$id_provinsi);
+            $id_provinsi=$a[0];
+            $nama_provinsi=$a[1];
+
+            $a=explode("|",$id_kabupaten);
+            $id_kabupaten=$a[0];
+            $nama_kabupaten=$a[1];
+
+            $a=explode("|",$id_kecamatan);
+            $id_kecamatan=$a[0];
+            $nama_kecamatan=$a[1];
+
+            $a=explode("|",$id_kelurahan);
+            $id_kelurahan=$a[0];
+            $nama_kelurahan=$a[1];
+
+            if($kirim=='Y'){
+                $sql="INSERT INTO pengajuan (id_pelayanan, uid_member, waktu_input, id_status, uid_pengajuan_data, jenis, kode, id_provinsi, nama_provinsi, id_kabupaten,  nama_kabupaten, id_kecamatan, nama_kecamatan, id_kelurahan, nama_kelurahan, alamat_kirim, kode_pos, dikirim) VALUES ('1', '$_SESSION[login_user]', '$waktu_sekarang', '1', '$uid_data', '$jenis', '$kode', '$id_provinsi', '$nama_provinsi', '$id_kabupaten', '$nama_kabupaten', '$id_kecamatan', '$nama_kecamatan', '$id_kelurahan', '$nama_kelurahan', '$alamat', '$kode_pos', '$kirim') RETURNING id";
+            }
+            else{
+                $sql="INSERT INTO pengajuan (id_pelayanan, uid_member, waktu_input, id_status,  uid_pengajuan_data, jenis, kode, dikirim) VALUES ('1', '$_SESSION[login_user]', '$waktu_sekarang', '1', '$uid_data', '$jenis', '$kode', '$kirim') RETURNING id";
+            }
+
+            //echo $sql;
+            $result=pg_query($conn,$sql);
+            $d=pg_fetch_array($result);
+            $id_pengajuan=$d['id'];
+
+            $sql="INSERT INTO pengajuan_log(id_pengajuan, waktu, id_status) VALUES ('$id_pengajuan', '$waktu_sekarang', '1')";
+            pg_query($conn,$sql);
+
+            $jenis = parent::encrypt($jenis);
+
+            $message="Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Pengesahan Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih";
+            parent::kirim_wa($_SESSION['no_handphone'], $message);
+
+            header("location:aktaesahanak?jenis=$jenis");
+            return array();
+
+        }
+    }
+
+    private function tambah_angkatanak($parameter) {
+        return array();
+    }
+
+    private function tambah_aktakawin($parameter) {
+        return array();
+    }
+
+    private function tambah_aktacerai($parameter) {
+        return array();
+    }
+
+    private function tambah_aktamati($parameter) {
+        return array();
+    }
+
+    private function tambah_kartukeluarga($parameter) {
+        return array();
+    }
+
+    private function tambah_ktp($parameter) {
+        return array();
+    }
+
+    private function tambah_identitasanak($parameter) {
+        return array();
+    }
+
+    private function tambah_suratpindah($parameter) {
+        return array();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private function tambah_aktalahir($parameter) {
         $Authorization = new Authorization();
@@ -258,6 +468,8 @@ class Pelaporan2 extends Utility
             'response_result' => $TambahPengajuan['response_result'],
             'response_data' => array($jenis)
         );
+
+        return $parameterBuilder;
     }
 
 

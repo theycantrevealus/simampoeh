@@ -93,7 +93,7 @@ try {
 			) ||
 
             (
-                (($requestTarget == 'PondokCoder\\Master') && $_SERVER['REQUEST_METHOD'] === 'POST')
+                (($requestTarget == 'PondokCoder\\Master') && ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'GET'))
             ) ||
 
             (
