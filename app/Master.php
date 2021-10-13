@@ -82,11 +82,17 @@ class Master extends Utility
                 'AND',
                 'pelayanan_jenis.id_pelayanan' => '= ?'
             ), array(
-                'N', $parameter['id_pelayanan']
+                'N', $parameter['parent']
             ))
             ->execute();
 
-        return $CheckSyarat;
+        return array(
+            'response_package' => array(
+                'response_data' => $CheckSyarat['response_data'],
+                'response_result' => count($CheckSyarat['response_data']),
+                'response_message' => 'Nah'
+            )
+        );
     }
 
     private function pelayanan_jenis_syarat($parameter) {
@@ -98,11 +104,17 @@ class Master extends Utility
                 'AND',
                 'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
             ), array(
-                'N', $parameter['jenis']
+                'N', $parameter['parent']
             ))
             ->execute();
 
-        return $CheckSyarat;
+        return array(
+            'response_package' => array(
+                'response_data' => $CheckSyarat['response_data'],
+                'response_result' => count($CheckSyarat['response_data']),
+                'response_message' => 'Nah'
+            )
+        );
 
     }
 
