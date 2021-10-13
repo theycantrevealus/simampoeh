@@ -8,7 +8,7 @@ abstract class Utility {
 	const appRoot = './';
 
     public function encrypt($parameter) {
-        return base64_encode(base64_decode($parameter));
+        return base64_encode(base64_encode($parameter));
     }
 
     public function decrypt($parameter) {

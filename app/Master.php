@@ -61,10 +61,49 @@ class Master extends Utility
             case 'penolong_kelahiran':
                 return self::term_data(8);
                 break;
+            case 'pelayanan_jenis_syarat':
+                return self::pelayanan_jenis_syarat($parameter);
+                break;
+            case 'pelayanan_jenis':
+                return self::pelayanan_jenis($parameter);
+                break;
             default:
                 return array();
 
         }
+    }
+
+    private function pelayanan_jenis($parameter) {
+        $CheckSyarat = self::$query->select('pelayanan_jenis', array(
+            'id', 'nama', 'id_pelayanan', 'status_hapus', 'batas_waktu', 'nilai_denda'
+        ))
+            ->where(array(
+                'pelayanan_jenis.status_hapus' => '= ?',
+                'AND',
+                'pelayanan_jenis.id_pelayanan' => '= ?'
+            ), array(
+                'N', $parameter['id_pelayanan']
+            ))
+            ->execute();
+
+        return $CheckSyarat;
+    }
+
+    private function pelayanan_jenis_syarat($parameter) {
+        $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
+            'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
+        ))
+            ->where(array(
+                'pelayanan_jenis_syarat.status_hapus' => '= ?',
+                'AND',
+                'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
+            ), array(
+                'N', $parameter['jenis']
+            ))
+            ->execute();
+
+        return $CheckSyarat;
+
     }
 
 

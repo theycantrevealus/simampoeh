@@ -167,7 +167,7 @@ class Member extends Utility {
         $data = self::$query->select('member', array(
             'uid' , 'email', 'password', 'nama', 'gambar', 'nik', 'no_kk',
             'status_hapus', 'status_login', 'id_status', 'waktu_input',
-            'tanggal_lahir', 'tempat_lahar', 'jenis_kelamin', 'agama', 'no_handphone',
+            'tanggal_lahir', 'tempat_lahir', 'jenis_kelamin', 'agama', 'no_handphone',
             'id_provinsi', 'nama_provinsi',
             'id_kabupaten', 'nama_kabupaten',
             'id_kecamatan', 'nama_kecamatan',
@@ -177,27 +177,68 @@ class Member extends Utility {
             ->where(array(
                 'member.status_hapus' => '= ?',
                 'AND',
-                'member.email' => '= ?',
+                'member.nik' => '= ?',
                 'AND',
                 'member.password' => '= ?',
             ), array(
-                'N', $parameter['email'], parent::decrypt($parameter['password'])
+                'N', $parameter['nik'], parent::encrypt($parameter['password'])
             ))
             ->execute();
 
-        $parameterBuilder = array(
-            'response_result' => 0,
-            'response_message' => '',
-        );
+        $parameterBuilder = array();
 
         if(count($data['response_data']) > 0) {
-            $parameterBuilder = array(
-                'response_result' => 1,
-                'response_message' => 'Login Berhasil',
-                'response_data' => $data['response_data']
+
+
+            $LOG = self::$query->insert('member_log_status', array(
+                'uid_member' => $data['response_data'][0]['uid'],
+                'waktu_input' => parent::format_date(),
+                'id_status' => 10
+            ))
+                ->execute();
+
+            $secret_key = file_get_contents('taknakal.pub');
+
+            //Register JWT
+            $iss = __HOSTNAME__;
+            $iat = time();
+            $nbf = $iat + 10;
+            $exp = $iat + 30;
+            $aud = 'users_library';
+
+            $user_arr_data = array(
+                'uid' => $data['response_data'][0]['uid'],
+                'foto' => $data['response_data'][0]['foto'],
+                'nik' => $data['response_data'][0]['nik'],
+                'password' => $data['response_data'][0]['password'],
+                'email' => $data['response_data'][0]['email'],
+                'nama' => $data['response_data'][0]['nama'],
+                'no_handphone' => $data['response_data'][0]['no_handphone'],
+                'kecamatan' => $data['response_data'][0]['id_kecamatan'],
+                'kelurahan' => $data['response_data'][0]['id_kelurahan'],
+                'log_id' => 1
             );
+
+            $payload_info = array(
+                'iss' => $iss,
+                'iat' => $iat,
+                'nbf' => $nbf,
+                'exp' => $exp,
+                'aud' => $aud,
+                'data' => $user_arr_data
+            );
+            $jwt = JWT::encode($payload_info, $secret_key);
+
+            unset($data['response_data'][0]['password']);
+            $parameterBuilder['response_package'] = array();
+            $parameterBuilder['token'] = $jwt;
+            $parameterBuilder['response_package']['response_result'] = $data['response_result'];
+            $parameterBuilder['response_package']['response_message'] = 'Login berhasil';
+            //$parameterBuilder['response_package']['response_token'] = $jwt;
+            $parameterBuilder['response_package']['response_data'] = array($data['response_data'][0]);
         } else {
             $parameterBuilder = array(
+                'data' => $data,
                 'response_result' => 0,
                 'response_message' => 'Email / Password salah',
                 'response_data' => $data['response_data']
