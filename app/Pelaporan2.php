@@ -126,21 +126,17 @@ class Pelaporan2 extends Utility
                 ->execute();
 
             $parameterBuilder = array(
-                'response_package' => array(
-                    'response_message' => 'File berhasil di upload',
-                    'response_data' => array(
-                        'url' => __HOST__ . 'android_temp/' . $UserData['data']->uid . '/' . $parameter['file_name']
-                    ),
-                    'response_result' => 1
-                )
+                'response_message' => 'File berhasil di upload',
+                'response_data' => array(
+                    'url' => __HOST__ . 'android_temp/' . $UserData['data']->uid . '/' . $parameter['file_name']
+                ),
+                'response_result' => 1
             );
         } else {
             $parameterBuilder = array(
-                'response_package' => array(
-                    'temp_image' => $_FILES['file']['tmp_name'],
-                    'response_message' => 'File gagal upload',
-                    'response_result' => 0
-                )
+                'temp_image' => $_FILES['file']['tmp_name'],
+                'response_message' => 'File gagal upload',
+                'response_result' => 0
             );
         }
 
