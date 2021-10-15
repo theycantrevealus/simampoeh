@@ -2561,7 +2561,7 @@ class Pelaporan2 extends Utility
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
 
-        $nik = parent::anti_injection($parameter['anak_nik']);
+        $nik = parent::anti_injection($parameter['nik']);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,"http://siakmedan3.medan.depdagri.go.id/ajax/sibisa/get-nik");
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -2596,12 +2596,12 @@ class Pelaporan2 extends Utility
             'uid_member' => $UserData['data']->uid,
             'anak_nik' => $nik,
             'anak_noakta' => $anak_noakta,
-            'anak_nama' => $anak_nama,
-            'anak_tempatlahir' => $anak_tempat_lahir,
-            'anak_tanggallahir' => $anak_tanggal_lahir,
-            'anak_ayah' => $anak_ayah,
-            'anak_ibu' => $anak_ibu,
-            'anak_alamat' => $anak_alamat
+            'anak_nama' => (isset($anak_nama) ? $anak_nama : ''),
+            'anak_tempatlahir' => (isset($anak_tempat_lahir) ? $anak_tempat_lahir : ''),
+            'anak_tanggallahir' => (isset($anak_tanggal_lahir) ? $anak_tanggal_lahir : ''),
+            'anak_ayah' => (isset($anak_ayah) ? $anak_ayah : ''),
+            'anak_ibu' => (isset($anak_ibu) ? $anak_ibu : ''),
+            'anak_alamat' => (isset($anak_alamat) ? $anak_alamat : '')
         ))
             ->execute();
 
@@ -2812,7 +2812,7 @@ class Pelaporan2 extends Utility
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
 
-        $nik = parent::anti_injection($parameter['anak_nik']);
+        $nik = parent::anti_injection($parameter['nik']);
         $Master = new Master(self::$pdo);
         $hasil = $Master->get_nik(array(
             'nik' => $nik
@@ -2875,8 +2875,8 @@ class Pelaporan2 extends Utility
 
             $SuratPindah = self::$query->insert('suratpindah', array(
                 'uid' => $uid_data,
-                'waktu_input' => '',
-                'uid_member' => '',
+                'waktu_input' => parent::format_date(),
+                'uid_member' => $UserData['data']->uid,
                 'no_kk' => $no_kk,
                 'nik_pemohon' => $nik,
                 'nama_pemohon' => $nama,
