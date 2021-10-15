@@ -363,3 +363,60 @@ Simampoeh API Only
      "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
    }
    ```
+
+9. Akta Mati
+
+   **Request**
+   ```
+   curl --request POST \
+   --url http://127.0.0.1/simampoeh/Pelaporan2/ \
+   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDIxNjM1NSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyMTYzODUsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.nzUJAIDD-1YV4uGt43X3BDn5TRBt7FN7HZfzhg9nlBg' \
+   --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
+   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+   --form request=tambah_aktamati \
+   --form nik=1271062205920002 \
+   --form jenis=34 \
+   --form kirim=N \
+   --form id_provinsi=1 \
+   --form id_kabupaten=1 \
+   --form id_kecamatan=1 \
+   --form id_kelurahan=1 \
+   --form 'alamat=Jln. Kapodang II' \
+   --form kode_pos=666 \
+   --form id_pelayanan=4 \
+   --form hubungan=PAMAN \
+   --form nama=Sarno \
+   --form id_jenkel=1 \
+   --form tempat_lahir=Medan \
+   --form tanggal_lahir=1990-01-01 \
+   --form id_agama=1 \
+   --form id_kewarganegaraan=1 \
+   --form 'alamat=Jln. Kapodang II' \
+   --form rt=01 \
+   --form rw=02 \
+   --form telepon=085261510202 \
+   --form tanggal_meninggal=2020-01-01 \
+   --form jam_meninggal=10:00 \
+   --form tempat_meninggal=WC \
+   --form 'penyebab_meninggal=Berak Semen' \
+   --form no_handphone=085261510202 \
+   --form id_provinsi2=1 \
+   --form id_kabupaten2=1 \
+   --form id_kecamatan2=1 \
+   --form id_kelurahan2=1
+   ```
+
+   **Response**
+   ```
+   {
+     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDI4NDk2MiwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyODUwMjIsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.WqKdhZGOG31QJBkWZCRaUDjnPfTZzyF_-eBahpRJWLs",
+     "response_package": {
+       "response_message": "Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Kematian. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih",
+       "response_result": null,
+       "response_data": [
+         "TXpRPQ=="
+       ]
+     },
+     "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
+   }
+   ```
