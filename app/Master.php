@@ -61,6 +61,9 @@ class Master extends Utility
             case 'shdk':
                 return self::term_data(51);
                 break;
+            case 'agama':
+                return self::term_data(5);
+                break;
             case 'penolong_kelahiran':
                 return self::term_data(8);
                 break;
