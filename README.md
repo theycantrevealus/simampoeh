@@ -301,3 +301,65 @@ Simampoeh API Only
      "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
    }
    ```
+
+8. Akta Kawin
+
+   **Request**
+   ```
+   curl --request POST \
+   --url http://127.0.0.1/simampoeh/Pelaporan2/ \
+   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDIxNjM1NSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyMTYzODUsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.nzUJAIDD-1YV4uGt43X3BDn5TRBt7FN7HZfzhg9nlBg' \
+   --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
+   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+   --form request=tambah_aktakawin \
+   --form id_provinsi=1 \
+   --form id_kabupaten=1 \
+   --form id_kecamatan=1 \
+   --form id_kelurahan=1 \
+   --form 'alamat=Jln. Kapodang II' \
+   --form kode_pos=666 \
+   --form id_pelayanan=4 \
+   --form organisasi_penghayat=Gereja \
+   --form badan_peradilan=Kanonik \
+   --form nomor_pengadilan=IJ239872 \
+   --form 'nama_pemuka=Pt. Peter' \
+   --form izin_perwakilan=BOLEH123 \
+   --form tanggal_kawin=2020-01-01 \
+   --form id_agama=1 \
+   --form tanggal_pengadilan=2020-02-01 \
+   --form jumlah_anak=2 \
+   --form jenis=47 \
+   --form kirim=N \
+   --form nik_suami=1271062205920002 \
+   --form nik_istri=1271062205920001 \
+   --form nama_suami=Suryo \
+   --form nama_istri=Surti \
+   --form nik_suami_ayah=1271062205920005 \
+   --form nama_suami_ayah=Sarno \
+   --form nik_suami__ibu=1271062205920006 \
+   --form nama_suami_ibu=Sarni \
+   --form nik_istri_ayah=1271062205920007 \
+   --form nama_istri_ayah=Satimin \
+   --form nik_istri_ibu=1271062205920008 \
+   --form nama_istri_ibu=Susi \
+   --form nik_saksi_1=1271062205920009 \
+   --form nama_saksi_1=Soni \
+   --form nik_saksi_2=1271062205920010 \
+   --form nama_saksi_2=Sungkup \
+   --form tanggal_pengadilan=2020-01-01
+   ```
+
+   **Response**
+   ```
+   {
+     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDI4NDQ3OCwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyODQ1MzgsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.WvzSB6aOeLxq65K6TY2_pQ-aUwoFSaXEbExZT0bv6MU",
+     "response_package": {
+       "response_message": "Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Perkawinan. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih",
+       "response_result": null,
+       "response_data": [
+         "TkRjPQ=="
+       ]
+     },
+     "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
+   }
+   ```
