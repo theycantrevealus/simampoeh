@@ -161,3 +161,143 @@ Simampoeh API Only
       "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
    }
    ```
+
+5. Angkat Anak
+
+   **Request**
+   ```
+   curl --request POST \
+   --url http://127.0.0.1/simampoeh/Pelaporan2/ \
+   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDIxNjM1NSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyMTYzODUsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.nzUJAIDD-1YV4uGt43X3BDn5TRBt7FN7HZfzhg9nlBg' \
+   --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
+   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+   --form request=tambah_angkatanak \
+   --form nik=1271062205920002 \
+   --form anak_jenkel=LAKI-LAKI \
+   --form jenis=34 \
+   --form kirim=N \
+   --form anak_kelahiran_ke=1 \
+   --form anak_nomor_akta=22AD8989 \
+   --form anak_tanggal_akta=2020-01-01 \
+   --form 'anak_dinas_akta=Kota Medan' \
+   --form id_provinsi=1 \
+   --form id_kabupaten=1 \
+   --form id_kecamatan=1 \
+   --form id_kelurahan=1 \
+   --form 'alamat=Jln. Kapodang II' \
+   --form kode_pos=123 \
+   --form id_pelayanan=11
+   ```
+
+   **Response**
+   ```
+   {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDI4MTkyOSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyODE5ODksImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.b_gJWBnJOeLBpIpAAWnp3c8kCpKmivqLjnLPDi7V1VM",
+      "response_package": {
+         "response_message": "Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Pengangkatan Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih",
+         "response_result": null,
+         "response_data": [
+            "TXpRPQ=="
+         ]
+      },
+      "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
+   }
+   ```
+
+
+6. Akta Lahir
+
+   **Request**
+   ```
+   curl --request POST \
+   --url http://127.0.0.1/simampoeh/Pelaporan2/ \
+   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDIxNjM1NSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyMTYzODUsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.nzUJAIDD-1YV4uGt43X3BDn5TRBt7FN7HZfzhg9nlBg' \
+   --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
+   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+   --form request=tambah_aktalahir \
+   --form nik=1271062205920002 \
+   --form anak_nama=Susan \
+   --form jenis=34 \
+   --form kirim=N \
+   --form anak_tempat_lahir=Medan \
+   --form anak_berat_bayi=12 \
+   --form anak_panjang_bayi=12 \
+   --form anak_berat_bayi_koma=2 \
+   --form anak_id_jenkel=1 \
+   --form anak_id_tempatlahir=1 \
+   --form anak_tanggal_lahir=2020-01-01 \
+   --form anak_jam_lahir=10:00 \
+   --form anak_kelahiran_ke=1 \
+   --form anak_id_tolonglahir=1 \
+   --form anak_ayah=Sutotok \
+   --form anak_ibu=Septiani \
+   --form anak_saksi1=Hapis \
+   --form anak_saksi2=NurAhini \
+   --form anak_no_handphone=085261510202 \
+   --form jenis_kelahiran=1 \
+   --form id_provinsi=1 \
+   --form id_kabupaten=1 \
+   --form id_kecamatan=1 \
+   --form id_kelurahan=1 \
+   --form 'alamat=Jln. Kapodang II' \
+   --form kode_pos=666 \
+   --form id_pelayanan=4
+   ```
+
+   **Response**
+   ```
+   {
+     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDI4Mjk0OSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyODMwMDksImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.MrRwCbOXQomtwWm9Fggiudw_KDj3Erte-C4uWmL-jPM",
+     "response_package": {
+       "response_message": "Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Kelahiran Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih",
+       "response_result": null,
+       "response_data": [
+         "TXpRPQ=="
+       ]
+     },
+     "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
+   }
+   ```
+
+7. Aku Anak
+
+   **Request**
+   ```
+   curl --request POST \
+   --url http://127.0.0.1/simampoeh/Pelaporan2/ \
+   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDIxNjM1NSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyMTYzODUsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.nzUJAIDD-1YV4uGt43X3BDn5TRBt7FN7HZfzhg9nlBg' \
+   --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
+   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+   --form request=tambah_aktaaku \
+   --form nik=1271062205920002 \
+   --form anak_jenkel=LAKI-LAKI \
+   --form jenis=34 \
+   --form kirim=N \
+   --form anak_kelahiran_ke=1 \
+   --form anak_nomor_akta=RF23124 \
+   --form anak_tanggal_akta=2020-01-01 \
+   --form anak_dinas_akta=DW \
+   --form anak_id_jenkel=1 \
+   --form id_provinsi=1 \
+   --form id_kabupaten=1 \
+   --form id_kecamatan=1 \
+   --form id_kelurahan=1 \
+   --form 'alamat=Jln. Kapodang II' \
+   --form kode_pos=666 \
+   --form id_pelayanan=4
+   ```
+
+   **Response**
+   ```
+   {
+     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDI4MzMxNywibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyODMzNzcsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.DYUHnDPDH0yNw5jsrQQAai3dMuknSCld0qfqoRy-DDs",
+     "response_package": {
+       "response_message": "Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Pengakuan Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih",
+       "response_result": null,
+       "response_data": [
+         "TXpRPQ=="
+       ]
+     },
+     "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
+   }
+   ```

@@ -461,7 +461,7 @@ class Pelaporan2 extends Utility
             $anak_tanggal_akta = parent::anti_injection($parameter['anak_tanggal_akta']);
             $anak_dinas_akta = parent::anti_injection($parameter['anak_dinas_akta']);
 
-            $uid_data = parent::format_date();
+            $uid_data = parent::gen_uuid();
             $AngkatAnak = self::$query->insert('aktaangkat', array(
                 'uid' => $uid_data,
                 'waktu_input' => parent::format_date(),
@@ -1356,7 +1356,7 @@ class Pelaporan2 extends Utility
             $anak_berat_bayi = $anak_berat_bayi.'.'.$anak_berat_bayi_koma;
             $uid_data = parent::gen_uuid();
             $AktaLahir = self::$query->insert('aktalahir', array(
-                'uid' => '',
+                'uid' => $uid_data,
                 'waktu_input' => parent::format_date(),
                 'uid_member' => $UserData['data']->uid,
                 'anak_nama' => $anak_nama,
@@ -1593,14 +1593,16 @@ class Pelaporan2 extends Utility
 
         $parameterBuilder = array();
 
-        $nik = parent::anti_injection($parameter['anak_nik']);
+        $nik = parent::anti_injection($parameter['nik']);
 
 
         $Master = new Master(self::$pdo);
-        $hasil = $Master->get_nik($nik);
+        $hasil = $Master->get_nik(array(
+            'nik' => $nik
+        ));
 
-        if($hasil['response_result'] > 0) {
-            $json_object = $hasil['response_data'][0];
+        if($hasil['response_package']['response_result'] > 0) {
+            $json_object = $hasil['response_package']['response_data'][0];
             $anak_nama = $json_object->NAMA_LGKP;
             if($anak_nama!=''){
                 $anak_nama = str_replace("'","''",$anak_nama);
@@ -1645,12 +1647,12 @@ class Pelaporan2 extends Utility
                     'anak_kabupaten' => $anak_kabupaten,
                     'anak_kecamatan' => $anak_kecamatan,
                     'anak_kelurahan' => '$anak_kelurahan',
-                    'anak_kodepos' => $anak_kodepos,
-                    'anak_telepon' => $anak_telepon,
+                    'anak_kodepos' => (isset($anak_kodepos) ? $anak_kodepos : ''),
+                    'anak_telepon' => (isset($anak_telepon) ? $anak_telepon : ''),
                     'anak_kelahiran_ke' => $anak_kelahiran_ke,
                     'anak_nomor_akta' => $anak_nomor_akta,
                     'anak_tanggal_akta' => $anak_tanggal_akta,
-                    'anak_dinas_akta' => '$anak_dinas_akta'
+                    'anak_dinas_akta' => $anak_dinas_akta
 
                 ))
                     ->execute();

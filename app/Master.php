@@ -161,7 +161,7 @@ class Master extends Utility
         foreach ($data['response_data'] as $key => $value) {
             array_push($parsed, array(
                 'id' => strval($value['id']),
-                'name' => $value['nama'],
+                'nama' => $value['nama'],
             ));
         }
 
