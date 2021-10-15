@@ -212,7 +212,7 @@ class Master extends Utility
             foreach ($json_object as $key => $value) {
                 array_push($parsed, array(
                     'id' => $value->NO_PROP,
-                    'name' => $value->NAMA_PROP
+                    'nama' => $value->NAMA_PROP
                 ));
             }
         }
@@ -245,7 +245,7 @@ class Master extends Utility
             foreach ($json_object as $key => $value) {
                 array_push($parsed, array(
                     'id' => $value->NO_KAB,
-                    'name' => $value->NAMA_KAB
+                    'nama' => $value->NAMA_KAB
                 ));
             }
         }
@@ -282,7 +282,7 @@ class Master extends Utility
             foreach ($json_object as $key => $value) {
                 array_push($parsed, array(
                     'id' => $value->NO_KEC,
-                    'name' => $value->NAMA_KEC
+                    'nama' => $value->NAMA_KEC
                 ));
             }
         }
@@ -321,7 +321,7 @@ class Master extends Utility
             foreach ($json_object as $key => $value) {
                 array_push($parsed, array(
                     'id' => $value->NO_KEL,
-                    'name' => $value->NAMA_KEL
+                    'nama' => $value->NAMA_KEL
                 ));
             }
         }
