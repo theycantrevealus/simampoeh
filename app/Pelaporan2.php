@@ -52,10 +52,6 @@ class Pelaporan2 extends Utility
                 return self::tambah_aktakawin($parameter);
                 break;
 
-            case 'tambah_aktacerai':
-                return self::tambah_aktacerai($parameter);
-                break;
-
             case 'tambah_aktamati':
                 return self::tambah_aktamati($parameter);
                 break;
@@ -211,42 +207,6 @@ class Pelaporan2 extends Utility
 
 
             if($AktaSah['response_result'] > 0) {
-                /*$CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
-                'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
-            ))
-                ->where(array(
-                    'pelayanan_jenis_syarat.status_hapus' => '= ?',
-                    'AND',
-                    'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
-                ), array(
-                    'N', $jenis
-                ))
-                ->execute();
-
-            foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
-                $berkas = "fupload_$CSV[id]";
-
-                $acak			 = rand(1,99);
-                $lokasi_file     = $_FILES[$berkas]['tmp_name'];
-                $tipe_file       = $_FILES[$berkas]['type'];
-                $nama_file       = $_FILES[$berkas]['name'];
-                $nama_file_unik  = $uid_data.$acak.$nama_file;
-
-                if ($_FILES[$berkas]["error"] > 0 OR empty($lokasi_file)){
-                    $nama_file_unik = "";
-                }
-
-                else{
-                    UploadBerkasAktaEsah($nama_file_unik, $lokasi_file);
-                }
-
-                $sql="INSERT INTO aktaesah_berkas (uid_aktaesah, nama_berkas, berkas) VALUES  ('$uid_data', '$r[nama]', '$nama_file_unik')";
-                pg_query($conn,$sql);
-            }*/
-
-
-
-
                 $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
                     'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
                 ))
@@ -529,99 +489,85 @@ class Pelaporan2 extends Utility
             ))
                 ->execute();
 
-
-            $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
-                'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
-            ))
-                ->where(array(
-                    'pelayanan_jenis_syarat.status_hapus' => '= ?',
-                    'AND',
-                    'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
-                ), array(
-                    'N', $jenis
-                ))
-                ->execute();
-
-            foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
-
-                //Check Android Upload Partial
-                $AndrTemp = self::$query->select('android_file_coordinator', array(
-                    'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
-
+            if($AngkatAnak['response_result'] > 0) {
+                $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
+                    'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
                 ))
                     ->where(array(
-                        'android_file_coordinator.uid_foreign' => 'IS NULL',
+                        'pelayanan_jenis_syarat.status_hapus' => '= ?',
                         'AND',
-                        'android_file_coordinator.type' => '= ?',
-                        'AND',
-                        'android_file_coordinator.member' => '= ?',
-                        'AND',
-                        'android_file_coordinator.status' => '= ?'
+                        'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
                     ), array(
-                        $CSV['id'], $UserData['data']->uid, 'N'
+                        'N', $jenis
                     ))
-                    ->order(array(
-                        'created_at' => 'DESC'
-                    ))
-                    ->limit(1)
                     ->execute();
 
-                if(count($AndrTemp['response_data']) > 0) {
-                    $berkas = "fupload_$CSV[id]";
+                foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
 
-                    $acak			 = rand(1,99);
-                    $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
-                    $tipe_file       = $_FILES[$berkas]['type'];
-                    $nama_file       = $AndrTemp['response_data'][0]['file_name'];
-                    $nama_file_unik  = $uid_data.$acak.$nama_file;
+                    //Check Android Upload Partial
+                    $AndrTemp = self::$query->select('android_file_coordinator', array(
+                        'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
 
-                    $vdir_upload = 'berkas/aktaangkat/';
-                    if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
-                        mkdir($vdir_upload);
-                    }
-
-                    $vfile_upload = $vdir_upload . $nama_file_unik;
-                    if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
-                        //Reset Temp Data
-                        $AndrTempStat = self::$query->update('android_file_coordinator', array(
-                            'uid_foreign' => $uid_data,
-                            'dir_to' => $vfile_upload,
-                            'status' => 'D'
+                    ))
+                        ->where(array(
+                            'android_file_coordinator.uid_foreign' => 'IS NULL',
+                            'AND',
+                            'android_file_coordinator.type' => '= ?',
+                            'AND',
+                            'android_file_coordinator.member' => '= ?',
+                            'AND',
+                            'android_file_coordinator.status' => '= ?'
+                        ), array(
+                            $CSV['id'], $UserData['data']->uid, 'N'
                         ))
-                            ->where(array(
-                                'android_file_coordinator.id' => '= ?'
-                            ), array(
-                                $AndrTemp['response_data'][0]['id']
+                        ->order(array(
+                            'created_at' => 'DESC'
+                        ))
+                        ->limit(1)
+                        ->execute();
+
+                    if(count($AndrTemp['response_data']) > 0) {
+                        $berkas = "fupload_$CSV[id]";
+
+                        $acak			 = rand(1,99);
+                        $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
+                        $tipe_file       = $_FILES[$berkas]['type'];
+                        $nama_file       = $AndrTemp['response_data'][0]['file_name'];
+                        $nama_file_unik  = $uid_data.$acak.$nama_file;
+
+                        $vdir_upload = 'berkas/aktaangkat/';
+                        if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
+                            mkdir($vdir_upload);
+                        }
+
+                        $vfile_upload = $vdir_upload . $nama_file_unik;
+                        if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
+                            //Reset Temp Data
+                            $AndrTempStat = self::$query->update('android_file_coordinator', array(
+                                'uid_foreign' => $uid_data,
+                                'dir_to' => $vfile_upload,
+                                'status' => 'D'
                             ))
+                                ->where(array(
+                                    'android_file_coordinator.id' => '= ?'
+                                ), array(
+                                    $AndrTemp['response_data'][0]['id']
+                                ))
+                                ->execute();
+                        }
+
+                        $AktaAngkatBerkas = self::$query->insert('aktaangkat_berkas', array(
+                            'uid_aktaangkat' => $uid_data,
+                            'nama_berkas' => $CSV['nama'],
+                            'berkas' => $nama_file_unik
+                        ))
                             ->execute();
                     }
-
-                    $AktaAngkatBerkas = self::$query->insert('aktaangkat_berkas', array(
-                        'uid_aktaangkat' => $uid_data,
-                        'nama_berkas' => $CSV['nama'],
-                        'berkas' => $nama_file_unik
-                    ))
-                        ->execute();
                 }
-            }
 
 
-            $kode = parent::acak(6);
-
-            $Pengajuan = self::$query->select('pengajuan', array(
-                'uid'
-            ))
-                ->where(array(
-                    'pengajuan.kode' => '= ?',
-                    'AND',
-                    'pengajuan.status_hapus' => '= ?'
-                ), array(
-                    $kode, 'N'
-                ))
-                ->execute();
-
-            if(count($Pengajuan['response_data']) > 0) {
                 $kode = parent::acak(6);
+
                 $Pengajuan = self::$query->select('pengajuan', array(
                     'uid'
                 ))
@@ -636,89 +582,110 @@ class Pelaporan2 extends Utility
 
                 if(count($Pengajuan['response_data']) > 0) {
                     $kode = parent::acak(6);
+                    $Pengajuan = self::$query->select('pengajuan', array(
+                        'uid'
+                    ))
+                        ->where(array(
+                            'pengajuan.kode' => '= ?',
+                            'AND',
+                            'pengajuan.status_hapus' => '= ?'
+                        ), array(
+                            $kode, 'N'
+                        ))
+                        ->execute();
+
+                    if(count($Pengajuan['response_data']) > 0) {
+                        $kode = parent::acak(6);
+                    }
                 }
-            }
 
-            $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
-            $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
-            $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
-            $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
-            $alamat = parent::anti_injection($parameter['alamat']);
-            $kode_pos = parent::anti_injection($parameter['kode_pos']);
+                $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
+                $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
+                $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
+                $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
+                $alamat = parent::anti_injection($parameter['alamat']);
+                $kode_pos = parent::anti_injection($parameter['kode_pos']);
 
 
-            $a=explode("|",$id_provinsi);
-            $id_provinsi=$a[0];
-            $nama_provinsi=$a[1];
+                $a=explode("|",$id_provinsi);
+                $id_provinsi=$a[0];
+                $nama_provinsi=$a[1];
 
-            $a=explode("|",$id_kabupaten);
-            $id_kabupaten=$a[0];
-            $nama_kabupaten=$a[1];
+                $a=explode("|",$id_kabupaten);
+                $id_kabupaten=$a[0];
+                $nama_kabupaten=$a[1];
 
-            $a=explode("|",$id_kecamatan);
-            $id_kecamatan=$a[0];
-            $nama_kecamatan=$a[1];
+                $a=explode("|",$id_kecamatan);
+                $id_kecamatan=$a[0];
+                $nama_kecamatan=$a[1];
 
-            $a=explode("|",$id_kelurahan);
-            $id_kelurahan=$a[0];
-            $nama_kelurahan=$a[1];
+                $a=explode("|",$id_kelurahan);
+                $id_kelurahan=$a[0];
+                $nama_kelurahan=$a[1];
 
-            if($kirim=='Y'){
-                $TambahPengajuan = self::$query->insert('pengajuan', array(
-                    'id_pelayanan' => $parameter['id_pelayanan'],
-                    'uid_member' => $UserData['data']->uid,
-                    'waktu_input' => parent::format_date(),
-                    'id_status' => 1,
-                    'uid_pengajuan_data' => $uid_data,
-                    'jenis' => $jenis,
-                    'kode' => $kode,
-                    'id_provinsi' => $id_provinsi,
-                    'nama_provinsi' => $nama_provinsi,
-                    'id_kabupaten' => $id_kabupaten,
-                    'nama_kabupaten' => $nama_kabupaten,
-                    'id_kecamatan' => $id_kecamatan,
-                    'nama_kecamatan' => $nama_kecamatan,
-                    'id_kelurahan' => $id_kelurahan,
-                    'nama_kelurahan' => $nama_kelurahan,
-                    'alamat_kirim' => $alamat,
-                    'kode_pos' => $kode_pos,
-                    'dikirim' => $kirim,
+                if($kirim=='Y'){
+                    $TambahPengajuan = self::$query->insert('pengajuan', array(
+                        'id_pelayanan' => $parameter['id_pelayanan'],
+                        'uid_member' => $UserData['data']->uid,
+                        'waktu_input' => parent::format_date(),
+                        'id_status' => 1,
+                        'uid_pengajuan_data' => $uid_data,
+                        'jenis' => $jenis,
+                        'kode' => $kode,
+                        'id_provinsi' => $id_provinsi,
+                        'nama_provinsi' => $nama_provinsi,
+                        'id_kabupaten' => $id_kabupaten,
+                        'nama_kabupaten' => $nama_kabupaten,
+                        'id_kecamatan' => $id_kecamatan,
+                        'nama_kecamatan' => $nama_kecamatan,
+                        'id_kelurahan' => $id_kelurahan,
+                        'nama_kelurahan' => $nama_kelurahan,
+                        'alamat_kirim' => $alamat,
+                        'kode_pos' => $kode_pos,
+                        'dikirim' => $kirim,
+                    ))
+                        ->returning('id')
+                        ->execute();
+                }
+                else{
+                    $TambahPengajuan = self::$query->insert('pengajuan', array(
+                        'id_pelayanan' => $parameter['id_pelayanan'],
+                        'uid_member' => $UserData['data']->uid,
+                        'waktu_input' => parent::format_date(),
+                        'id_status' => 1,
+                        'uid_pengajuan_data' => $uid_data,
+                        'jenis' => $jenis,
+                        'kode' => $kode,
+                        'dikirim' => $kirim,
+                    ))
+                        ->returning('id')
+                        ->execute();
+                }
+
+                $id_pengajuan = $TambahPengajuan['response_unique'];
+
+                $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
+                    'id_pengajuan' => $id_pengajuan,
+                    'waktu' => parent::format_date(),
+                    'id_status' => 1
                 ))
-                    ->returning('id')
                     ->execute();
+
+                $jenis = parent::encrypt($jenis);
+                $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Pengangkatan Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
+                parent::kirim_wa($UserData['data']->no_handphone, $message);
+                $parameterBuilder = array(
+                    'response_message' => $message,
+                    'response_result' => $TambahPengajuan['response_result'],
+                    'response_data' => array($jenis)
+                );
+            } else {
+                $parameterBuilder = array(
+                    'response_message' => 'Gagal tambah permohonan',
+                    'response_result' => 0,
+                    'response_data' => $AngkatAnak
+                );
             }
-            else{
-                $TambahPengajuan = self::$query->insert('pengajuan', array(
-                    'id_pelayanan' => $parameter['id_pelayanan'],
-                    'uid_member' => $UserData['data']->uid,
-                    'waktu_input' => parent::format_date(),
-                    'id_status' => 1,
-                    'uid_pengajuan_data' => $uid_data,
-                    'jenis' => $jenis,
-                    'kode' => $kode,
-                    'dikirim' => $kirim,
-                ))
-                    ->returning('id')
-                    ->execute();
-            }
-
-            $id_pengajuan = $TambahPengajuan['response_unique'];
-
-            $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
-                'id_pengajuan' => $id_pengajuan,
-                'waktu' => parent::format_date(),
-                'id_status' => 1
-            ))
-                ->execute();
-
-            $jenis = parent::encrypt($jenis);
-            $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Pengangkatan Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
-            parent::kirim_wa($UserData['data']->no_handphone, $message);
-            $parameterBuilder = array(
-                'response_message' => $message,
-                'response_result' => $TambahPengajuan['response_result'],
-                'response_data' => array($jenis)
-            );
         } else {
             $parameterBuilder = array(
                 'response_message' => $hasil['response_package']['response_message'],
@@ -791,124 +758,47 @@ class Pelaporan2 extends Utility
             ))
                 ->execute();
 
-            $KKAnak = self::$query->insert('kartukk_anak',  array(
-                'nik' => $nik,
-                'nama' => $parameter['nama'],
-                'uid_kartukk' => $uid_data,
-                'shdk' => $shdk
-            ))
-                ->execute();
-
-
-            /*$CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
-                'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
-            ))
-                ->where(array(
-                    'pelayanan_jenis_syarat.status_hapus' => '= ?',
-                    'AND',
-                    'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
-                ), array(
-                    'N', $jenis
-                ))
-                ->execute();
-
-            foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
-                $berkas = "fupload_$CSV[id]";
-
-                $acak			 = rand(1,99);
-                $lokasi_file     = $_FILES[$berkas]['tmp_name'];
-                $tipe_file       = $_FILES[$berkas]['type'];
-                $nama_file       = $_FILES[$berkas]['name'];
-                $nama_file_unik  = $uid_data.$acak.$nama_file;
-
-                if ($_FILES[$berkas]["error"] > 0 OR empty($lokasi_file)){
-                    $nama_file_unik = "";
-                }
-
-                else{
-                    $vdir_upload = "../../berkas/kk/";
-                    $vfile_upload = $vdir_upload . $nama_file_unik;
-
-                    //Simpan gambar dalam ukuran sebenarnya
-                    move_uploaded_file($lokasi_file, $vfile_upload);
-                }
-
-                $KartuKKBerkas = self::$query->insert('kartukk_berkas', array(
+            if($KartuKK['response_result'] > 0) {
+                $KKAnak = self::$query->insert('kartukk_anak',  array(
+                    'nik' => $nik,
+                    'nama' => $parameter['nama'],
                     'uid_kartukk' => $uid_data,
-                    'nama_berkas' => $CSV['nama'],
-                    'berkas' => $nama_file_unik
+                    'shdk' => $shdk
                 ))
                     ->execute();
-            }*/
 
 
-
-
-            //Revamp
-            $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
-                'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
-            ))
-                ->where(array(
-                    'pelayanan_jenis_syarat.status_hapus' => '= ?',
-                    'AND',
-                    'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
-                ), array(
-                    'N', $jenis
-                ))
-                ->execute();
-
-            foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
-
-                //Check Android Upload Partial
-                $AndrTemp = self::$query->select('android_file_coordinator', array(
-                    'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
-
+                /*$CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
+                    'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
                 ))
                     ->where(array(
-                        'android_file_coordinator.uid_foreign' => 'IS NULL',
+                        'pelayanan_jenis_syarat.status_hapus' => '= ?',
                         'AND',
-                        'android_file_coordinator.type' => '= ?',
-                        'AND',
-                        'android_file_coordinator.member' => '= ?',
-                        'AND',
-                        'android_file_coordinator.status' => '= ?'
+                        'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
                     ), array(
-                        $CSV['id'], $UserData['data']->uid, 'N'
+                        'N', $jenis
                     ))
-                    ->order(array(
-                        'created_at' => 'DESC'
-                    ))
-                    ->limit(1)
                     ->execute();
 
-                if(count($AndrTemp['response_data']) > 0) {
+                foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
                     $berkas = "fupload_$CSV[id]";
 
                     $acak			 = rand(1,99);
-                    $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
+                    $lokasi_file     = $_FILES[$berkas]['tmp_name'];
                     $tipe_file       = $_FILES[$berkas]['type'];
-                    $nama_file       = $AndrTemp['response_data'][0]['file_name'];
+                    $nama_file       = $_FILES[$berkas]['name'];
                     $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                    $vdir_upload = 'berkas/kk/';
-                    if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
-                        mkdir($vdir_upload);
+                    if ($_FILES[$berkas]["error"] > 0 OR empty($lokasi_file)){
+                        $nama_file_unik = "";
                     }
 
-                    $vfile_upload = $vdir_upload . $nama_file_unik;
-                    if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
-                        //Reset Temp Data
-                        $AndrTempStat = self::$query->update('android_file_coordinator', array(
-                            'uid_foreign' => $uid_data,
-                            'dir_to' => $vfile_upload,
-                            'status' => 'D'
-                        ))
-                            ->where(array(
-                                'android_file_coordinator.id' => '= ?'
-                            ), array(
-                                $AndrTemp['response_data'][0]['id']
-                            ))
-                            ->execute();
+                    else{
+                        $vdir_upload = "../../berkas/kk/";
+                        $vfile_upload = $vdir_upload . $nama_file_unik;
+
+                        //Simpan gambar dalam ukuran sebenarnya
+                        move_uploaded_file($lokasi_file, $vfile_upload);
                     }
 
                     $KartuKKBerkas = self::$query->insert('kartukk_berkas', array(
@@ -917,58 +807,122 @@ class Pelaporan2 extends Utility
                         'berkas' => $nama_file_unik
                     ))
                         ->execute();
-                }
-            }
+                }*/
 
 
 
 
-
-
-            if (isset($parameter['id_anggota'])){
-                $id_anggota = $parameter['id_anggota'];
-
-                $tambahan = explode(",",$id_anggota);
-
-                //print_r($tambahan);
-
-                foreach ($tambahan as $key => $value) {
-                    $nik_anggota = "";
-                    if (isset($parameter['nik-anggota-'.$value])){
-                        $nik_anggota = parent::anti_injection($parameter['nik-anggota-'.$value]);
-                    }
-
-                    $nama_anggota = strtoupper(parent::anti_injection($parameter['nama-anggota-'.$value]));
-                    $shdk_anggota = parent::anti_injection($parameter['shdk-anggota-'.$value]);
-
-                    $KKAnakS = self::$query->insert('kartukk_anak', array(
-                        'nik' => $nik_anggota,
-                        'nama' => $nama_anggota,
-                        'uid_kartukk' => $uid_data,
-                        'shdk' => $shdk_anggota
-                    ))
-                        ->execute();
-                }
-            }
-
-            /*----------------------------------------------------------*/
-
-            $kode = parent::acak(6);
-
-            $Pengajuan = self::$query->select('pengajuan', array(
-                'uid'
-            ))
-                ->where(array(
-                    'pengajuan.kode' => '= ?',
-                    'AND',
-                    'pengajuan.status_hapus' => '= ?'
-                ), array(
-                    $kode, 'N'
+                //Revamp
+                $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
+                    'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
                 ))
-                ->execute();
+                    ->where(array(
+                        'pelayanan_jenis_syarat.status_hapus' => '= ?',
+                        'AND',
+                        'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
+                    ), array(
+                        'N', $jenis
+                    ))
+                    ->execute();
 
-            if(count($Pengajuan['response_data']) > 0) {
+                foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
+
+                    //Check Android Upload Partial
+                    $AndrTemp = self::$query->select('android_file_coordinator', array(
+                        'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
+
+                    ))
+                        ->where(array(
+                            'android_file_coordinator.uid_foreign' => 'IS NULL',
+                            'AND',
+                            'android_file_coordinator.type' => '= ?',
+                            'AND',
+                            'android_file_coordinator.member' => '= ?',
+                            'AND',
+                            'android_file_coordinator.status' => '= ?'
+                        ), array(
+                            $CSV['id'], $UserData['data']->uid, 'N'
+                        ))
+                        ->order(array(
+                            'created_at' => 'DESC'
+                        ))
+                        ->limit(1)
+                        ->execute();
+
+                    if(count($AndrTemp['response_data']) > 0) {
+                        $berkas = "fupload_$CSV[id]";
+
+                        $acak			 = rand(1,99);
+                        $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
+                        $tipe_file       = $_FILES[$berkas]['type'];
+                        $nama_file       = $AndrTemp['response_data'][0]['file_name'];
+                        $nama_file_unik  = $uid_data.$acak.$nama_file;
+
+                        $vdir_upload = 'berkas/kk/';
+                        if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
+                            mkdir($vdir_upload);
+                        }
+
+                        $vfile_upload = $vdir_upload . $nama_file_unik;
+                        if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
+                            //Reset Temp Data
+                            $AndrTempStat = self::$query->update('android_file_coordinator', array(
+                                'uid_foreign' => $uid_data,
+                                'dir_to' => $vfile_upload,
+                                'status' => 'D'
+                            ))
+                                ->where(array(
+                                    'android_file_coordinator.id' => '= ?'
+                                ), array(
+                                    $AndrTemp['response_data'][0]['id']
+                                ))
+                                ->execute();
+                        }
+
+                        $KartuKKBerkas = self::$query->insert('kartukk_berkas', array(
+                            'uid_kartukk' => $uid_data,
+                            'nama_berkas' => $CSV['nama'],
+                            'berkas' => $nama_file_unik
+                        ))
+                            ->execute();
+                    }
+                }
+
+
+
+
+
+
+                if (isset($parameter['id_anggota'])){
+                    $id_anggota = $parameter['id_anggota'];
+
+                    $tambahan = explode(",",$id_anggota);
+
+                    //print_r($tambahan);
+
+                    foreach ($tambahan as $key => $value) {
+                        $nik_anggota = "";
+                        if (isset($parameter['nik-anggota-'.$value])){
+                            $nik_anggota = parent::anti_injection($parameter['nik-anggota-'.$value]);
+                        }
+
+                        $nama_anggota = strtoupper(parent::anti_injection($parameter['nama-anggota-'.$value]));
+                        $shdk_anggota = parent::anti_injection($parameter['shdk-anggota-'.$value]);
+
+                        $KKAnakS = self::$query->insert('kartukk_anak', array(
+                            'nik' => $nik_anggota,
+                            'nama' => $nama_anggota,
+                            'uid_kartukk' => $uid_data,
+                            'shdk' => $shdk_anggota
+                        ))
+                            ->execute();
+                    }
+                }
+
+                /*----------------------------------------------------------*/
+
                 $kode = parent::acak(6);
+
                 $Pengajuan = self::$query->select('pengajuan', array(
                     'uid'
                 ))
@@ -983,89 +937,110 @@ class Pelaporan2 extends Utility
 
                 if(count($Pengajuan['response_data']) > 0) {
                     $kode = parent::acak(6);
+                    $Pengajuan = self::$query->select('pengajuan', array(
+                        'uid'
+                    ))
+                        ->where(array(
+                            'pengajuan.kode' => '= ?',
+                            'AND',
+                            'pengajuan.status_hapus' => '= ?'
+                        ), array(
+                            $kode, 'N'
+                        ))
+                        ->execute();
+
+                    if(count($Pengajuan['response_data']) > 0) {
+                        $kode = parent::acak(6);
+                    }
                 }
-            }
 
-            $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
-            $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
-            $id_kecamatan = parent::anti_injection($parameter['id_kecamatan2']);
-            $id_kelurahan = parent::anti_injection($parameter['id_kelurahan2']);
-            $alamat = parent::anti_injection($parameter['alamat']);
-            $kode_pos = parent::anti_injection($parameter['kode_pos']);
+                $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
+                $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
+                $id_kecamatan = parent::anti_injection($parameter['id_kecamatan2']);
+                $id_kelurahan = parent::anti_injection($parameter['id_kelurahan2']);
+                $alamat = parent::anti_injection($parameter['alamat']);
+                $kode_pos = parent::anti_injection($parameter['kode_pos']);
 
 
-            $a=explode("|",$id_provinsi);
-            $id_provinsi=$a[0];
-            $nama_provinsi=$a[1];
+                $a=explode("|",$id_provinsi);
+                $id_provinsi=$a[0];
+                $nama_provinsi=$a[1];
 
-            $a=explode("|",$id_kabupaten);
-            $id_kabupaten=$a[0];
-            $nama_kabupaten=$a[1];
+                $a=explode("|",$id_kabupaten);
+                $id_kabupaten=$a[0];
+                $nama_kabupaten=$a[1];
 
-            $a=explode("|",$id_kecamatan);
-            $id_kecamatan=$a[0];
-            $nama_kecamatan=$a[1];
+                $a=explode("|",$id_kecamatan);
+                $id_kecamatan=$a[0];
+                $nama_kecamatan=$a[1];
 
-            $a=explode("|",$id_kelurahan);
-            $id_kelurahan=$a[0];
-            $nama_kelurahan=$a[1];
+                $a=explode("|",$id_kelurahan);
+                $id_kelurahan=$a[0];
+                $nama_kelurahan=$a[1];
 
-            if($kirim=='Y'){
-                $TambahPengajuan = self::$query->insert('pengajuan', array(
-                    'id_pelayanan' => $parameter['id_pelayanan'],
-                    'uid_member' => $UserData['data']->uid,
-                    'waktu_input' => parent::format_date(),
-                    'id_status' => 1,
-                    'uid_pengajuan_data' => $uid_data,
-                    'jenis' => $jenis,
-                    'kode' => $kode,
-                    'id_provinsi' => $id_provinsi,
-                    'nama_provinsi' => $nama_provinsi,
-                    'id_kabupaten' => $id_kabupaten,
-                    'nama_kabupaten' => $nama_kabupaten,
-                    'id_kecamatan' => $id_kecamatan,
-                    'nama_kecamatan' => $nama_kecamatan,
-                    'id_kelurahan' => $id_kelurahan,
-                    'nama_kelurahan' => $nama_kelurahan,
-                    'alamat_kirim' => $alamat,
-                    'kode_pos' => $kode_pos,
-                    'dikirim' => $kirim,
+                if($kirim=='Y'){
+                    $TambahPengajuan = self::$query->insert('pengajuan', array(
+                        'id_pelayanan' => $parameter['id_pelayanan'],
+                        'uid_member' => $UserData['data']->uid,
+                        'waktu_input' => parent::format_date(),
+                        'id_status' => 1,
+                        'uid_pengajuan_data' => $uid_data,
+                        'jenis' => $jenis,
+                        'kode' => $kode,
+                        'id_provinsi' => $id_provinsi,
+                        'nama_provinsi' => $nama_provinsi,
+                        'id_kabupaten' => $id_kabupaten,
+                        'nama_kabupaten' => $nama_kabupaten,
+                        'id_kecamatan' => $id_kecamatan,
+                        'nama_kecamatan' => $nama_kecamatan,
+                        'id_kelurahan' => $id_kelurahan,
+                        'nama_kelurahan' => $nama_kelurahan,
+                        'alamat_kirim' => $alamat,
+                        'kode_pos' => $kode_pos,
+                        'dikirim' => $kirim,
+                    ))
+                        ->returning('id')
+                        ->execute();
+                }
+                else{
+                    $TambahPengajuan = self::$query->insert('pengajuan', array(
+                        'id_pelayanan' => $parameter['id_pelayanan'],
+                        'uid_member' => $UserData['data']->uid,
+                        'waktu_input' => parent::format_date(),
+                        'id_status' => 1,
+                        'uid_pengajuan_data' => $uid_data,
+                        'jenis' => $jenis,
+                        'kode' => $kode,
+                        'dikirim' => $kirim,
+                    ))
+                        ->returning('id')
+                        ->execute();
+                }
+
+                $id_pengajuan = $TambahPengajuan['response_unique'];
+
+                $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
+                    'id_pengajuan' => $id_pengajuan,
+                    'waktu' => parent::format_date(),
+                    'id_status' => 1
                 ))
-                    ->returning('id')
                     ->execute();
+
+                $jenis = parent::encrypt($jenis);
+                $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Kartu Keluarga. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
+                parent::kirim_wa($UserData['data']->no_handphone, $message);
+                $parameterBuilder = array(
+                    'response_message' => $message,
+                    'response_result' => $TambahPengajuan['response_result'],
+                    'response_data' => array($jenis)
+                );
+            } else {
+                $parameterBuilder = array(
+                    'response_message' => 'Gagal tambah permohonan',
+                    'response_result' => 0,
+                    'response_data' => $KartuKK
+                );
             }
-            else{
-                $TambahPengajuan = self::$query->insert('pengajuan', array(
-                    'id_pelayanan' => $parameter['id_pelayanan'],
-                    'uid_member' => $UserData['data']->uid,
-                    'waktu_input' => parent::format_date(),
-                    'id_status' => 1,
-                    'uid_pengajuan_data' => $uid_data,
-                    'jenis' => $jenis,
-                    'kode' => $kode,
-                    'dikirim' => $kirim,
-                ))
-                    ->returning('id')
-                    ->execute();
-            }
-
-            $id_pengajuan = $TambahPengajuan['response_unique'];
-
-            $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
-                'id_pengajuan' => $id_pengajuan,
-                'waktu' => parent::format_date(),
-                'id_status' => 1
-            ))
-                ->execute();
-
-            $jenis = parent::encrypt($jenis);
-            $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Kartu Keluarga. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
-            parent::kirim_wa($UserData['data']->no_handphone, $message);
-            $parameterBuilder = array(
-                'response_message' => $message,
-                'response_result' => $TambahPengajuan['response_result'],
-                'response_data' => array($jenis)
-            );
 
         } else {
             $parameterBuilder = array(
@@ -1121,128 +1096,81 @@ class Pelaporan2 extends Utility
             ))
                 ->execute();
 
-            /*$CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
-                'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
-            ))
-                ->where(array(
-                    'pelayanan_jenis_syarat.status_hapus' => '= ?',
-                    'AND',
-                    'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
-                ), array(
-                    'N', $jenis
-                ))
-                ->execute();
-
-            foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
-                $berkas = "fupload_$CSV[id]";
-
-                $acak			 = rand(1,99);
-                $lokasi_file     = $_FILES[$berkas]['tmp_name'];
-                $tipe_file       = $_FILES[$berkas]['type'];
-                $nama_file       = $_FILES[$berkas]['name'];
-                $nama_file_unik  = $uid_data.$acak.$nama_file;
-
-                if ($_FILES[$berkas]["error"] > 0 OR empty($lokasi_file)){
-                    $nama_file_unik = "";
-                }
-
-                else{
-                    $vdir_upload = "../../berkas/ktp/";
-                    $vfile_upload = $vdir_upload . $nama_file_unik;
-
-                    //Simpan gambar dalam ukuran sebenarnya
-                    move_uploaded_file($lokasi_file, $vfile_upload);
-                }
-
-                $KartuKTPBerkas = self::$query->insert('kartuktp_berkas', array(
-                    'uid_kartuktp' => $uid_data,
-                    'nama_berkas' => $CSV['nama'],
-                    'berkas' => $nama_file_unik
-                ))
-                    ->execute();
-            }*/
-
-
-
-
-
-
-
-
-            $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
-                'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
-            ))
-                ->where(array(
-                    'pelayanan_jenis_syarat.status_hapus' => '= ?',
-                    'AND',
-                    'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
-                ), array(
-                    'N', $jenis
-                ))
-                ->execute();
-
-            foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
-
-                //Check Android Upload Partial
-                $AndrTemp = self::$query->select('android_file_coordinator', array(
-                    'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
-
+            if($KartuKTP['response_result'] > 0) {
+                $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
+                    'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
                 ))
                     ->where(array(
-                        'android_file_coordinator.uid_foreign' => 'IS NULL',
+                        'pelayanan_jenis_syarat.status_hapus' => '= ?',
                         'AND',
-                        'android_file_coordinator.type' => '= ?',
-                        'AND',
-                        'android_file_coordinator.member' => '= ?',
-                        'AND',
-                        'android_file_coordinator.status' => '= ?'
+                        'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
                     ), array(
-                        $CSV['id'], $UserData['data']->uid, 'N'
+                        'N', $jenis
                     ))
-                    ->order(array(
-                        'created_at' => 'DESC'
-                    ))
-                    ->limit(1)
                     ->execute();
 
-                if(count($AndrTemp['response_data']) > 0) {
-                    $berkas = "fupload_$CSV[id]";
+                foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
 
-                    $acak			 = rand(1,99);
-                    $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
-                    $tipe_file       = $_FILES[$berkas]['type'];
-                    $nama_file       = $AndrTemp['response_data'][0]['file_name'];
-                    $nama_file_unik  = $uid_data.$acak.$nama_file;
+                    //Check Android Upload Partial
+                    $AndrTemp = self::$query->select('android_file_coordinator', array(
+                        'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
 
-                    $vdir_upload = 'berkas/ktp/';
-                    if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
-                        mkdir($vdir_upload);
-                    }
-
-                    $vfile_upload = $vdir_upload . $nama_file_unik;
-                    if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
-                        //Reset Temp Data
-                        $AndrTempStat = self::$query->update('android_file_coordinator', array(
-                            'uid_foreign' => $uid_data,
-                            'dir_to' => $vfile_upload,
-                            'status' => 'D'
+                    ))
+                        ->where(array(
+                            'android_file_coordinator.uid_foreign' => 'IS NULL',
+                            'AND',
+                            'android_file_coordinator.type' => '= ?',
+                            'AND',
+                            'android_file_coordinator.member' => '= ?',
+                            'AND',
+                            'android_file_coordinator.status' => '= ?'
+                        ), array(
+                            $CSV['id'], $UserData['data']->uid, 'N'
                         ))
-                            ->where(array(
-                                'android_file_coordinator.id' => '= ?'
-                            ), array(
-                                $AndrTemp['response_data'][0]['id']
+                        ->order(array(
+                            'created_at' => 'DESC'
+                        ))
+                        ->limit(1)
+                        ->execute();
+
+                    if(count($AndrTemp['response_data']) > 0) {
+                        $berkas = "fupload_$CSV[id]";
+
+                        $acak			 = rand(1,99);
+                        $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
+                        $tipe_file       = $_FILES[$berkas]['type'];
+                        $nama_file       = $AndrTemp['response_data'][0]['file_name'];
+                        $nama_file_unik  = $uid_data.$acak.$nama_file;
+
+                        $vdir_upload = 'berkas/ktp/';
+                        if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
+                            mkdir($vdir_upload);
+                        }
+
+                        $vfile_upload = $vdir_upload . $nama_file_unik;
+                        if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
+                            //Reset Temp Data
+                            $AndrTempStat = self::$query->update('android_file_coordinator', array(
+                                'uid_foreign' => $uid_data,
+                                'dir_to' => $vfile_upload,
+                                'status' => 'D'
                             ))
+                                ->where(array(
+                                    'android_file_coordinator.id' => '= ?'
+                                ), array(
+                                    $AndrTemp['response_data'][0]['id']
+                                ))
+                                ->execute();
+                        }
+
+                        $KartuKTPBerkas = self::$query->insert('kartuktp_berkas', array(
+                            'uid_kartuktp' => $uid_data,
+                            'nama_berkas' => $CSV['nama'],
+                            'berkas' => $nama_file_unik
+                        ))
                             ->execute();
                     }
-
-                    $KartuKTPBerkas = self::$query->insert('kartuktp_berkas', array(
-                        'uid_kartuktp' => $uid_data,
-                        'nama_berkas' => $CSV['nama'],
-                        'berkas' => $nama_file_unik
-                    ))
-                        ->execute();
                 }
-            }
 
 
 
@@ -1253,22 +1181,8 @@ class Pelaporan2 extends Utility
 
 
 
-            $kode = parent::acak(6);
-
-            $Pengajuan = self::$query->select('pengajuan', array(
-                'uid'
-            ))
-                ->where(array(
-                    'pengajuan.kode' => '= ?',
-                    'AND',
-                    'pengajuan.status_hapus' => '= ?'
-                ), array(
-                    $kode, 'N'
-                ))
-                ->execute();
-
-            if(count($Pengajuan['response_data']) > 0) {
                 $kode = parent::acak(6);
+
                 $Pengajuan = self::$query->select('pengajuan', array(
                     'uid'
                 ))
@@ -1283,89 +1197,110 @@ class Pelaporan2 extends Utility
 
                 if(count($Pengajuan['response_data']) > 0) {
                     $kode = parent::acak(6);
+                    $Pengajuan = self::$query->select('pengajuan', array(
+                        'uid'
+                    ))
+                        ->where(array(
+                            'pengajuan.kode' => '= ?',
+                            'AND',
+                            'pengajuan.status_hapus' => '= ?'
+                        ), array(
+                            $kode, 'N'
+                        ))
+                        ->execute();
+
+                    if(count($Pengajuan['response_data']) > 0) {
+                        $kode = parent::acak(6);
+                    }
                 }
-            }
 
-            $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
-            $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
-            $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
-            $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
-            $alamat = parent::anti_injection($parameter['alamat']);
-            $kode_pos = parent::anti_injection($parameter['kode_pos']);
+                $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
+                $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
+                $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
+                $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
+                $alamat = parent::anti_injection($parameter['alamat']);
+                $kode_pos = parent::anti_injection($parameter['kode_pos']);
 
 
-            $a=explode("|",$id_provinsi);
-            $id_provinsi=$a[0];
-            $nama_provinsi=$a[1];
+                $a=explode("|",$id_provinsi);
+                $id_provinsi=$a[0];
+                $nama_provinsi=$a[1];
 
-            $a=explode("|",$id_kabupaten);
-            $id_kabupaten=$a[0];
-            $nama_kabupaten=$a[1];
+                $a=explode("|",$id_kabupaten);
+                $id_kabupaten=$a[0];
+                $nama_kabupaten=$a[1];
 
-            $a=explode("|",$id_kecamatan);
-            $id_kecamatan=$a[0];
-            $nama_kecamatan=$a[1];
+                $a=explode("|",$id_kecamatan);
+                $id_kecamatan=$a[0];
+                $nama_kecamatan=$a[1];
 
-            $a=explode("|",$id_kelurahan);
-            $id_kelurahan=$a[0];
-            $nama_kelurahan=$a[1];
+                $a=explode("|",$id_kelurahan);
+                $id_kelurahan=$a[0];
+                $nama_kelurahan=$a[1];
 
-            if($kirim=='Y') {
-                $TambahPengajuan = self::$query->insert('pengajuan', array(
-                    'id_pelayanan' => $parameter['id_pelayanan'],
-                    'uid_member' => $UserData['data']->uid,
-                    'waktu_input' => parent::format_date(),
-                    'id_status' => 1,
-                    'uid_pengajuan_data' => $uid_data,
-                    'jenis' => $jenis,
-                    'kode' => $kode,
-                    'id_provinsi' => $id_provinsi,
-                    'nama_provinsi' => $nama_provinsi,
-                    'id_kabupaten' => $id_kabupaten,
-                    'nama_kabupaten' => $nama_kabupaten,
-                    'id_kecamatan' => $id_kecamatan,
-                    'nama_kecamatan' => $nama_kecamatan,
-                    'id_kelurahan' => $id_kelurahan,
-                    'nama_kelurahan' => $nama_kelurahan,
-                    'alamat_kirim' => $alamat,
-                    'kode_pos' => $kode_pos,
-                    'dikirim' => $kirim,
+                if($kirim=='Y') {
+                    $TambahPengajuan = self::$query->insert('pengajuan', array(
+                        'id_pelayanan' => $parameter['id_pelayanan'],
+                        'uid_member' => $UserData['data']->uid,
+                        'waktu_input' => parent::format_date(),
+                        'id_status' => 1,
+                        'uid_pengajuan_data' => $uid_data,
+                        'jenis' => $jenis,
+                        'kode' => $kode,
+                        'id_provinsi' => $id_provinsi,
+                        'nama_provinsi' => $nama_provinsi,
+                        'id_kabupaten' => $id_kabupaten,
+                        'nama_kabupaten' => $nama_kabupaten,
+                        'id_kecamatan' => $id_kecamatan,
+                        'nama_kecamatan' => $nama_kecamatan,
+                        'id_kelurahan' => $id_kelurahan,
+                        'nama_kelurahan' => $nama_kelurahan,
+                        'alamat_kirim' => $alamat,
+                        'kode_pos' => $kode_pos,
+                        'dikirim' => $kirim,
+                    ))
+                        ->returning('id')
+                        ->execute();
+                }
+                else{
+                    $TambahPengajuan = self::$query->insert('pengajuan', array(
+                        'id_pelayanan' => $parameter['id_pelayanan'],
+                        'uid_member' => $UserData['data']->uid,
+                        'waktu_input' => parent::format_date(),
+                        'id_status' => 1,
+                        'uid_pengajuan_data' => $uid_data,
+                        'jenis' => $jenis,
+                        'kode' => $kode,
+                        'dikirim' => $kirim,
+                    ))
+                        ->returning('id')
+                        ->execute();
+                }
+
+                $id_pengajuan = $TambahPengajuan['response_unique'];
+
+                $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
+                    'id_pengajuan' => $id_pengajuan,
+                    'waktu' => parent::format_date(),
+                    'id_status' => 1
                 ))
-                    ->returning('id')
                     ->execute();
+
+                $jenis = parent::encrypt($jenis);
+                $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Kartu Tanda Penduduk. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
+                parent::kirim_wa($_SESSION['no_handphone'], $message);
+                $parameterBuilder = array(
+                    'response_message' => $message,
+                    'response_result' => $TambahPengajuan['response_result'],
+                    'response_data' => array($jenis)
+                );
+            } else {
+                $parameterBuilder = array(
+                    'response_message' => 'Gagal tambah permohonan',
+                    'response_result' => 0,
+                    'response_data' => $KartuKTP
+                );
             }
-            else{
-                $TambahPengajuan = self::$query->insert('pengajuan', array(
-                    'id_pelayanan' => $parameter['id_pelayanan'],
-                    'uid_member' => $UserData['data']->uid,
-                    'waktu_input' => parent::format_date(),
-                    'id_status' => 1,
-                    'uid_pengajuan_data' => $uid_data,
-                    'jenis' => $jenis,
-                    'kode' => $kode,
-                    'dikirim' => $kirim,
-                ))
-                    ->returning('id')
-                    ->execute();
-            }
-
-            $id_pengajuan = $TambahPengajuan['response_unique'];
-
-            $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
-                'id_pengajuan' => $id_pengajuan,
-                'waktu' => parent::format_date(),
-                'id_status' => 1
-            ))
-                ->execute();
-
-            $jenis = parent::encrypt($jenis);
-            $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Kartu Tanda Penduduk. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
-            parent::kirim_wa($_SESSION['no_handphone'], $message);
-            $parameterBuilder = array(
-                'response_message' => $message,
-                'response_result' => $TambahPengajuan['response_result'],
-                'response_data' => array($jenis)
-            );
         } else {
             $parameterBuilder = array(
                 'response_message' => $hasil['response_package']['response_message'],
@@ -1443,98 +1378,84 @@ class Pelaporan2 extends Utility
                 'jenis_kelahiran' => $jenis_kelahiran
             ))
                 ->execute();
-
-            $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
-                'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
-            ))
-                ->where(array(
-                    'pelayanan_jenis_syarat.status_hapus' => '= ?',
-                    'AND',
-                    'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
-                ), array(
-                    'N', $jenis
-                ))
-                ->execute();
-
-            foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
-
-                //Check Android Upload Partial
-                $AndrTemp = self::$query->select('android_file_coordinator', array(
-                    'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
-
+            if($AktaLahir['response_result'] > 0) {
+                $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
+                    'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
                 ))
                     ->where(array(
-                        'android_file_coordinator.uid_foreign' => 'IS NULL',
+                        'pelayanan_jenis_syarat.status_hapus' => '= ?',
                         'AND',
-                        'android_file_coordinator.type' => '= ?',
-                        'AND',
-                        'android_file_coordinator.member' => '= ?',
-                        'AND',
-                        'android_file_coordinator.status' => '= ?'
+                        'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
                     ), array(
-                        $CSV['id'], $UserData['data']->uid, 'N'
+                        'N', $jenis
                     ))
-                    ->order(array(
-                        'created_at' => 'DESC'
-                    ))
-                    ->limit(1)
                     ->execute();
 
-                if(count($AndrTemp['response_data']) > 0) {
-                    $berkas = "fupload_$CSV[id]";
+                foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
 
-                    $acak			 = rand(1,99);
-                    $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
-                    $tipe_file       = $_FILES[$berkas]['type'];
-                    $nama_file       = $AndrTemp['response_data'][0]['file_name'];
-                    $nama_file_unik  = $uid_data.$acak.$nama_file;
+                    //Check Android Upload Partial
+                    $AndrTemp = self::$query->select('android_file_coordinator', array(
+                        'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
 
-                    $vdir_upload = 'berkas/aktalahir/';
-                    if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
-                        mkdir($vdir_upload);
-                    }
-
-                    $vfile_upload = $vdir_upload . $nama_file_unik;
-                    if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
-                        //Reset Temp Data
-                        $AndrTempStat = self::$query->update('android_file_coordinator', array(
-                            'uid_foreign' => $uid_data,
-                            'dir_to' => $vfile_upload,
-                            'status' => 'D'
+                    ))
+                        ->where(array(
+                            'android_file_coordinator.uid_foreign' => 'IS NULL',
+                            'AND',
+                            'android_file_coordinator.type' => '= ?',
+                            'AND',
+                            'android_file_coordinator.member' => '= ?',
+                            'AND',
+                            'android_file_coordinator.status' => '= ?'
+                        ), array(
+                            $CSV['id'], $UserData['data']->uid, 'N'
                         ))
-                            ->where(array(
-                                'android_file_coordinator.id' => '= ?'
-                            ), array(
-                                $AndrTemp['response_data'][0]['id']
+                        ->order(array(
+                            'created_at' => 'DESC'
+                        ))
+                        ->limit(1)
+                        ->execute();
+
+                    if(count($AndrTemp['response_data']) > 0) {
+                        $berkas = "fupload_$CSV[id]";
+
+                        $acak			 = rand(1,99);
+                        $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
+                        $tipe_file       = $_FILES[$berkas]['type'];
+                        $nama_file       = $AndrTemp['response_data'][0]['file_name'];
+                        $nama_file_unik  = $uid_data.$acak.$nama_file;
+
+                        $vdir_upload = 'berkas/aktalahir/';
+                        if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
+                            mkdir($vdir_upload);
+                        }
+
+                        $vfile_upload = $vdir_upload . $nama_file_unik;
+                        if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
+                            //Reset Temp Data
+                            $AndrTempStat = self::$query->update('android_file_coordinator', array(
+                                'uid_foreign' => $uid_data,
+                                'dir_to' => $vfile_upload,
+                                'status' => 'D'
                             ))
+                                ->where(array(
+                                    'android_file_coordinator.id' => '= ?'
+                                ), array(
+                                    $AndrTemp['response_data'][0]['id']
+                                ))
+                                ->execute();
+                        }
+
+                        $AktaLahirBerkas = self::$query->insert('aktalahir_berkas', array(
+                            'uid_aktalahir' => $uid_data,
+                            'nama_berkas' => $CSV['nama'],
+                            'berkas' => $nama_file_unik
+                        ))
                             ->execute();
                     }
-
-                    $AktaLahirBerkas = self::$query->insert('aktalahir_berkas', array(
-                        'uid_aktalahir' => $uid_data,
-                        'nama_berkas' => $CSV['nama'],
-                        'berkas' => $nama_file_unik
-                    ))
-                        ->execute();
                 }
-            }
 
-            $kode = parent::acak(6);
-
-            $Pengajuan = self::$query->select('pengajuan', array(
-                'uid'
-            ))
-                ->where(array(
-                    'pengajuan.kode' => '= ?',
-                    'AND',
-                    'pengajuan.status_hapus' => '= ?'
-                ), array(
-                    $kode, 'N'
-                ))
-                ->execute();
-
-            if(count($Pengajuan['response_data']) > 0) {
                 $kode = parent::acak(6);
+
                 $Pengajuan = self::$query->select('pengajuan', array(
                     'uid'
                 ))
@@ -1549,89 +1470,110 @@ class Pelaporan2 extends Utility
 
                 if(count($Pengajuan['response_data']) > 0) {
                     $kode = parent::acak(6);
+                    $Pengajuan = self::$query->select('pengajuan', array(
+                        'uid'
+                    ))
+                        ->where(array(
+                            'pengajuan.kode' => '= ?',
+                            'AND',
+                            'pengajuan.status_hapus' => '= ?'
+                        ), array(
+                            $kode, 'N'
+                        ))
+                        ->execute();
+
+                    if(count($Pengajuan['response_data']) > 0) {
+                        $kode = parent::acak(6);
+                    }
                 }
-            }
 
-            $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
-            $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
-            $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
-            $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
-            $alamat = parent::anti_injection($parameter['alamat']);
-            $kode_pos = parent::anti_injection($parameter['kode_pos']);
-
-
-            $a=explode("|",$id_provinsi);
-            $id_provinsi=$a[0];
-            $nama_provinsi=$a[1];
-
-            $a=explode("|",$id_kabupaten);
-            $id_kabupaten=$a[0];
-            $nama_kabupaten=$a[1];
-
-            $a=explode("|",$id_kecamatan);
-            $id_kecamatan=$a[0];
-            $nama_kecamatan=$a[1];
-
-            $a=explode("|",$id_kelurahan);
-            $id_kelurahan=$a[0];
-            $nama_kelurahan=$a[1];
+                $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
+                $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
+                $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
+                $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
+                $alamat = parent::anti_injection($parameter['alamat']);
+                $kode_pos = parent::anti_injection($parameter['kode_pos']);
 
 
-            if($kirim=='Y') {
-                $TambahPengajuan = self::$query->insert('pengajuan', array(
-                    'id_pelayanan' => $parameter['id_pelayanan'],
-                    'uid_member' => $UserData['data']->uid,
-                    'waktu_input' => parent::format_date(),
-                    'id_status' => 1,
-                    'uid_pengajuan_data' => $uid_data,
-                    'jenis' => $jenis,
-                    'kode' => $kode,
-                    'id_provinsi' => $id_provinsi,
-                    'nama_provinsi' => $nama_provinsi,
-                    'id_kabupaten' => $id_kabupaten,
-                    'nama_kabupaten' => $nama_kabupaten,
-                    'id_kecamatan' => $id_kecamatan,
-                    'nama_kecamatan' => $nama_kecamatan,
-                    'id_kelurahan' => $id_kelurahan,
-                    'nama_kelurahan' => $nama_kelurahan,
-                    'alamat_kirim' => $alamat,
-                    'kode_pos' => $kode_pos,
-                    'dikirim' => $kirim,
+                $a=explode("|",$id_provinsi);
+                $id_provinsi=$a[0];
+                $nama_provinsi=$a[1];
+
+                $a=explode("|",$id_kabupaten);
+                $id_kabupaten=$a[0];
+                $nama_kabupaten=$a[1];
+
+                $a=explode("|",$id_kecamatan);
+                $id_kecamatan=$a[0];
+                $nama_kecamatan=$a[1];
+
+                $a=explode("|",$id_kelurahan);
+                $id_kelurahan=$a[0];
+                $nama_kelurahan=$a[1];
+
+
+                if($kirim=='Y') {
+                    $TambahPengajuan = self::$query->insert('pengajuan', array(
+                        'id_pelayanan' => $parameter['id_pelayanan'],
+                        'uid_member' => $UserData['data']->uid,
+                        'waktu_input' => parent::format_date(),
+                        'id_status' => 1,
+                        'uid_pengajuan_data' => $uid_data,
+                        'jenis' => $jenis,
+                        'kode' => $kode,
+                        'id_provinsi' => $id_provinsi,
+                        'nama_provinsi' => $nama_provinsi,
+                        'id_kabupaten' => $id_kabupaten,
+                        'nama_kabupaten' => $nama_kabupaten,
+                        'id_kecamatan' => $id_kecamatan,
+                        'nama_kecamatan' => $nama_kecamatan,
+                        'id_kelurahan' => $id_kelurahan,
+                        'nama_kelurahan' => $nama_kelurahan,
+                        'alamat_kirim' => $alamat,
+                        'kode_pos' => $kode_pos,
+                        'dikirim' => $kirim,
+                    ))
+                        ->returning('id')
+                        ->execute();
+                } else {
+                    $TambahPengajuan = self::$query->insert('pengajuan', array(
+                        'id_pelayanan' => $parameter['id_pelayanan'],
+                        'uid_member' => $UserData['data']->uid,
+                        'waktu_input' => parent::format_date(),
+                        'id_status' => 1,
+                        'uid_pengajuan_data' => $uid_data,
+                        'jenis' => $jenis,
+                        'kode' => $kode,
+                        'dikirim' => $kirim,
+                    ))
+                        ->returning('id')
+                        ->execute();
+                }
+
+                $id_pengajuan = $TambahPengajuan['response_unique'];
+
+                $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
+                    'id_pengajuan' => $id_pengajuan,
+                    'waktu' => parent::format_date(),
+                    'id_status' => 1
                 ))
-                    ->returning('id')
                     ->execute();
+
+                $jenis = parent::encrypt($jenis);
+                $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Kelahiran Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
+                parent::kirim_wa($_SESSION['no_handphone'], $message);
+                $parameterBuilder = array(
+                    'response_message' => $message,
+                    'response_result' => $TambahPengajuan['response_result'],
+                    'response_data' => array($jenis)
+                );
             } else {
-                $TambahPengajuan = self::$query->insert('pengajuan', array(
-                    'id_pelayanan' => $parameter['id_pelayanan'],
-                    'uid_member' => $UserData['data']->uid,
-                    'waktu_input' => parent::format_date(),
-                    'id_status' => 1,
-                    'uid_pengajuan_data' => $uid_data,
-                    'jenis' => $jenis,
-                    'kode' => $kode,
-                    'dikirim' => $kirim,
-                ))
-                    ->returning('id')
-                    ->execute();
+                $parameterBuilder = array(
+                    'response_message' => 'Gagal tambah permohonan',
+                    'response_result' => 0,
+                    'response_data' => $AktaLahir
+                );
             }
-
-            $id_pengajuan = $TambahPengajuan['response_unique'];
-
-            $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
-                'id_pengajuan' => $id_pengajuan,
-                'waktu' => parent::format_date(),
-                'id_status' => 1
-            ))
-                ->execute();
-
-            $jenis = parent::encrypt($jenis);
-            $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Kelahiran Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
-            parent::kirim_wa($_SESSION['no_handphone'], $message);
-            $parameterBuilder = array(
-                'response_message' => $message,
-                'response_result' => $TambahPengajuan['response_result'],
-                'response_data' => array($jenis)
-            );
         } else {
             $parameterBuilder = array(
                 'response_message' => $hasil['response_package']['response_message'],
@@ -1714,6 +1656,1250 @@ class Pelaporan2 extends Utility
                 ))
                     ->execute();
 
+                if($proceedAktaAku['response_result'] > 0) {
+                    $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
+                        'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
+                    ))
+                        ->where(array(
+                            'pelayanan_jenis_syarat.status_hapus' => '= ?',
+                            'AND',
+                            'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
+                        ), array(
+                            'N', $jenis
+                        ))
+                        ->execute();
+
+                    foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
+
+                        //Check Android Upload Partial
+                        $AndrTemp = self::$query->select('android_file_coordinator', array(
+                            'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
+
+                        ))
+                            ->where(array(
+                                'android_file_coordinator.uid_foreign' => 'IS NULL',
+                                'AND',
+                                'android_file_coordinator.type' => '= ?',
+                                'AND',
+                                'android_file_coordinator.member' => '= ?',
+                                'AND',
+                                'android_file_coordinator.status' => '= ?'
+                            ), array(
+                                $CSV['id'], $UserData['data']->uid, 'N'
+                            ))
+                            ->order(array(
+                                'created_at' => 'DESC'
+                            ))
+                            ->limit(1)
+                            ->execute();
+
+                        if(count($AndrTemp['response_data']) > 0) {
+                            $berkas = "fupload_$CSV[id]";
+
+                            $acak			 = rand(1,99);
+                            $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
+                            $tipe_file       = $_FILES[$berkas]['type'];
+                            $nama_file       = $AndrTemp['response_data'][0]['file_name'];
+                            $nama_file_unik  = $uid_data.$acak.$nama_file;
+
+                            $vdir_upload = 'berkas/aktaaku/';
+                            if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
+                                mkdir($vdir_upload);
+                            }
+
+                            $vfile_upload = $vdir_upload . $nama_file_unik;
+                            if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
+                                //Reset Temp Data
+                                $AndrTempStat = self::$query->update('android_file_coordinator', array(
+                                    'uid_foreign' => $uid_data,
+                                    'dir_to' => $vfile_upload,
+                                    'status' => 'D'
+                                ))
+                                    ->where(array(
+                                        'android_file_coordinator.id' => '= ?'
+                                    ), array(
+                                        $AndrTemp['response_data'][0]['id']
+                                    ))
+                                    ->execute();
+                            }
+
+                            $AktaLahirBerkas = self::$query->insert('aktaaku_berkas', array(
+                                'uid_aktaaku' => $uid_data,
+                                'nama_berkas' => $CSV['nama'],
+                                'berkas' => $nama_file_unik
+                            ))
+                                ->execute();
+                        }
+                    }
+
+                    $kode = parent::acak(6);
+
+                    $Pengajuan = self::$query->select('pengajuan', array(
+                        'uid'
+                    ))
+                        ->where(array(
+                            'pengajuan.kode' => '= ?',
+                            'AND',
+                            'pengajuan.status_hapus' => '= ?'
+                        ), array(
+                            $kode, 'N'
+                        ))
+                        ->execute();
+
+                    if(count($Pengajuan['response_data']) > 0) {
+                        $kode = parent::acak(6);
+                        $Pengajuan = self::$query->select('pengajuan', array(
+                            'uid'
+                        ))
+                            ->where(array(
+                                'pengajuan.kode' => '= ?',
+                                'AND',
+                                'pengajuan.status_hapus' => '= ?'
+                            ), array(
+                                $kode, 'N'
+                            ))
+                            ->execute();
+
+                        if(count($Pengajuan['response_data']) > 0) {
+                            $kode = parent::acak(6);
+                        }
+                    }
+
+
+                    $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
+                    $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
+                    $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
+                    $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
+                    $alamat = parent::anti_injection($parameter['alamat']);
+                    $kode_pos = parent::anti_injection($parameter['kode_pos']);
+
+
+                    $a=explode("|",$id_provinsi);
+                    $id_provinsi=$a[0];
+                    $nama_provinsi=$a[1];
+
+                    $a=explode("|",$id_kabupaten);
+                    $id_kabupaten=$a[0];
+                    $nama_kabupaten=$a[1];
+
+                    $a=explode("|",$id_kecamatan);
+                    $id_kecamatan=$a[0];
+                    $nama_kecamatan=$a[1];
+
+                    $a=explode("|",$id_kelurahan);
+                    $id_kelurahan=$a[0];
+                    $nama_kelurahan=$a[1];
+
+                    if($kirim=='Y'){
+                        $TambahPengajuan = self::$query->insert('pengajuan', array(
+                            'id_pelayanan' => $parameter['id_pelayanan'],
+                            'uid_member' => $UserData['data']->uid,
+                            'waktu_input' => parent::format_date(),
+                            'id_status' => 1,
+                            'uid_pengajuan_data' => $uid_data,
+                            'jenis' => $jenis,
+                            'kode' => $kode,
+                            'id_provinsi' => $id_provinsi,
+                            'nama_provinsi' => $nama_provinsi,
+                            'id_kabupaten' => $id_kabupaten,
+                            'nama_kabupaten' => $nama_kabupaten,
+                            'id_kecamatan' => $id_kecamatan,
+                            'nama_kecamatan' => $nama_kecamatan,
+                            'id_kelurahan' => $id_kelurahan,
+                            'nama_kelurahan' => $nama_kelurahan,
+                            'alamat_kirim' => $alamat,
+                            'kode_pos' => $kode_pos,
+                            'dikirim' => $kirim,
+                        ))
+                            ->returning('id')
+                            ->execute();
+                    }
+                    else{
+                        $TambahPengajuan = self::$query->insert('pengajuan', array(
+                            'id_pelayanan' => $parameter['id_pelayanan'],
+                            'uid_member' => $UserData['data']->uid,
+                            'waktu_input' => parent::format_date(),
+                            'id_status' => 1,
+                            'uid_pengajuan_data' => $uid_data,
+                            'jenis' => $jenis,
+                            'kode' => $kode,
+                            'dikirim' => $kirim,
+                        ))
+                            ->returning('id')
+                            ->execute();
+                    }
+
+                    $id_pengajuan= $TambahPengajuan['response_unique'];
+
+                    $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
+                        'id_pengajuan' => $id_pengajuan,
+                        'waktu' => parent::format_date(),
+                        'id_status' => 1
+                    ))
+                        ->execute();
+
+                    $jenis = parent::encrypt($jenis);
+
+                    $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Pengakuan Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
+
+                    parent::kirim_wa($_SESSION['no_handphone'], $message);
+
+                    $parameterBuilder = array(
+                        'response_message' => $message,
+                        'response_result' => $TambahPengajuan['response_result'],
+                        'response_data' => array($jenis)
+                    );
+                } else {
+                    $parameterBuilder = array(
+                        'response_message' => 'Gagal tambah permohonan',
+                        'response_result' => 0,
+                        'response_data' => $proceedAktaAku
+                    );
+                }
+            } else {
+                $jenis = parent::encrypt($parameter['jenis']);
+                header("location:tambah-aktaakuanak?jenis=$jenis");
+            }
+        } else {
+            $parameterBuilder = $hasil;
+        }
+
+        return $parameterBuilder;
+    }  //Todo : Samakan status query tambah permohonan dengan sahanak
+
+    private function tambah_aktakawin($parameter) {
+        $Authorization = new Authorization();
+        $UserData = $Authorization->readBearerToken($parameter['access_token']);
+
+        $organisasi_penghayat = parent::anti_injection(str_replace("'","''",$parameter['organisasi_penghayat']));
+        $badan_peradilan = parent::anti_injection(str_replace("'","''",$parameter['badan_peradilan']));
+        $nomor_pengadilan = parent::anti_injection(str_replace("'","''",$parameter['nomor_pengadilan']));
+        $nama_pemuka = parent::anti_injection(str_replace("'","''",$parameter['nama_pemuka']));
+        $izin_perwakilan = parent::anti_injection(str_replace("'","''",$parameter['izin_perwakilan']));
+
+        $tanggal_kawin = parent::anti_injection($parameter['tanggal_kawin']);
+        $id_agama = parent::anti_injection($parameter['id_agama']);
+        $tanggal_pengadilan = parent::anti_injection($parameter['tanggal_pengadilan']);
+        $jumlah_anak = parent::anti_injection($parameter['jumlah_anak']);
+
+        $jenis = parent::anti_injection($parameter['jenis']);
+
+        $kirim = parent::anti_injection($parameter['kirim']);
+
+
+        $nik_suami = parent::anti_injection(str_replace("'","''",$parameter['nik_suami']));
+        $nama_suami = parent::anti_injection(str_replace("'","''",$parameter['nama_suami']));
+        $nik_istri = parent::anti_injection(str_replace("'","''",$parameter['nik_istri']));
+        $nama_istri = parent::anti_injection(str_replace("'","''",$parameter['nama_istri']));
+        $nik_suami_ayah = parent::anti_injection(str_replace("'","''",$parameter['nik_suami_ayah']));
+        $nama_suami_ayah = parent::anti_injection(str_replace("'","''",$parameter['nama_suami_ayah']));
+        $nik_suami_ibu = parent::anti_injection(str_replace("'","''",$parameter['nik_suami__ibu']));
+        $nama_suami_ibu = parent::anti_injection(str_replace("'","''",$parameter['nama_suami_ibu']));
+        $nik_istri_ayah = parent::anti_injection(str_replace("'","''",$parameter['nik_istri_ayah']));
+        $nama_istri_ayah = parent::anti_injection(str_replace("'","''",$parameter['nama_istri_ayah']));
+        $nik_istri_ibu = parent::anti_injection(str_replace("'","''",$parameter['nik_istri_ibu']));
+        $nama_istri_ibu = parent::anti_injection(str_replace("'","''",$parameter['nama_istri_ibu']));
+        $nik_saksi_1 = parent::anti_injection(str_replace("'","''",$parameter['nik_saksi_1']));
+        $nama_saksi_1 = parent::anti_injection(str_replace("'","''",$parameter['nama_saksi_1']));
+        $nik_saksi_2 = parent::anti_injection(str_replace("'","''",$parameter['nik_saksi_2']));
+        $nama_saksi_2 = parent::anti_injection(str_replace("'","''",$parameter['nama_saksi_2']));
+
+
+        $uid_data = parent::gen_uuid();
+        if($parameter['tanggal_pengadilan']!='') {
+            $AktaKawin = self::$query->insert('aktakawin', array(
+                'uid' => $uid_data,
+                'waktu_input' => parent::format_date(),
+                'uid_member' => $UserData['data']->uid,
+                'tanggal_kawin' => $tanggal_kawin,
+                'id_agama' => $id_agama,
+                'organisasi_penghayat' => $organisasi_penghayat,
+                'badan_peradilan' => $badan_peradilan,
+                'nomor_pengadilan' => $nomor_pengadilan,
+                'tanggal_pengadilan' => $tanggal_pengadilan,
+                'nama_pemuka' => $nama_pemuka,
+                'izin_perwakilan' => $izin_perwakilan,
+                'jumlah_anak' => $jumlah_anak,
+                'nik_suami' => $nik_suami,
+                'nama_suami' => $nama_suami,
+                'nik_istri' => $nik_istri,
+                'nama_istri' => $nama_istri,
+                'nik_suami_ayah' => $nik_suami_ayah,
+                'nama_suami_ayah' => $nama_suami_ayah,
+                'nik_suami_ibu' => $nik_suami_ibu,
+                'nama_suami_ibu' => $nama_suami_ibu,
+                'nik_istri_ayah' => $nik_istri_ayah,
+                'nama_istri_ayah' => $nama_istri_ayah,
+                'nik_istri_ibu' => $nik_istri_ibu,
+                'nama_istri_ibu' => $nama_istri_ibu,
+                'nik_saksi_1' => $nik_saksi_1,
+                'nama_saksi_1' => $nama_saksi_1,
+                'nik_saksi_2' => $nik_saksi_2,
+                'nama_saksi_2' => $nama_saksi_2
+            ))
+                ->execute();
+            
+        }
+        else{
+            $AktaKawin = self::$query->insert('aktakawin', array(
+                'uid' => $uid_data,
+                'waktu_input' => parent::format_date(),
+                'uid_member' => '',
+                'tanggal_kawin' => $tanggal_kawin,
+                'id_agama' => $id_agama,
+                'organisasi_penghayat' => $organisasi_penghayat,
+                'badan_peradilan' => $badan_peradilan,
+                'nomor_pengadilan' => $nomor_pengadilan,
+                'tanggal_pengadilan' => $tanggal_pengadilan,
+                'nama_pemuka' => $nama_pemuka,
+                'izin_perwakilan' => $izin_perwakilan,
+                'jumlah_anak' => $jumlah_anak,
+                'nik_suami' => $nik_suami,
+                'nama_suami' => $nama_suami,
+                'nik_istri' => $nik_istri,
+                'nama_istri' => $nama_istri,
+                'nik_suami_ayah' => $nik_suami_ayah,
+                'nama_suami_ayah' => $nama_suami_ayah,
+                'nik_suami_ibu' => $nik_suami_ibu,
+                'nama_suami_ibu' => $nama_suami_ibu,
+                'nik_istri_ayah' => $nik_istri_ayah,
+                'nama_istri_ayah' => $nama_istri_ayah,
+                'nik_istri_ibu' => $nik_istri_ibu,
+                'nama_istri_ibu' => $nama_istri_ibu,
+                'nik_saksi_1' => $nik_saksi_1,
+                'nama_saksi_1' => $nama_saksi_1,
+                'nik_saksi_2' => $nik_saksi_2,
+                'nama_saksi_2' => $nama_saksi_2
+            ))
+                ->execute();
+        }
+
+        if($AktaKawin['response_result'] > 0) {
+            $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
+                'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
+            ))
+                ->where(array(
+                    'pelayanan_jenis_syarat.status_hapus' => '= ?',
+                    'AND',
+                    'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
+                ), array(
+                    'N', $jenis
+                ))
+                ->execute();
+
+            foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
+
+                //Check Android Upload Partial
+                $AndrTemp = self::$query->select('android_file_coordinator', array(
+                    'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
+
+                ))
+                    ->where(array(
+                        'android_file_coordinator.uid_foreign' => 'IS NULL',
+                        'AND',
+                        'android_file_coordinator.type' => '= ?',
+                        'AND',
+                        'android_file_coordinator.member' => '= ?',
+                        'AND',
+                        'android_file_coordinator.status' => '= ?'
+                    ), array(
+                        $CSV['id'], $UserData['data']->uid, 'N'
+                    ))
+                    ->order(array(
+                        'created_at' => 'DESC'
+                    ))
+                    ->limit(1)
+                    ->execute();
+
+                if(count($AndrTemp['response_data']) > 0) {
+                    $berkas = "fupload_$CSV[id]";
+
+                    $acak			 = rand(1,99);
+                    $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
+                    $tipe_file       = $_FILES[$berkas]['type'];
+                    $nama_file       = $AndrTemp['response_data'][0]['file_name'];
+                    $nama_file_unik  = $uid_data.$acak.$nama_file;
+
+                    $vdir_upload = 'berkas/aktakawin/';
+                    if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
+                        mkdir($vdir_upload);
+                    }
+
+                    $vfile_upload = $vdir_upload . $nama_file_unik;
+                    if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
+                        //Reset Temp Data
+                        $AndrTempStat = self::$query->update('android_file_coordinator', array(
+                            'uid_foreign' => $uid_data,
+                            'dir_to' => $vfile_upload,
+                            'status' => 'D'
+                        ))
+                            ->where(array(
+                                'android_file_coordinator.id' => '= ?'
+                            ), array(
+                                $AndrTemp['response_data'][0]['id']
+                            ))
+                            ->execute();
+                    }
+
+                    $AktaKawinBerkas = self::$query->insert('aktakawin_berkas', array(
+                        'uid_aktakawin' => $uid_data,
+                        'nama_berkas' => $CSV['nama'],
+                        'berkas' => $nama_file_unik
+                    ))
+                        ->execute();
+                }
+            }
+
+            $kode = parent::acak(6);
+
+            $Pengajuan = self::$query->select('pengajuan', array(
+                'uid'
+            ))
+                ->where(array(
+                    'pengajuan.kode' => '= ?',
+                    'AND',
+                    'pengajuan.status_hapus' => '= ?'
+                ), array(
+                    $kode, 'N'
+                ))
+                ->execute();
+
+            if(count($Pengajuan['response_data']) > 0) {
+                $kode = parent::acak(6);
+                $Pengajuan = self::$query->select('pengajuan', array(
+                    'uid'
+                ))
+                    ->where(array(
+                        'pengajuan.kode' => '= ?',
+                        'AND',
+                        'pengajuan.status_hapus' => '= ?'
+                    ), array(
+                        $kode, 'N'
+                    ))
+                    ->execute();
+
+                if(count($Pengajuan['response_data']) > 0) {
+                    $kode = parent::acak(6);
+                }
+            }
+
+            $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
+            $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
+            $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
+            $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
+            $alamat = parent::anti_injection($parameter['alamat']);
+            $kode_pos = parent::anti_injection($parameter['kode_pos']);
+
+
+            $a=explode("|",$id_provinsi);
+            $id_provinsi=$a[0];
+            $nama_provinsi=$a[1];
+
+            $a=explode("|",$id_kabupaten);
+            $id_kabupaten=$a[0];
+            $nama_kabupaten=$a[1];
+
+            $a=explode("|",$id_kecamatan);
+            $id_kecamatan=$a[0];
+            $nama_kecamatan=$a[1];
+
+            $a=explode("|",$id_kelurahan);
+            $id_kelurahan=$a[0];
+            $nama_kelurahan=$a[1];
+
+            if($kirim=='Y'){
+                $TambahPengajuan = self::$query->insert('pengajuan', array(
+                    'id_pelayanan' => $parameter['id_pelayanan'],
+                    'uid_member' => $UserData['data']->uid,
+                    'waktu_input' => parent::format_date(),
+                    'id_status' => 1,
+                    'uid_pengajuan_data' => $uid_data,
+                    'jenis' => $jenis,
+                    'kode' => $kode,
+                    'id_provinsi' => $id_provinsi,
+                    'nama_provinsi' => $nama_provinsi,
+                    'id_kabupaten' => $id_kabupaten,
+                    'nama_kabupaten' => $nama_kabupaten,
+                    'id_kecamatan' => $id_kecamatan,
+                    'nama_kecamatan' => $nama_kecamatan,
+                    'id_kelurahan' => $id_kelurahan,
+                    'nama_kelurahan' => $nama_kelurahan,
+                    'alamat_kirim' => $alamat,
+                    'kode_pos' => $kode_pos,
+                    'dikirim' => $kirim,
+                ))
+                    ->returning('id')
+                    ->execute();
+            }
+            else{
+                $TambahPengajuan = self::$query->insert('pengajuan', array(
+                    'id_pelayanan' => $parameter['id_pelayanan'],
+                    'uid_member' => $UserData['data']->uid,
+                    'waktu_input' => parent::format_date(),
+                    'id_status' => 1,
+                    'uid_pengajuan_data' => $uid_data,
+                    'jenis' => $jenis,
+                    'kode' => $kode,
+                    'dikirim' => $kirim,
+                ))
+                    ->returning('id')
+                    ->execute();
+            }
+
+            $id_pengajuan= $TambahPengajuan['response_unique'];
+
+            $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
+                'id_pengajuan' => $id_pengajuan,
+                'waktu' => parent::format_date(),
+                'id_status' => 1
+            ))
+                ->execute();
+
+            $jenis = parent::encrypt($jenis);
+
+            $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Perkawinan. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
+
+            parent::kirim_wa($_SESSION['no_handphone'], $message);
+
+            $parameterBuilder = array(
+                'response_message' => $message,
+                'response_result' => $TambahPengajuan['response_result'],
+                'response_data' => array($jenis)
+            );
+        } else {
+            $parameterBuilder = array(
+                'response_message' => 'Gagal tambah permohonan',
+                'response_result' => 0,
+                'response_data' => $AktaKawin
+            );
+        }
+
+        return $parameterBuilder;
+    }  //Todo : Samakan status query tambah permohonan dengan sahanak
+
+
+
+
+
+
+
+
+
+
+
+    /*private function tambah_aktacerai($parameter) {
+        $Authorization = new Authorization();
+        $UserData = $Authorization->readBearerToken($parameter['access_token']);
+
+        $jenis = parent::anti_injection($parameter['jenis']);
+
+        $tanggal_panitera = 'NULL';
+        if ($parameter['tanggal_panitera_pengadilan'] != ""){
+            $tanggal_panitera = "'" . $parameter['tanggal_panitera_pengadilan'] . "'";
+        }
+
+        $id_pengaju_perceraian = parent::anti_injection($parameter['id_pengaju_perceraian']);
+        $nomor_akta_kawin = parent::anti_injection($parameter['nomor_akta_kawin']);
+        $tanggal_akta_kawin = parent::anti_injection($parameter['tanggal_akta_kawin']);
+        $tempat_pencatatan_perkawinan = parent::anti_injection($parameter['tempat_pencatatan_perkawinan']);
+        $nomor_putusan_pengadilan = parent::anti_injection($parameter['nomor_putusan_pengadilan']);
+        $tanggal_putusan_pengadilan = parent::anti_injection($parameter['tanggal_putusan_pengadilan']);
+        $nama_dan_tingkat_peradilan = parent::anti_injection($parameter['nama_dan_tingkat_peradilan']);
+        $tempat_kedudukan_peradilan = parent::anti_injection($parameter['tempat_kedudukan_peradilan']);
+        $sebab = parent::anti_injection($parameter['sebab']);
+        $nama_lembaga_peradilan_penerbit = parent::anti_injection($parameter['nama_lembaga_peradilan_penerbit']);
+        $panitera_pengadilan_negri = parent::anti_injection($parameter['panitera_pengadilan_negri']);
+        $nomor_panitera_pengadilan = parent::anti_injection($parameter['nomor_panitera_pengadilan']);
+        $tanggal_panitera_pengadilan = parent::anti_injection($parameter['tanggal_panitera_pengadilan']);
+
+        $uid_data = parent::gen_uuid();
+        $AktaCerai = self::$query->insert('aktacerai', array(
+            'uid' => $uid_data,
+            'waktu_input' => parent::format_date(),
+            'uid_member' => $UserData['data']->uid,
+            'id_pengaju_perceraian' => $id_pengaju_perceraian,
+            'nomor_akta_kawin' => $nomor_akta_kawin,
+            'tanggal_akta_kawin' => $tanggal_akta_kawin,
+            'tempat_kawin' => $tempat_pencatatan_perkawinan,
+            'nomor_putusan_pengadilan' => $nomor_putusan_pengadilan,
+            'tanggal_putusan_pengadilan' => $tanggal_putusan_pengadilan,
+            'nama_peradilan' => $nama_tingkat_peradilan,
+            'tempat_peradilan' => $tempat_peradilan,
+            'id_alasan_cerai' => $id_alasan_cerai,
+            'nama_lembaga_peradilan_penerbit' => $sebab,
+            'panitera_pengadilan_negri' => $nama_lembaga_peradilan_penerbit,
+            'nomor_panitera' => $panitera_pengadilan_negri,
+            'tanggal_panitera' => $nomor_panitera_pengadilan,
+            'tanggal_melapor' => $tanggal_panitera,
+        ))
+            ->execute();
+
+        $sql="INSERT INTO aktacerai (, , , , , , , , , , , , , , , ) VALUES ('', '$]', '', '', '', '', '', '', '', '',  '', '','','','', ,'$waktu_sekarang') RETURNING uid";
+
+        //echo $sql;
+        $result=pg_query($conn,$sql);
+        $d=pg_fetch_array($result);
+        $uid_data=$d['uid'];
+
+        $tampil=pg_query($conn,"SELECT * FROM pelayanan_jenis_syarat WHERE status_hapus='N' AND id_pelayanan_jenis='$jenis'");
+        while($r=pg_fetch_array($tampil)){
+            $berkas = "fupload_$r[id]";
+
+            $acak			 = rand(1,99);
+            $lokasi_file     = $_FILES[$berkas]['tmp_name'];
+            $tipe_file       = $_FILES[$berkas]['type'];
+            $nama_file       = $_FILES[$berkas]['name'];
+            $nama_file_unik  = $uid_data.$acak.$nama_file;
+
+            if ($_FILES[$berkas]["error"] > 0 OR empty($lokasi_file)){
+                $nama_file_unik = "";
+            }
+
+            else{
+                UploadBerkasAktaCerai($nama_file_unik, $lokasi_file);
+            }
+
+            $sql="INSERT INTO aktacerai_berkas (uid_aktacerai, nama_berkas, berkas) VALUES  ('$uid_data', '$r[nama]', '$nama_file_unik')";
+            pg_query($conn,$sql);
+        }
+
+        $c=pg_fetch_array(pg_query($conn,"SELECT COUNT(uid) AS ada FROM pengajuan WHERE kode='$kode' AND status_hapus='N'"));
+        if($c['ada']!=''){
+            $kode = acak(6);
+            $c=pg_fetch_array(pg_query($conn,"SELECT COUNT(uid) AS ada FROM pengajuan WHERE kode='$kode' AND status_hapus='N'"));
+            if($c['ada']!=''){
+                $kode = acak(6);
+            }
+        }
+
+        $sql="INSERT INTO pengajuan (id_pelayanan, uid_member, waktu_input, id_status, uid_pengajuan_data, jenis, kode) VALUES ('6', '$_SESSION[login_user]', '$waktu_sekarang', '1',  '$uid_data', '$jenis', '$kode') RETURNING id";
+        $result=pg_query($conn,$sql);
+        $d=pg_fetch_array($result);
+        $id_pengajuan=$d['id'];
+
+        $sql="INSERT INTO pengajuan_log(id_pengajuan, waktu, id_status) VALUES ('$id_pengajuan', '$waktu_sekarang', '1')";
+        pg_query($conn,$sql);
+    }*/
+
+    private function tambah_aktamati($parameter) {
+        $Authorization = new Authorization();
+        $UserData = $Authorization->readBearerToken($parameter['access_token']);
+
+        $hubungan = parent::anti_injection($parameter['hubungan']);
+        $nik = parent::anti_injection($parameter['nik']);
+        $nama = parent::anti_injection($parameter['nama']);
+        $id_jenkel = parent::anti_injection($parameter['id_jenkel']);
+        $tempat_lahir = parent::anti_injection($parameter['tempat_lahir']);
+        $tanggal_lahir = parent::anti_injection($parameter['tanggal_lahir']);
+        $id_agama = parent::anti_injection($parameter['id_agama']);
+        $id_kewarganegaraan = parent::anti_injection($parameter['id_kewarganegaraan']);
+        $alamat = parent::anti_injection($parameter['alamat']);
+        $rt = parent::anti_injection($parameter['rt']);
+        $rw = parent::anti_injection($parameter['rw']);
+        $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
+        $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
+        $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
+        $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
+
+        $a=explode("|",$id_provinsi);
+        $id_provinsi=$a[0];
+
+        $a=explode("|",$id_kabupaten);
+        $id_kabupaten=$a[0];
+
+        $a=explode("|",$id_kecamatan);
+        $id_kecamatan=$a[0];
+
+        $a=explode("|",$id_kelurahan);
+        $id_kelurahan=$a[0];
+
+        $kodepos = parent::anti_injection($parameter['kodepos']);
+        $telepon = parent::anti_injection($parameter['telepon']);
+        $tanggal_meninggal = parent::anti_injection($parameter['tanggal_meninggal']);
+        $jam_meninggal = parent::anti_injection($parameter['jam_meninggal']);
+        $tempat_meninggal = parent::anti_injection($parameter['tempat_meninggal']);
+        $penyebab_meninggal = parent::anti_injection($parameter['penyebab_meninggal']);
+        $no_handphone = parent::anti_injection($parameter['no_handphone']);
+
+        $jenis = parent::anti_injection($parameter['jenis']);
+        $kirim = parent::anti_injection($parameter['kirim']);
+        $uid_data = parent::gen_uuid();
+        $AktaMati = self::$query->insert('aktamati', array(
+            'uid' => $uid_data,
+            'waktu_input' => parent::format_date(),
+            'uid_member' => $UserData['data']->uid,
+            'hubungan' => $hubungan,
+            'nik' => $nik,
+            'nama' => $nama,
+            'id_jenkel' => $id_jenkel,
+            'tempat_lahir' => $tempat_lahir,
+            'tanggal_lahir' => $tanggal_lahir,
+            'id_agama' => $id_agama,
+            'id_kewarganegaraan' => $id_kewarganegaraan,
+            'alamat' => $alamat,
+            'rt' => $rt,
+            'rw' => $rw,
+            'id_provinsi' => $id_provinsi,
+            'id_kabupaten' => $id_kabupaten,
+            'id_kecamatan' => $id_kecamatan,
+            'id_kelurahan' => $id_kelurahan,
+            'kodepos' => $kodepos,
+            'telepon' => $telepon,
+            'tanggal_meninggal' => $tanggal_meninggal,
+            'jam_meninggal' => $jam_meninggal,
+            'tempat_meninggal' => $tempat_meninggal,
+            'penyebab_meninggal' => $penyebab_meninggal,
+            'no_handphone' => $no_handphone
+        ))
+            ->execute();
+
+        if($AktaMati['response_result'] > 0) {
+            $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
+                'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
+            ))
+                ->where(array(
+                    'pelayanan_jenis_syarat.status_hapus' => '= ?',
+                    'AND',
+                    'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
+                ), array(
+                    'N', $jenis
+                ))
+                ->execute();
+
+            foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
+
+                //Check Android Upload Partial
+                $AndrTemp = self::$query->select('android_file_coordinator', array(
+                    'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
+
+                ))
+                    ->where(array(
+                        'android_file_coordinator.uid_foreign' => 'IS NULL',
+                        'AND',
+                        'android_file_coordinator.type' => '= ?',
+                        'AND',
+                        'android_file_coordinator.member' => '= ?',
+                        'AND',
+                        'android_file_coordinator.status' => '= ?'
+                    ), array(
+                        $CSV['id'], $UserData['data']->uid, 'N'
+                    ))
+                    ->order(array(
+                        'created_at' => 'DESC'
+                    ))
+                    ->limit(1)
+                    ->execute();
+
+                if(count($AndrTemp['response_data']) > 0) {
+                    $berkas = "fupload_$CSV[id]";
+
+                    $acak			 = rand(1,99);
+                    $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
+                    $tipe_file       = $_FILES[$berkas]['type'];
+                    $nama_file       = $AndrTemp['response_data'][0]['file_name'];
+                    $nama_file_unik  = $uid_data.$acak.$nama_file;
+
+                    $vdir_upload = 'berkas/aktamati/';
+                    if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
+                        mkdir($vdir_upload);
+                    }
+
+                    $vfile_upload = $vdir_upload . $nama_file_unik;
+                    if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
+                        //Reset Temp Data
+                        $AndrTempStat = self::$query->update('android_file_coordinator', array(
+                            'uid_foreign' => $uid_data,
+                            'dir_to' => $vfile_upload,
+                            'status' => 'D'
+                        ))
+                            ->where(array(
+                                'android_file_coordinator.id' => '= ?'
+                            ), array(
+                                $AndrTemp['response_data'][0]['id']
+                            ))
+                            ->execute();
+                    }
+
+                    $AktaMatiBerkas = self::$query->insert('aktamati_berkas', array(
+                        'uid_aktamati' => $uid_data,
+                        'nama_berkas' => $CSV['nama'],
+                        'berkas' => $nama_file_unik
+                    ))
+                        ->execute();
+                }
+            }
+
+            $kode = parent::acak(6);
+
+            $Pengajuan = self::$query->select('pengajuan', array(
+                'uid'
+            ))
+                ->where(array(
+                    'pengajuan.kode' => '= ?',
+                    'AND',
+                    'pengajuan.status_hapus' => '= ?'
+                ), array(
+                    $kode, 'N'
+                ))
+                ->execute();
+
+            if(count($Pengajuan['response_data']) > 0) {
+                $kode = parent::acak(6);
+                $Pengajuan = self::$query->select('pengajuan', array(
+                    'uid'
+                ))
+                    ->where(array(
+                        'pengajuan.kode' => '= ?',
+                        'AND',
+                        'pengajuan.status_hapus' => '= ?'
+                    ), array(
+                        $kode, 'N'
+                    ))
+                    ->execute();
+
+                if(count($Pengajuan['response_data']) > 0) {
+                    $kode = parent::acak(6);
+                }
+            }
+
+            $id_provinsi = parent::anti_injection($parameter['id_provinsi2']);
+            $id_kabupaten = parent::anti_injection($parameter['id_kabupaten2']);
+            $id_kecamatan = parent::anti_injection($parameter['id_kecamatan2']);
+            $id_kelurahan = parent::anti_injection($parameter['id_kelurahan2']);
+            $alamat = parent::anti_injection($parameter['alamat']);
+            $kode_pos = parent::anti_injection($parameter['kode_pos']);
+
+
+            $a=explode("|",$id_provinsi);
+            $id_provinsi=$a[0];
+            $nama_provinsi=$a[1];
+
+            $a=explode("|",$id_kabupaten);
+            $id_kabupaten=$a[0];
+            $nama_kabupaten=$a[1];
+
+            $a=explode("|",$id_kecamatan);
+            $id_kecamatan=$a[0];
+            $nama_kecamatan=$a[1];
+
+            $a=explode("|",$id_kelurahan);
+            $id_kelurahan=$a[0];
+            $nama_kelurahan=$a[1];
+
+            if($kirim=='Y') {
+                $TambahPengajuan = self::$query->insert('pengajuan', array(
+                    'id_pelayanan' => $parameter['id_pelayanan'],
+                    'uid_member' => $UserData['data']->uid,
+                    'waktu_input' => parent::format_date(),
+                    'id_status' => 1,
+                    'uid_pengajuan_data' => $uid_data,
+                    'jenis' => $jenis,
+                    'kode' => $kode,
+                    'id_provinsi' => $id_provinsi,
+                    'nama_provinsi' => $nama_provinsi,
+                    'id_kabupaten' => $id_kabupaten,
+                    'nama_kabupaten' => $nama_kabupaten,
+                    'id_kecamatan' => $id_kecamatan,
+                    'nama_kecamatan' => $nama_kecamatan,
+                    'id_kelurahan' => $id_kelurahan,
+                    'nama_kelurahan' => $nama_kelurahan,
+                    'alamat_kirim' => $alamat,
+                    'kode_pos' => $kode_pos,
+                    'dikirim' => $kirim,
+                ))
+                    ->returning('id')
+                    ->execute();
+            }
+            else{
+                $TambahPengajuan = self::$query->insert('pengajuan', array(
+                    'id_pelayanan' => $parameter['id_pelayanan'],
+                    'uid_member' => $UserData['data']->uid,
+                    'waktu_input' => parent::format_date(),
+                    'id_status' => 1,
+                    'uid_pengajuan_data' => $uid_data,
+                    'jenis' => $jenis,
+                    'kode' => $kode,
+                    'dikirim' => $kirim,
+                ))
+                    ->returning('id')
+                    ->execute();
+            }
+
+            $id_pengajuan= $TambahPengajuan['response_unique'];
+
+            $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
+                'id_pengajuan' => $id_pengajuan,
+                'waktu' => parent::format_date(),
+                'id_status' => 1
+            ))
+                ->execute();
+
+            $jenis = parent::encrypt($jenis);
+
+            $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Kematian. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
+
+            parent::kirim_wa($_SESSION['no_handphone'], $message);
+
+            $parameterBuilder = array(
+                'response_message' => $message,
+                'response_result' => $TambahPengajuan['response_result'],
+                'response_data' => array($jenis)
+            );
+        } else {
+            $parameterBuilder = array(
+                'response_message' => 'Gagal tambah permohonan',
+                'response_result' => 0,
+                'response_data' => $AktaMati
+            );
+        }
+
+        return $parameterBuilder;
+    }
+
+    private function tambah_identitasanak($parameter) {
+        $Authorization = new Authorization();
+        $UserData = $Authorization->readBearerToken($parameter['access_token']);
+
+        $nik = parent::anti_injection($parameter['anak_nik']);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"http://siakmedan3.medan.depdagri.go.id/ajax/sibisa/get-nik");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,"nik=$nik");
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $json_object = json_decode(curl_exec($ch));
+
+        //print("<pre>".print_r($json_object,true)."</pre>");
+        curl_close ($ch);
+
+        $anak_nama = $json_object->NAMA_LGKP;
+        $anak_nama = str_replace("'","''",$anak_nama);
+        $anak_tempat_lahir = $json_object->TMPT_LHR;
+        $anak_tanggal_lahir = $json_object->TGL_LHR;
+        $anak_jenkel=$json_object->JENIS_KLMIN;
+        $anak_agama = $json_object->AGAMA;
+        $kk = $json_object->KARTU_KELUARGA;
+        $anak_alamat = $kk->ALAMAT;
+
+        $anak_noakta = parent::anti_injection($parameter['anak_noakta']);
+        $anak_ayah = parent::anti_injection($parameter['anak_ayah']);
+        $anak_ibu = parent::anti_injection($parameter['anak_ibu']);
+        $jenis = parent::anti_injection($parameter['jenis']);
+
+        $kirim = parent::anti_injection($parameter['kirim']);
+        $uid_data = parent::gen_uuid();
+        $KartuKIA = self::$query->insert('kartukia', array(
+            'uid' => $uid_data,
+            'waktu_input' => parent::format_date(),
+            'uid_member' => $UserData['data']->uid,
+            'anak_nik' => $nik,
+            'anak_noakta' => $anak_noakta,
+            'anak_nama' => $anak_nama,
+            'anak_tempatlahir' => $anak_tempat_lahir,
+            'anak_tanggallahir' => $anak_tanggal_lahir,
+            'anak_ayah' => $anak_ayah,
+            'anak_ibu' => $anak_ibu,
+            'anak_alamat' => $anak_alamat
+        ))
+            ->execute();
+
+        if($KartuKIA['response_result'] > 0) {
+            $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
+                'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
+            ))
+                ->where(array(
+                    'pelayanan_jenis_syarat.status_hapus' => '= ?',
+                    'AND',
+                    'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
+                ), array(
+                    'N', $jenis
+                ))
+                ->execute();
+
+            foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
+
+                //Check Android Upload Partial
+                $AndrTemp = self::$query->select('android_file_coordinator', array(
+                    'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
+
+                ))
+                    ->where(array(
+                        'android_file_coordinator.uid_foreign' => 'IS NULL',
+                        'AND',
+                        'android_file_coordinator.type' => '= ?',
+                        'AND',
+                        'android_file_coordinator.member' => '= ?',
+                        'AND',
+                        'android_file_coordinator.status' => '= ?'
+                    ), array(
+                        $CSV['id'], $UserData['data']->uid, 'N'
+                    ))
+                    ->order(array(
+                        'created_at' => 'DESC'
+                    ))
+                    ->limit(1)
+                    ->execute();
+
+                if(count($AndrTemp['response_data']) > 0) {
+                    $berkas = "fupload_$CSV[id]";
+
+                    $acak			 = rand(1,99);
+                    $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
+                    $tipe_file       = $_FILES[$berkas]['type'];
+                    $nama_file       = $AndrTemp['response_data'][0]['file_name'];
+                    $nama_file_unik  = $uid_data.$acak.$nama_file;
+
+                    $vdir_upload = 'berkas/kia/';
+                    if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
+                        mkdir($vdir_upload);
+                    }
+
+                    $vfile_upload = $vdir_upload . $nama_file_unik;
+                    if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
+                        //Reset Temp Data
+                        $AndrTempStat = self::$query->update('android_file_coordinator', array(
+                            'uid_foreign' => $uid_data,
+                            'dir_to' => $vfile_upload,
+                            'status' => 'D'
+                        ))
+                            ->where(array(
+                                'android_file_coordinator.id' => '= ?'
+                            ), array(
+                                $AndrTemp['response_data'][0]['id']
+                            ))
+                            ->execute();
+                    }
+
+                    $AktaEsahBerkas = self::$query->insert('kartukia_berkas', array(
+                        'uid_kartukia' => $uid_data,
+                        'nama_berkas' => $CSV['nama'],
+                        'berkas' => $nama_file_unik
+                    ))
+                        ->execute();
+                }
+            }
+
+            $kode = parent::acak(6);
+
+            $Pengajuan = self::$query->select('pengajuan', array(
+                'uid'
+            ))
+                ->where(array(
+                    'pengajuan.kode' => '= ?',
+                    'AND',
+                    'pengajuan.status_hapus' => '= ?'
+                ), array(
+                    $kode, 'N'
+                ))
+                ->execute();
+
+            if(count($Pengajuan['response_data']) > 0) {
+                $kode = parent::acak(6);
+                $Pengajuan = self::$query->select('pengajuan', array(
+                    'uid'
+                ))
+                    ->where(array(
+                        'pengajuan.kode' => '= ?',
+                        'AND',
+                        'pengajuan.status_hapus' => '= ?'
+                    ), array(
+                        $kode, 'N'
+                    ))
+                    ->execute();
+
+                if(count($Pengajuan['response_data']) > 0) {
+                    $kode = parent::acak(6);
+                }
+            }
+
+            $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
+            $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
+            $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
+            $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
+            $alamat = parent::anti_injection($parameter['alamat']);
+            $kode_pos = parent::anti_injection($parameter['kode_pos']);
+
+
+            $a=explode("|",$id_provinsi);
+            $id_provinsi=$a[0];
+            $nama_provinsi=$a[1];
+
+            $a=explode("|",$id_kabupaten);
+            $id_kabupaten=$a[0];
+            $nama_kabupaten=$a[1];
+
+            $a=explode("|",$id_kecamatan);
+            $id_kecamatan=$a[0];
+            $nama_kecamatan=$a[1];
+
+            $a=explode("|",$id_kelurahan);
+            $id_kelurahan=$a[0];
+            $nama_kelurahan=$a[1];
+
+            if($kirim=='Y') {
+                $TambahPengajuan = self::$query->insert('pengajuan', array(
+                    'id_pelayanan' => $parameter['id_pelayanan'],
+                    'uid_member' => $UserData['data']->uid,
+                    'waktu_input' => parent::format_date(),
+                    'id_status' => 1,
+                    'uid_pengajuan_data' => $uid_data,
+                    'jenis' => $jenis,
+                    'kode' => $kode,
+                    'id_provinsi' => $id_provinsi,
+                    'nama_provinsi' => $nama_provinsi,
+                    'id_kabupaten' => $id_kabupaten,
+                    'nama_kabupaten' => $nama_kabupaten,
+                    'id_kecamatan' => $id_kecamatan,
+                    'nama_kecamatan' => $nama_kecamatan,
+                    'id_kelurahan' => $id_kelurahan,
+                    'nama_kelurahan' => $nama_kelurahan,
+                    'alamat_kirim' => $alamat,
+                    'kode_pos' => $kode_pos,
+                    'dikirim' => $kirim,
+                ))
+                    ->returning('id')
+                    ->execute();
+            }
+            else{
+                $TambahPengajuan = self::$query->insert('pengajuan', array(
+                    'id_pelayanan' => $parameter['id_pelayanan'],
+                    'uid_member' => $UserData['data']->uid,
+                    'waktu_input' => parent::format_date(),
+                    'id_status' => 1,
+                    'uid_pengajuan_data' => $uid_data,
+                    'jenis' => $jenis,
+                    'kode' => $kode,
+                    'dikirim' => $kirim,
+                ))
+                    ->returning('id')
+                    ->execute();
+            }
+
+            $id_pengajuan= $TambahPengajuan['response_unique'];
+
+            $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
+                'id_pengajuan' => $id_pengajuan,
+                'waktu' => parent::format_date(),
+                'id_status' => 1
+            ))
+                ->execute();
+
+            $jenis = parent::encrypt($jenis);
+
+            $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Kartu Identitas Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
+
+            parent::kirim_wa($_SESSION['no_handphone'], $message);
+
+            $parameterBuilder = array(
+                'response_message' => $message,
+                'response_result' => $TambahPengajuan['response_result'],
+                'response_data' => array($jenis)
+            );
+        } else {
+            $parameterBuilder = array(
+                'response_message' => 'Gagal tambah permohonan',
+                'response_result' => 0,
+                'response_data' => $KartuKIA
+            );
+        }
+
+        return $parameterBuilder;
+    }
+
+    private function tambah_suratpindah($parameter) {
+        $Authorization = new Authorization();
+        $UserData = $Authorization->readBearerToken($parameter['access_token']);
+
+        $nik = parent::anti_injection($parameter['anak_nik']);
+        $Master = new Master(self::$pdo);
+        $hasil = $Master->get_nik(array(
+            'nik' => $nik
+        ));
+
+        if($hasil['response_package']['response_result'] > 0) {
+            $json_object = $hasil['response_package']['response_data'][0];
+
+
+            $nama = $json_object->NAMA_LGKP;
+            $nama = str_replace("'","''",$nama);
+            $alamat = strtoupper($parameter['alamat_tujuan']);
+
+            $alasan_lainnya = "";
+            if ($parameter['alasan'] == "75"){
+                $alasan_lainnya = $parameter['alasan_pindah_lainnya'];
+            }
+
+            if ($json_object == ""){
+                $nama = $parameter['nama'];
+            }
+
+            $jenis = parent::anti_injection($parameter['jenis']);
+            $alasan_lainnya = parent::anti_injection($parameter['alasan_lainnya']);
+            $nama = parent::anti_injection($parameter['nama']);
+            $no_kk = parent::anti_injection($parameter['no_kk']);
+            $alasan = parent::anti_injection($parameter['alasan']);
+            $rt_tujuan = parent::anti_injection($parameter['rt_tujuan']);
+            $rw_tujuan = parent::anti_injection($parameter['rw_tujuan']);
+            $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
+            $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
+            $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
+            $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
+
+            $a=explode("|",$id_provinsi);
+            $id_provinsi=$a[0];
+            $nama_provinsi_tujuan=$a[1];
+
+            $a=explode("|",$id_kabupaten);
+            $id_kabupaten=$a[0];
+            $nama_kabupaten_tujuan=$a[1];
+
+            $a=explode("|",$id_kecamatan);
+            $id_kecamatan=$a[0];
+            $nama_kecamatan_tujuan=$a[1];
+
+            $a=explode("|",$id_kelurahan);
+            $id_kelurahan=$a[0];
+            $nama_kelurahan_tujuan=$a[1];
+
+            $kode_pos = parent::anti_injection($parameter['kode_pos_tujuan']);
+            $telepon = parent::anti_injection($parameter['telepon']);
+            $jenis_pindahan = parent::anti_injection($parameter['jenis_pindahan']);
+            $kk_bagi_tidak_pindah = parent::anti_injection($parameter['kk_bagi_tidak_pindah']);
+            $kk_bagi_pindah = parent::anti_injection($parameter['kk_bagi_pindah']);
+
+
+            $kirim = parent::anti_injection($parameter['kirim']);
+            $uid_data = parent::gen_uuid();
+
+            $SuratPindah = self::$query->insert('suratpindah', array(
+                'uid' => $uid_data,
+                'waktu_input' => '',
+                'uid_member' => '',
+                'no_kk' => $no_kk,
+                'nik_pemohon' => $nik,
+                'nama_pemohon' => $nama,
+                'alasan_pindah' => $alasan,
+                'alasan_pindah_lainnya' => $alasan_lainnya,
+                'alamat_tujuan' => $alamat,
+                'rt_tujuan' => $rt_tujuan,
+                'rw_tujuan' => $rw_tujuan,
+                'id_kelurahan_tujuan' => $id_kelurahan,
+                'id_kecamatan_tujuan' => $id_kecamatan,
+                'id_kabupaten_tujuan' => $id_kabupaten,
+                'id_provinsi_tujuan' => $id_provinsi,
+                'kode_pos_tujuan' => $kode_pos,
+                'telepon' => $telepon,
+                'jenis_kepindahan' => $jenis_pindahan,
+                'status_kk_tidak_pindah' => $kk_bagi_tidak_pindah,
+                'status_kk_pindah' => $kk_bagi_pindah,
+                'nama_provinsi_tujuan' => $nama_provinsi_tujuan,
+                'nama_kabupaten_tujuan' => $nama_kabupaten_tujuan,
+                'nama_kecamatan_tujuan' => $nama_kecamatan_tujuan,
+                'nama_kelurahan_tujuan' => $nama_kelurahan_tujuan
+            ))
+                ->execute();
+            if($SuratPindah['response_result'] > 0) {
                 $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
                     'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
                 ))
@@ -1759,7 +2945,7 @@ class Pelaporan2 extends Utility
                         $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                         $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                        $vdir_upload = 'berkas/aktaaku/';
+                        $vdir_upload = 'berkas/suratpindah/';
                         if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                             mkdir($vdir_upload);
                         }
@@ -1780,10 +2966,37 @@ class Pelaporan2 extends Utility
                                 ->execute();
                         }
 
-                        $AktaLahirBerkas = self::$query->insert('aktaaku_berkas', array(
-                            'uid_aktaaku' => $uid_data,
+                        $AktaEsahBerkas = self::$query->insert('suratpindah_berkas', array(
+                            'uid_suratpindah' => $uid_data,
                             'nama_berkas' => $CSV['nama'],
                             'berkas' => $nama_file_unik
+                        ))
+                            ->execute();
+                    }
+                }
+
+                if (isset($parameter['id_anggota'])){
+                    $id_anggota = $parameter['id_anggota'];
+                    $data_anggota = array();
+
+                    $anggota = explode(",",$id_anggota);
+                    //print_r($anggota);
+                    foreach ($anggota as $key => $value) {
+                        $temp_arr = explode("-", $value);
+
+                        //print_r($temp_arr[0]);
+                        array_push($data_anggota,array(
+                                "nik"=>$temp_arr[0],
+                                "nama"=>$temp_arr[1]
+                            )
+                        );
+                    }
+
+                    foreach ($data_anggota as $key => $value) {
+                        $SuratPindahAnak = self::$query->insert('suratpindah_anak', array(
+                            'nik' => $value['nik'],
+                            'nama' => $value['nama'],
+                            'uid_suratpindah' => $uid_data
                         ))
                             ->execute();
                     }
@@ -1822,11 +3035,10 @@ class Pelaporan2 extends Utility
                     }
                 }
 
-
-                $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
-                $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
-                $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
-                $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
+                $id_provinsi = parent::anti_injection($parameter['id_provinsi2']);
+                $id_kabupaten = parent::anti_injection($parameter['id_kabupaten2']);
+                $id_kecamatan = parent::anti_injection($parameter['id_kecamatan2']);
+                $id_kelurahan = parent::anti_injection($parameter['id_kelurahan2']);
                 $alamat = parent::anti_injection($parameter['alamat']);
                 $kode_pos = parent::anti_injection($parameter['kode_pos']);
 
@@ -1847,7 +3059,7 @@ class Pelaporan2 extends Utility
                 $id_kelurahan=$a[0];
                 $nama_kelurahan=$a[1];
 
-                if($kirim=='Y'){
+                if($kirim=='Y') {
                     $TambahPengajuan = self::$query->insert('pengajuan', array(
                         'id_pelayanan' => $parameter['id_pelayanan'],
                         'uid_member' => $UserData['data']->uid,
@@ -1897,7 +3109,7 @@ class Pelaporan2 extends Utility
 
                 $jenis = parent::encrypt($jenis);
 
-                $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Pengakuan Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
+                $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Surat Pindah. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
 
                 parent::kirim_wa($_SESSION['no_handphone'], $message);
 
@@ -1907,342 +3119,21 @@ class Pelaporan2 extends Utility
                     'response_data' => array($jenis)
                 );
             } else {
-                $jenis = parent::encrypt($parameter['jenis']);
-                header("location:tambah-aktaakuanak?jenis=$jenis");
+                $parameterBuilder = array(
+                    'response_message' => 'Gagal tambah permohonan',
+                    'response_result' => 0,
+                    'response_data' => $SuratPindah
+                );
             }
         } else {
-            $parameterBuilder = $hasil;
+            $parameterBuilder = array(
+                'response_message' => $hasil['response_package']['response_message'],
+                'response_result' => $hasil['response_package']['response_result'],
+                'response_data' => $hasil['response_package']['response_data']
+            );
         }
 
         return $parameterBuilder;
-    }  //Todo : Samakan status query tambah permohonan dengan sahanak
-
-    private function tambah_aktakawin($parameter) {
-        $Authorization = new Authorization();
-        $UserData = $Authorization->readBearerToken($parameter['access_token']);
-
-        $organisasi_penghayat = parent::anti_injection(str_replace("'","''",$_POST['organisasi_penghayat']));
-        $badan_peradilan = parent::anti_injection(str_replace("'","''",$_POST['badan_peradilan']));
-        $nomor_pengadilan = parent::anti_injection(str_replace("'","''",$_POST['nomor_pengadilan']));
-        $nama_pemuka = parent::anti_injection(str_replace("'","''",$_POST['nama_pemuka']));
-        $izin_perwakilan = parent::anti_injection(str_replace("'","''",$_POST['izin_perwakilan']));
-
-        $tanggal_kawin = parent::anti_injection($_POST['tanggal_kawin']);
-        $id_agama = parent::anti_injection($_POST['id_agama']);
-        $tanggal_pengadilan = parent::anti_injection($_POST['tanggal_pengadilan']);
-        $jumlah_anak = parent::anti_injection($_POST['jumlah_anak']);
-
-        $jenis = parent::anti_injection($_POST['jenis']);
-
-        $kirim = parent::anti_injection($_POST['kirim']);
-
-
-        $nik_suami = parent::anti_injection(str_replace("'","''",$_POST['nik_suami']));
-        $nama_suami = parent::anti_injection(str_replace("'","''",$_POST['nama_suami']));
-        $nik_istri = parent::anti_injection(str_replace("'","''",$_POST['nik_istri']));
-        $nama_istri = parent::anti_injection(str_replace("'","''",$_POST['nama_istri']));
-        $nik_suami_ayah = parent::anti_injection(str_replace("'","''",$_POST['nik_suami_ayah']));
-        $nama_suami_ayah = parent::anti_injection(str_replace("'","''",$_POST['nama_suami_ayah']));
-        $nik_suami_ibu = parent::anti_injection(str_replace("'","''",$_POST['nik_suami__ibu']));
-        $nama_suami_ibu = parent::anti_injection(str_replace("'","''",$_POST['nama_suami_ibu']));
-        $nik_istri_ayah = parent::anti_injection(str_replace("'","''",$_POST['nik_istri_ayah']));
-        $nama_istri_ayah = parent::anti_injection(str_replace("'","''",$_POST['nama_istri_ayah']));
-        $nik_istri_ibu = parent::anti_injection(str_replace("'","''",$_POST['nik_istri_ibu']));
-        $nama_istri_ibu = parent::anti_injection(str_replace("'","''",$_POST['nama_istri_ibu']));
-        $nik_saksi_1 = parent::anti_injection(str_replace("'","''",$_POST['nik_saksi_1']));
-        $nama_saksi_1 = parent::anti_injection(str_replace("'","''",$_POST['nama_saksi_1']));
-        $nik_saksi_2 = parent::anti_injection(str_replace("'","''",$_POST['nik_saksi_2']));
-        $nama_saksi_2 = parent::anti_injection(str_replace("'","''",$_POST['nama_saksi_2']));
-
-
-        $uid_data = parent::gen_uuid();
-        if($_POST['tanggal_pengadilan']!=''){
-            $AktaKawin = self::$query->insert('aktakawin', array(
-                'uid' => $uid_data,
-                'waktu_input' => parent::format_date(),
-                'uid_member' => $UserData['data']->uid,
-                'tanggal_kawin' => $tanggal_kawin,
-                'id_agama' => $id_agama,
-                'organisasi_penghayat' => $organisasi_penghayat,
-                'badan_peradilan' => $badan_peradilan,
-                'nomor_pengadilan' => $nomor_pengadilan,
-                'tanggal_pengadilan' => $tanggal_pengadilan,
-                'nama_pemuka' => $nama_pemuka,
-                'izin_perwakilan' => $izin_perwakilan,
-                'jumlah_anak' => $jumlah_anak,
-                'nik_suami' => $nik_suami,
-                'nama_suami' => $nama_suami,
-                'nik_istri' => $nik_istri,
-                'nama_istri' => $nama_istri,
-                'nik_suami_ayah' => $nik_suami_ayah,
-                'nama_suami_ayah' => $nama_suami_ayah,
-                'nik_suami_ibu' => $nik_suami_ibu,
-                'nama_suami_ibu' => $nama_suami_ibu,
-                'nik_istri_ayah' => $nik_istri_ayah,
-                'nama_istri_ayah' => $nama_istri_ayah,
-                'nik_istri_ibu' => $nik_istri_ibu,
-                'nama_istri_ibu' => $nama_istri_ibu,
-                'nik_saksi_1' => $nik_saksi_1,
-                'nama_saksi_1' => $nama_saksi_1,
-                'nik_saksi_2' => $nik_saksi_2,
-                'nama_saksi_2' => $nama_saksi_2
-            ))
-                ->execute();
-        }
-        else{
-            $AktaKawin = self::$query->insert('aktakawin', array(
-                'uid' => $uid_data,
-                'waktu_input' => parent::format_date(),
-                'uid_member' => '',
-                'tanggal_kawin' => $tanggal_kawin,
-                'id_agama' => $id_agama,
-                'organisasi_penghayat' => $organisasi_penghayat,
-                'badan_peradilan' => $badan_peradilan,
-                'nomor_pengadilan' => $nomor_pengadilan,
-                'tanggal_pengadilan' => $tanggal_pengadilan,
-                'nama_pemuka' => $nama_pemuka,
-                'izin_perwakilan' => $izin_perwakilan,
-                'jumlah_anak' => $jumlah_anak,
-                'nik_suami' => $nik_suami,
-                'nama_suami' => $nama_suami,
-                'nik_istri' => $nik_istri,
-                'nama_istri' => $nama_istri,
-                'nik_suami_ayah' => $nik_suami_ayah,
-                'nama_suami_ayah' => $nama_suami_ayah,
-                'nik_suami_ibu' => $nik_suami_ibu,
-                'nama_suami_ibu' => $nama_suami_ibu,
-                'nik_istri_ayah' => $nik_istri_ayah,
-                'nama_istri_ayah' => $nama_istri_ayah,
-                'nik_istri_ibu' => $nik_istri_ibu,
-                'nama_istri_ibu' => $nama_istri_ibu,
-                'nik_saksi_1' => $nik_saksi_1,
-                'nama_saksi_1' => $nama_saksi_1,
-                'nik_saksi_2' => $nik_saksi_2,
-                'nama_saksi_2' => $nama_saksi_2
-            ))
-                ->execute();
-        }
-
-
-        $CheckSyarat = self::$query->select('pelayanan_jenis_syarat', array(
-            'id', 'nama', 'id_pelayanan_jenis', 'status_hapus', 'is_required', 'urutan'
-        ))
-            ->where(array(
-                'pelayanan_jenis_syarat.status_hapus' => '= ?',
-                'AND',
-                'pelayanan_jenis_syarat.id_pelayanan_jenis' => '= ?'
-            ), array(
-                'N', $jenis
-            ))
-            ->execute();
-
-        foreach($CheckSyarat['response_data'] as $CSK => $CSV) {
-
-            //Check Android Upload Partial
-            $AndrTemp = self::$query->select('android_file_coordinator', array(
-                'id', 'file_name', 'dir_from', 'dir_to', 'type', 'status'
-
-            ))
-                ->where(array(
-                    'android_file_coordinator.uid_foreign' => 'IS NULL',
-                    'AND',
-                    'android_file_coordinator.type' => '= ?',
-                    'AND',
-                    'android_file_coordinator.member' => '= ?',
-                    'AND',
-                    'android_file_coordinator.status' => '= ?'
-                ), array(
-                    $CSV['id'], $UserData['data']->uid, 'N'
-                ))
-                ->order(array(
-                    'created_at' => 'DESC'
-                ))
-                ->limit(1)
-                ->execute();
-
-            if(count($AndrTemp['response_data']) > 0) {
-                $berkas = "fupload_$CSV[id]";
-
-                $acak			 = rand(1,99);
-                $lokasi_file     = $AndrTemp['response_data'][0]['dir_from'];
-                $tipe_file       = $_FILES[$berkas]['type'];
-                $nama_file       = $AndrTemp['response_data'][0]['file_name'];
-                $nama_file_unik  = $uid_data.$acak.$nama_file;
-
-                $vdir_upload = 'berkas/aktakawin/';
-                if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
-                    mkdir($vdir_upload);
-                }
-
-                $vfile_upload = $vdir_upload . $nama_file_unik;
-                if(rename('android_temp/' . $AndrTemp['response_data'][0]['dir_from'], $vfile_upload)) {
-                    //Reset Temp Data
-                    $AndrTempStat = self::$query->update('android_file_coordinator', array(
-                        'uid_foreign' => $uid_data,
-                        'dir_to' => $vfile_upload,
-                        'status' => 'D'
-                    ))
-                        ->where(array(
-                            'android_file_coordinator.id' => '= ?'
-                        ), array(
-                            $AndrTemp['response_data'][0]['id']
-                        ))
-                        ->execute();
-                }
-
-                $AktaKawinBerkas = self::$query->insert('aktakawin_berkas', array(
-                    'uid_aktakawin' => $uid_data,
-                    'nama_berkas' => $CSV['nama'],
-                    'berkas' => $nama_file_unik
-                ))
-                    ->execute();
-            }
-        }
-
-        $kode = parent::acak(6);
-
-        $Pengajuan = self::$query->select('pengajuan', array(
-            'uid'
-        ))
-            ->where(array(
-                'pengajuan.kode' => '= ?',
-                'AND',
-                'pengajuan.status_hapus' => '= ?'
-            ), array(
-                $kode, 'N'
-            ))
-            ->execute();
-
-        if(count($Pengajuan['response_data']) > 0) {
-            $kode = parent::acak(6);
-            $Pengajuan = self::$query->select('pengajuan', array(
-                'uid'
-            ))
-                ->where(array(
-                    'pengajuan.kode' => '= ?',
-                    'AND',
-                    'pengajuan.status_hapus' => '= ?'
-                ), array(
-                    $kode, 'N'
-                ))
-                ->execute();
-
-            if(count($Pengajuan['response_data']) > 0) {
-                $kode = parent::acak(6);
-            }
-        }
-
-        $id_provinsi = parent::anti_injection($_POST['id_provinsi']);
-        $id_kabupaten = parent::anti_injection($_POST['id_kabupaten']);
-        $id_kecamatan = parent::anti_injection($_POST['id_kecamatan']);
-        $id_kelurahan = parent::anti_injection($_POST['id_kelurahan']);
-        $alamat = parent::anti_injection($_POST['alamat']);
-        $kode_pos = parent::anti_injection($_POST['kode_pos']);
-
-
-        $a=explode("|",$id_provinsi);
-        $id_provinsi=$a[0];
-        $nama_provinsi=$a[1];
-
-        $a=explode("|",$id_kabupaten);
-        $id_kabupaten=$a[0];
-        $nama_kabupaten=$a[1];
-
-        $a=explode("|",$id_kecamatan);
-        $id_kecamatan=$a[0];
-        $nama_kecamatan=$a[1];
-
-        $a=explode("|",$id_kelurahan);
-        $id_kelurahan=$a[0];
-        $nama_kelurahan=$a[1];
-
-        if($kirim=='Y'){
-            $TambahPengajuan = self::$query->insert('pengajuan', array(
-                'id_pelayanan' => $parameter['id_pelayanan'],
-                'uid_member' => $UserData['data']->uid,
-                'waktu_input' => parent::format_date(),
-                'id_status' => 1,
-                'uid_pengajuan_data' => $uid_data,
-                'jenis' => $jenis,
-                'kode' => $kode,
-                'id_provinsi' => $id_provinsi,
-                'nama_provinsi' => $nama_provinsi,
-                'id_kabupaten' => $id_kabupaten,
-                'nama_kabupaten' => $nama_kabupaten,
-                'id_kecamatan' => $id_kecamatan,
-                'nama_kecamatan' => $nama_kecamatan,
-                'id_kelurahan' => $id_kelurahan,
-                'nama_kelurahan' => $nama_kelurahan,
-                'alamat_kirim' => $alamat,
-                'kode_pos' => $kode_pos,
-                'dikirim' => $kirim,
-            ))
-                ->returning('id')
-                ->execute();
-        }
-        else{
-            $TambahPengajuan = self::$query->insert('pengajuan', array(
-                'id_pelayanan' => $parameter['id_pelayanan'],
-                'uid_member' => $UserData['data']->uid,
-                'waktu_input' => parent::format_date(),
-                'id_status' => 1,
-                'uid_pengajuan_data' => $uid_data,
-                'jenis' => $jenis,
-                'kode' => $kode,
-                'dikirim' => $kirim,
-            ))
-                ->returning('id')
-                ->execute();
-        }
-
-        $id_pengajuan= $TambahPengajuan['response_unique'];
-
-        $TambahPengajuanLog = self::$query->insert('pengajuan_log', array(
-            'id_pengajuan' => $id_pengajuan,
-            'waktu' => parent::format_date(),
-            'id_status' => 1
-        ))
-            ->execute();
-
-        $jenis = parent::encrypt($jenis);
-
-        $message = 'Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Perkawinan. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih';
-
-        parent::kirim_wa($_SESSION['no_handphone'], $message);
-
-        $parameterBuilder = array(
-            'response_message' => $message,
-            'response_result' => $TambahPengajuan['response_result'],
-            'response_data' => array($jenis)
-        );
-
-        return $parameterBuilder;
-    }  //Todo : Samakan status query tambah permohonan dengan sahanak
-
-
-
-
-
-
-
-
-
-
-
-    private function tambah_aktacerai($parameter) {
-        return array();
-    }
-
-    private function tambah_aktamati($parameter) {
-        return array();
-    }
-
-    private function tambah_identitasanak($parameter) {
-        return array();
-    }
-
-    private function tambah_suratpindah($parameter) {
-        return array();
     }
 }
 
