@@ -563,3 +563,31 @@ curl --request POST \
   "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
 }
 ```
+
+14. Update Password
+
+**Request**
+```
+curl --request POST \
+  --url http://127.0.0.1/simampoeh/Member \
+  --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzNDI5MDkwNCwibmJmIjoxNjM0MjkwOTE0LCJleHAiOjE2MzQyOTA5MzQsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6ImEzNmM1OTE5LWI3NzktNGQ4ZC04Zjk5LThhOTZhODlhMWE0NSIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJ0aGV5Y2FudHJldmVhbHVzQGdtYWlsLmNvbSIsIm5hbWEiOiJKT05BVEFOIFNJQU5UVVJJIiwibm9faGFuZHBob25lIjoiMDg1MjYxNTEwMjAyIiwia2VjYW1hdGFuIjoiNiIsImtlbHVyYWhhbiI6IjEwMDEiLCJsb2dfaWQiOjF9fQ.4ReCEpSgqh3eTwKGZCffwEWgo5do5pMkqFaeFjcRWws' \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+  --data request=update_password \
+  --data currentPassword=321 \
+  --data newPassword=123
+```
+
+**Response**
+```
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzNDI5MTEyMCwibmJmIjoxNjM0MjkwOTE0LCJleHAiOjE2MzQyOTExODAsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6ImEzNmM1OTE5LWI3NzktNGQ4ZC04Zjk5LThhOTZhODlhMWE0NSIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJ0aGV5Y2FudHJldmVhbHVzQGdtYWlsLmNvbSIsIm5hbWEiOiJKT05BVEFOIFNJQU5UVVJJIiwibm9faGFuZHBob25lIjoiMDg1MjYxNTEwMjAyIiwia2VjYW1hdGFuIjoiNiIsImtlbHVyYWhhbiI6IjEwMDEiLCJsb2dfaWQiOjF9fQ.ilCTLiUDs14Sdc9FBsda9y8-4s-cy3l_R8tEmjY_Kyc",
+  "response_package": {
+    "response_package": {
+      "response_message": "Profile berhasil diubah",
+      "response_result": 1
+    }
+  },
+  "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
+}
+```
