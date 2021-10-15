@@ -512,3 +512,26 @@ Simampoeh API Only
      "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
    }
    ```
+
+12. Register
+
+   **Request**
+   ```
+   curl --request POST \
+     --url http://127.0.0.1/simampoeh/Member \
+     --header 'Content-Type: application/x-www-form-urlencoded' \
+     --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+     --data request=register \
+     --data nik=1271062205920002 \
+     --data nokk=1271062210200001 \
+     --data email=theycantrevealus@gmail.com \
+     --data no_handphone=085261510202
+   ```
+   
+   **Response**
+   ```
+   {
+     "response_result": 1,
+     "response_message": "Terima kasih sudah mendaftar di Aplikasi Sibisa, Dinas Kependudukan dan Catatan Sipil Kota Medan.Silahkan cek email Anda untuk mengaktivasi akun Anda."
+   }
+   ```
