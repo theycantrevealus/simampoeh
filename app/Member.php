@@ -36,12 +36,26 @@ class Member extends Utility {
             case 'login':
                 return self::login($parameter);
                 break;
+            case 'register':
+                return self::register($parameter);
+                break;
         }
     }
 
 
     private function register($parameter) {
         $parameterBuilder = array();
+
+        if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
+            $uri = 'https://';
+        } else {
+            $uri = 'http://';
+        }
+        $uri .= $_SERVER['HTTP_HOST'];
+
+        $uri ="https://sibisa.pemkomedan.go.id";
+
+        $Master = new Master(self::$pdo);
 
         $checkNIK = self::$query->select('member', array(
             'uid'
@@ -56,7 +70,9 @@ class Member extends Utility {
             ->execute();
 
         if(count($checkNIK['response_data']) === 0) {
-            $checkEmail = self::$query->select('member', array('uid'))
+            $checkEmail = self::$query->select('member', array(
+                'uid', 'nik'
+            ))
                 ->where(array(
                     'member.email' => '= ?',
                     'AND',
@@ -71,13 +87,11 @@ class Member extends Utility {
                 $DataMember = $checkEmail['response_data'][0];
 
                 $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL,"http://siakmedan3.medan.depdagri.go.id/ajax/sibisa/get-nik");
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS,'nik=' . $DataMember['nik']);
+                $checkerNIK = $Master->get_nik(array(
+                    'nik' => $parameter['nik']
+                ));
 
-                $json_object = json_decode(curl_exec($ch));
-
-                curl_close ($ch);
+                $json_object = $checkerNIK['response_package']['response_data'][0];
 
                 $nama = parent::anti_injection($json_object->NAMA_LGKP);
                 $tempat_lahir = parent::anti_injection($json_object->TMPT_LHR);
@@ -111,7 +125,7 @@ class Member extends Utility {
                         'id_status' => 1,
                         'waktu_input' => parent::format_date(),
                         'tanggal_lahir' => $tanggal_lahir,
-                        'tempat_lahar' => $tempat_lahir,
+                        'tempat_lahir' => $tempat_lahir,
                         'jenis_kelamin' => $jenis_kelamin,
                         'agama' => $agama,
                         'no_handphone' => $parameter['no_handphone'],
@@ -136,9 +150,50 @@ class Member extends Utility {
                         ))
                             ->execute();
 
+
+
+                        $message = 'Terima kasih sudah mendaftar di Aplikasi Sibisa, Dinas Kependudukan dan Catatan Sipil Kota Medan.Silahkan cek email Anda untuk mengaktivasi akun Anda.';
+                        $kirim_wa = parent::kirim_wa($parameter['no_handphone'], $message);
+
+                        $pesan = "<h2 style='color:#0E6D00; font-weight:bold;'>PROSES REGISTRASI BERHASIL</h2>
+                            Halo <b>$nama</b>. Terima kasih sudah mendaftar di<br>
+                            <h3>SIBISA - DINAS KEPENDUDUKAN DAN CATATAN SIPIL MEDAN</h3>
+                            Silahkan klik link berikut untuk membuat password dan aktivasi akun Anda.<br><br>
+                            <a href='$uri/aktivasi-$d[uid]' style='padding:10px 20px; background:#3E4095;color:#FFF; font-size:1.2rem; border-radius:10px; text-decoration:none;'>AKTIVASI AKUN</a>";
+
+                        $isi_pesan = parent::isi_email($pesan);
+
+                        $data = array("mailTo" => "$parameter[email]","mailSubject" => "Pendaftaran Aplikasi SiBisa Disdukcapil Medan","mailHtml"=>"$pesan");
+
+                        $data_string = json_encode($data);
+                        $ch = curl_init();
+                        curl_setopt($ch, CURLOPT_URL,"http://192.10.10.102/ml-queuer/mail-send");
+                        curl_setopt($ch, CURLOPT_POST, 1);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                            'Content-Type: application/json',
+                            'Authorization: 9SZVPxb3NCw83AdUeeUcqa2RTQVqMQ'
+                        ));
+
+                        $json_object = json_decode(curl_exec($ch));
+
+                        //print_r($json_object);
+                        $hasil = $json_object->SUKSES;
+                        curl_close ($ch);
+
+
+
                         $parameterBuilder = array(
                             'response_result' => 1,
                             'response_message' => 'Terima kasih sudah mendaftar di Aplikasi Sibisa, Dinas Kependudukan dan Catatan Sipil Kota Medan.Silahkan cek email Anda untuk mengaktivasi akun Anda.'
+                        );
+                    } else {
+                        $parameterBuilder = array(
+                            'response_result' => 0,
+                            'response_message' => 'Gagal Daftar Member',
+                            'response_data' => $proceed
                         );
                     }
                 } else {
@@ -160,6 +215,8 @@ class Member extends Utility {
                 'response_message' => 'NIK Anda sudah terdaftar sebagai member dalam Aplikasi Sibisa. Silahkan login atau menghubungi Administrator Aplikasi Sibisa jika Anda merasa belum pernah mendaftar di Aplikasi'
             );
         }
+
+        return $parameterBuilder;
     }
 
 
