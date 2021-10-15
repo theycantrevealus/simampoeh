@@ -52,17 +52,17 @@ Simampoeh API Only
    --form request=tambah_kartukeluarga \
    --form nik=1271062205920002 \
    --form 'alamat_pemohon=Jln. Kapodang II' \
-   --form id_kecamatan2=1 \
+   --form id_kecamatan2=1|Medan Deli \
    --form 'alasan=Pengen Aja' \
    --form no_kk_lama=1271062210200001 \
    --form shdk=12 \
    --form jenis=47 \
    --form nama=JOSIN \
-   --form id_provinsi=23 \
-   --form id_kabupaten=34 \
+   --form id_provinsi=1|Sumatera Utara \
+   --form id_kabupaten=1|Kota Medan \
    --form 'alamat=Jln Kapodang' \
    --form kodepos=123 \
-   --form id_kelurahan2=1 \
+   --form id_kelurahan2=1|Kota Bangun \
    --form id_pelayanan=4
    ```
 
@@ -99,10 +99,10 @@ Simampoeh API Only
    --form 'anak_dinas_akta=Kota Medan' \
    --form jenis=31 \
    --form kirim=N \
-   --form id_provinsi=2 \
-   --form id_kabupaten=3 \
-   --form id_kecamatan=1 \
-   --form id_kelurahan=4 \
+   --form id_provinsi=1|Sumatera Utara \
+   --form id_kabupaten=1|Kota Medan \
+   --form id_kecamatan=1|Medan Deli \
+   --form id_kelurahan=1|Kota Bangun \
    --form 'alamat=Jln Kapodang II' \
    --form kode_pos=123 \
    --form id_pelayanan=4
@@ -137,10 +137,10 @@ Simampoeh API Only
    --form alasan=rusak \
    --form jenis=84 \
    --form kirim=N \
-   --form id_provinsi=1 \
-   --form id_kabupaten=1 \
-   --form id_kecamatan=1 \
-   --form id_kelurahan=1 \
+   --form id_provinsi=1|Sumatera Utara \
+   --form id_kabupaten=1|Kota Medan \
+   --form id_kecamatan=1|Medan Deli \
+   --form id_kelurahan=1|Kota Bangun \
    --form 'alamat=Jln. Kapodang II' \
    --form kode_pos=123 \
    --form jenkel=LAKI-LAKI \
@@ -180,10 +180,10 @@ Simampoeh API Only
    --form anak_nomor_akta=22AD8989 \
    --form anak_tanggal_akta=2020-01-01 \
    --form 'anak_dinas_akta=Kota Medan' \
-   --form id_provinsi=1 \
-   --form id_kabupaten=1 \
-   --form id_kecamatan=1 \
-   --form id_kelurahan=1 \
+   --form id_provinsi=1|Sumatera Utara \
+   --form id_kabupaten=1|Kota Medan \
+   --form id_kecamatan=1|Medan Deli \
+   --form id_kelurahan=1|Kota Bangun \
    --form 'alamat=Jln. Kapodang II' \
    --form kode_pos=123 \
    --form id_pelayanan=11
@@ -235,10 +235,10 @@ Simampoeh API Only
    --form anak_saksi2=NurAhini \
    --form anak_no_handphone=085261510202 \
    --form jenis_kelahiran=1 \
-   --form id_provinsi=1 \
-   --form id_kabupaten=1 \
-   --form id_kecamatan=1 \
-   --form id_kelurahan=1 \
+   --form id_provinsi=1|Sumatera Utara \
+   --form id_kabupaten=1|Kota Medan \
+   --form id_kecamatan=1|Medan Deli \
+   --form id_kelurahan=1|Kota Bangun \
    --form 'alamat=Jln. Kapodang II' \
    --form kode_pos=666 \
    --form id_pelayanan=4
@@ -278,10 +278,10 @@ Simampoeh API Only
    --form anak_tanggal_akta=2020-01-01 \
    --form anak_dinas_akta=DW \
    --form anak_id_jenkel=1 \
-   --form id_provinsi=1 \
-   --form id_kabupaten=1 \
-   --form id_kecamatan=1 \
-   --form id_kelurahan=1 \
+   --form id_provinsi=1|Sumatera Utara \
+   --form id_kabupaten=1|Kota Medan \
+   --form id_kecamatan=1|Medan Deli \
+   --form id_kelurahan=1|Kota Bangun \
    --form 'alamat=Jln. Kapodang II' \
    --form kode_pos=666 \
    --form id_pelayanan=4
@@ -312,10 +312,10 @@ Simampoeh API Only
    --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
    --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
    --form request=tambah_aktakawin \
-   --form id_provinsi=1 \
-   --form id_kabupaten=1 \
-   --form id_kecamatan=1 \
-   --form id_kelurahan=1 \
+   --form id_provinsi=1|Sumatera Utara \
+   --form id_kabupaten=1|Kota Medan \
+   --form id_kecamatan=1|Medan Deli \
+   --form id_kelurahan=1|Kota Bangun \
    --form 'alamat=Jln. Kapodang II' \
    --form kode_pos=666 \
    --form id_pelayanan=4 \
@@ -377,10 +377,10 @@ Simampoeh API Only
    --form nik=1271062205920002 \
    --form jenis=34 \
    --form kirim=N \
-   --form id_provinsi=1 \
-   --form id_kabupaten=1 \
-   --form id_kecamatan=1 \
-   --form id_kelurahan=1 \
+   --form id_provinsi=1|Sumatera Utara \
+   --form id_kabupaten=1|Kota Medan \
+   --form id_kecamatan=1|Medan Deli \
+   --form id_kelurahan=1|Kota Bangun \
    --form 'alamat=Jln. Kapodang II' \
    --form kode_pos=666 \
    --form id_pelayanan=4 \
@@ -400,10 +400,10 @@ Simampoeh API Only
    --form tempat_meninggal=WC \
    --form 'penyebab_meninggal=Berak Semen' \
    --form no_handphone=085261510202 \
-   --form id_provinsi2=1 \
-   --form id_kabupaten2=1 \
-   --form id_kecamatan2=1 \
-   --form id_kelurahan2=1
+   --form id_provinsi2=1|Sumatera Utara \
+   --form id_kabupaten2=1|Kota Medan \
+   --form id_kecamatan2=1|Medan Deli \
+   --form id_kelurahan2=1|Kota Bangun
    ```
 
    **Response**
@@ -425,25 +425,25 @@ Simampoeh API Only
 
    **Request**
    ```
-   curl --request POST \
-   --url http://127.0.0.1/simampoeh/Pelaporan2/ \
-   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDIxNjM1NSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyMTYzODUsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.nzUJAIDD-1YV4uGt43X3BDn5TRBt7FN7HZfzhg9nlBg' \
-   --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
-   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
-   --form request=tambah_identitasanak \
-   --form nik=1271062205920002 \
-   --form jenis=34 \
-   --form kirim=N \
-   --form id_provinsi=1 \
-   --form id_kabupaten=1 \
-   --form id_kecamatan=1 \
-   --form id_kelurahan=1 \
-   --form 'alamat=Jln. Kapodang II' \
-   --form kode_pos=666 \
-   --form id_pelayanan=4 \
-   --form anak_noakta=12376 \
-   --form anak_ayah=Sarno \
-   --form anak_ibu=Susan
+      curl --request POST \
+      --url http://127.0.0.1/simampoeh/Pelaporan2/ \
+      --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDIxNjM1NSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyMTYzODUsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.nzUJAIDD-1YV4uGt43X3BDn5TRBt7FN7HZfzhg9nlBg' \
+      --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
+      --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+      --form request=tambah_identitasanak \
+      --form nik=1271062205920002 \
+      --form jenis=34 \
+      --form kirim=N \
+      --form id_provinsi=1|Sumatera Utara \
+      --form id_kabupaten=1|Kota Medan \
+      --form id_kecamatan=1|Medan Deli \
+      --form id_kelurahan=1|Kota Bangun \
+      --form 'alamat=Jln. Kapodang II' \
+      --form kode_pos=666 \
+      --form id_pelayanan=4 \
+      --form anak_noakta=12376 \
+      --form anak_ayah=Sarno \
+      --form anak_ibu=Susan
    ```
 
    **Response**
@@ -463,52 +463,52 @@ Simampoeh API Only
 
 11. Surat Pindah
 
-**Request**
-```
-curl --request POST \
-  --url http://127.0.0.1/simampoeh/Pelaporan2/ \
-  --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDIxNjM1NSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyMTYzODUsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.nzUJAIDD-1YV4uGt43X3BDn5TRBt7FN7HZfzhg9nlBg' \
-  --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
-  --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
-  --form request=tambah_suratpindah \
-  --form nik=1271062205920002 \
-  --form jenis=34 \
-  --form kirim=N \
-  --form 'id_provinsi=1|Sumatera Utara' \
-  --form 'id_kabupaten=1|Kota Medan' \
-  --form 'id_kecamatan=1|Medan Deli' \
-  --form 'id_kelurahan=1|Kota Bangun' \
-  --form 'id_provinsi2=1|Sumatera Utara' \
-  --form 'id_kabupaten2=1|Kota Medan' \
-  --form 'id_kecamatan2=1|Medan Deli' \
-  --form 'id_kelurahan2=1|Kota Bangun' \
-  --form id_pelayanan=4 \
-  --form alasan=1 \
-  --form 'alasan_lainnya=G ada' \
-  --form nama=Suhardi \
-  --form 'alamat_tujuan=Jln. Kapoding III' \
-  --form no_kk=12312314 \
-  --form rt_tujuan=01 \
-  --form rw_tujuan=02 \
-  --form kode_pos_tujuan=3333 \
-  --form telepon=1231241 \
-  --form jenis_pindahan=1 \
-  --form kk_bagi_tidak_pindah=123 \
-  --form kk_bagi_pindah=4124 \
-  --form 'id_anggota=1234-Santi,3324-Siti'
-```
+   **Request**
+   ```
+   curl --request POST \
+     --url http://127.0.0.1/simampoeh/Pelaporan2/ \
+     --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDIxNjM1NSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyMTYzODUsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.nzUJAIDD-1YV4uGt43X3BDn5TRBt7FN7HZfzhg9nlBg' \
+     --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
+     --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+     --form request=tambah_suratpindah \
+     --form nik=1271062205920002 \
+     --form jenis=34 \
+     --form kirim=N \
+     --form 'id_provinsi=1|Sumatera Utara' \
+     --form 'id_kabupaten=1|Kota Medan' \
+     --form 'id_kecamatan=1|Medan Deli' \
+     --form 'id_kelurahan=1|Kota Bangun' \
+     --form 'id_provinsi2=1|Sumatera Utara' \
+     --form 'id_kabupaten2=1|Kota Medan' \
+     --form 'id_kecamatan2=1|Medan Deli' \
+     --form 'id_kelurahan2=1|Kota Bangun' \
+     --form id_pelayanan=4 \
+     --form alasan=1 \
+     --form 'alasan_lainnya=G ada' \
+     --form nama=Suhardi \
+     --form 'alamat_tujuan=Jln. Kapoding III' \
+     --form no_kk=12312314 \
+     --form rt_tujuan=01 \
+     --form rw_tujuan=02 \
+     --form kode_pos_tujuan=3333 \
+     --form telepon=1231241 \
+     --form jenis_pindahan=1 \
+     --form kk_bagi_tidak_pindah=123 \
+     --form kk_bagi_pindah=4124 \
+     --form 'id_anggota=1234-Santi,3324-Siti'
+   ```
 
-**Response**
-```
-{
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDI4NTk0OCwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyODYwMDgsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.8brK9zlpm9LEaaDUuetNdLjB3mykP6RERMZ97MvP6kQ",
-  "response_package": {
-    "response_message": "Selamat Anda sudah melakukan pengajuan data untuk layanan Surat Pindah. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih",
-    "response_result": null,
-    "response_data": [
-      "TXpRPQ=="
-    ]
-  },
-  "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
-}
-```
+   **Response**
+   ```
+   {
+     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDI4NTk0OCwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyODYwMDgsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.8brK9zlpm9LEaaDUuetNdLjB3mykP6RERMZ97MvP6kQ",
+     "response_package": {
+       "response_message": "Selamat Anda sudah melakukan pengajuan data untuk layanan Surat Pindah. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih",
+       "response_result": null,
+       "response_data": [
+         "TXpRPQ=="
+       ]
+     },
+     "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
+   }
+   ```
