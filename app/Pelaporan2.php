@@ -891,8 +891,22 @@ class Pelaporan2 extends Utility
 
 
 
+                if(isset($parameter['anggota'])) {
+                    foreach ($parameter['anggota'] as $AAKey => $AAValue) {
+                        $nama_anggota = strtoupper(parent::anti_injection($AAValue['nama']));
+                        $shdk_anggota = parent::anti_injection($AAValue['shdk']);
 
-                if (isset($parameter['id_anggota'])){
+                        $KKAnakS = self::$query->insert('kartukk_anak', array(
+                            'nik' => $AAValue['nik'],
+                            'nama' => $nama_anggota,
+                            'uid_kartukk' => $uid_data,
+                            'shdk' => $shdk_anggota
+                        ))
+                            ->execute();
+                    }
+                }
+
+                /*if (isset($parameter['id_anggota'])){
                     $id_anggota = $parameter['id_anggota'];
 
                     $tambahan = explode(",",$id_anggota);
@@ -916,7 +930,7 @@ class Pelaporan2 extends Utility
                         ))
                             ->execute();
                     }
-                }
+                }*/
 
                 /*----------------------------------------------------------*/
 

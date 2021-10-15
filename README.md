@@ -58,6 +58,7 @@ Simampoeh API Only
    --form shdk=12 \
    --form jenis=47 \
    --form nama=JOSIN \
+   --form anggota=[{nik:xxxxx,nama:xxxxxx,shdk:x}, {nik:xxxxx,nama:xxxxxx,shdk:x}, {nik:xxxxx,nama:xxxxxx,shdk:x}] \
    --form id_provinsi=1|Sumatera Utara \
    --form id_kabupaten=1|Kota Medan \
    --form 'alamat=Jln Kapodang' \
