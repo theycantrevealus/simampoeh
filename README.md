@@ -1,5 +1,5 @@
-# CapeeL
-CapeeL API Only
+# SIMAMPOEH
+Simampoeh API Only
 
 
 # API Documentation
@@ -12,7 +12,7 @@ CapeeL API Only
    --header 'Content-Type: application/x-www-form-urlencoded' \
    --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
    --data request=login \
-   --data username=tanaka \
+   --data nik=12700***** \
    --data password=123
    ```
 
@@ -40,291 +40,123 @@ CapeeL API Only
    }
    ```
 
-2. Pelaporan Mati
+2. Kartu Keluarga
 
    **Request**
    ```
    curl --request POST \
-   --url http://127.0.0.1/CapeeL/Pelaporan \
-   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzMTc4MzQzOSwibmJmIjoxNjMxNzgzNDQ5LCJleHAiOjE2MzE3ODM0NjksImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjgxMTM2NTJkLTRjYjctZTg1MC1kNDg3LTI4MWExNzYyMDQyYSIsImZvdG8iOiIiLCJwYXNzd29yZCI6IiQyeSQxMCR4ZHdBUjlycFltU2Z6S09ZeWZKa2N1T1VrbXhxSS50YjAza2RKcEU0MUhicGlIbmR3RUhEUyIsImVtYWlsIjoiIiwibmFtYSI6IlRhbmFrYSIsIm5vX2hhbmRwaG9uZSI6IiIsImxvZ19pZCI6IjcifX0.Xx1LxPngZCx2cjbp8RTwekmyP_s3LKEPiz3BJWnWIkg' \
+   --url http://127.0.0.1/simampoeh/Pelaporan2/ \
+   --header 'Authorization: Bearer token' \
    --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
    --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
-   --form request=tambah_pelaporan \
-   --form nik=2232312 \
-   --form 'nama_lengkap=Li Zuan Da' \
-   --form tempat_lahir=Medan \
-   --form tanggal_lahir=10-10-1990 \
-   --form tempat_meninggal=Medan \
-   --form tanggal_meninggal=16-09-2021 \
-   --form jam_meninggal=10:10:10 \
-   --form nama_keluarga=Paijo \
-   --form no_handphone_keluarga=085300290191 \
-   --form kecamatan=1 \
-   --form kelurahan=1 \
-   --form jenis=1
+   --form request=tambah_kartukeluarga \
+   --form nik=1271062205920002 \
+   --form 'alamat_pemohon=Jln. Kapodang II' \
+   --form id_kecamatan2=1 \
+   --form 'alasan=Pengen Aja' \
+   --form no_kk_lama=1271062210200001 \
+   --form shdk=12 \
+   --form jenis=47 \
+   --form nama=JOSIN \
+   --form id_provinsi=23 \
+   --form id_kabupaten=34 \
+   --form 'alamat=Jln Kapodang' \
+   --form kodepos=123 \
+   --form id_kelurahan2=1 \
+   --form id_pelayanan=4
    ```
 
    **Response**
    ```
    {
-      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzMTc4MzcyOSwibmJmIjoxNjMxNzgzNDQ5LCJleHAiOjE2MzE3ODM3ODksImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjgxMTM2NTJkLTRjYjctZTg1MC1kNDg3LTI4MWExNzYyMDQyYSIsImZvdG8iOiIiLCJwYXNzd29yZCI6IiQyeSQxMCR4ZHdBUjlycFltU2Z6S09ZeWZKa2N1T1VrbXhxSS50YjAza2RKcEU0MUhicGlIbmR3RUhEUyIsImVtYWlsIjoiIiwibmFtYSI6IlRhbmFrYSIsIm5vX2hhbmRwaG9uZSI6IiIsImxvZ19pZCI6IjcifX0.iIUnKB8UNtTgYkuhRXnBAxGergKp-PfOPVa_jwHJj3E",
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzNDI4MDk2NywibmJmIjoxNjM0MTIzMTY2LCJleHAiOjE2MzQyODEwMjcsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.EKlEcTJ5Xwae37TY7W9wzfK6JmSS0aoUaKoAfI10C0c",
       "response_package": {
-         "response_query": "INSERT INTO lapor (created_at,updated_at,uid_pegawai,id_kecamatan,id_kelurahan,id_jenis) VALUES (?,?,?,?,?,?) RETURNING id",
-         "response_values": [
-            "2021-09-16 16:15:29",
-            "2021-09-16 16:15:29",
-            "8113652d-4cb7-e850-d487-281a1762042a",
-            "1",
-            "1",
-            "1"
-         ],
-         "response_unique": 5,
-         "response_message": "Data berhasil ditambahkan",
-         "response_result": 1,
-         "detail": {
-            "response_query": "INSERT INTO lapor_mati (nik,nama_lengkap,tempat_lahir,tanggal_lahir,tempat_meninggal,tanggal_meninggal,jam_meninggal,nama_keluarga,no_handphone_keluarga,id_lapor) VALUES (?,?,?,?,?,?,?,?,?,?) RETURNING id",
-            "response_values": [
-               "2232312",
-               "Li Zuan Da",
-               "Medan",
-               "10-10-1990",
-               "Medan",
-               "16-09-2021",
-               "10:10:10",
-               "Paijo",
-               "085300290191",
-               5
-            ],
-            "response_unique": 2,
-            "response_message": "Data berhasil ditambahkan",
-            "response_result": 1
-         }
-      },
-      "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
-   }
-   ```
-
-3. Pelaporan Lahir
-
-   **Request**
-   ```
-   curl --request POST \
-   --url http://127.0.0.1/CapeeL/Pelaporan \
-   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzMjgxNTQwOCwibmJmIjoxNjMyODE1NDE4LCJleHAiOjE2MzI4MTU0MzgsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjgxMTM2NTJkLTRjYjctZTg1MC1kNDg3LTI4MWExNzYyMDQyYSIsImZvdG8iOiIiLCJwYXNzd29yZCI6IiQyeSQxMCRGYTlvWU95Yi53dElaMXBMbXN6NGNlRnJtMHowT3d2ZlI2elM3Tzg3bGVVakhuem1VQm94QyIsImVtYWlsIjoidGhleWNhbnRyZXZlYWx1c0BnbWFpbC5jb20iLCJuYW1hIjoiSGVuZHJ5IFRhbmFrYSIsIm5vX2hhbmRwaG9uZSI6IjA4NTI2MTUxMDIwMiIsImxvZ19pZCI6IjMwIn19.jWjDIaXEzYDvZBQbAb10AgzMk_e5JiRmIx67PRQtvxs' \
-   --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
-   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
-   --form request=tambah_pelaporan \
-   --form nik_ortu=2232312 \
-   --form 'nama_ortu=Li Zuan Da' \
-   --form tempat_lahir=Medan \
-   --form tanggal_lahir=10-10-2021 \
-   --form nama_anak=Sukiman \
-   --form 'alamat=Medan Petisah' \
-   --form jam_meninggal=10:10:10 \
-   --form jenis=2 \
-   --form kecamatan=1 \
-   --form kelurahan=1
-   ```
-
-   **Response**
-   ```
-   {
-      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzMjgxNTU1MCwibmJmIjoxNjMyODE1NDE4LCJleHAiOjE2MzI4MTU2MTAsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjgxMTM2NTJkLTRjYjctZTg1MC1kNDg3LTI4MWExNzYyMDQyYSIsImZvdG8iOiIiLCJwYXNzd29yZCI6IiQyeSQxMCRGYTlvWU95Yi53dElaMXBMbXN6NGNlRnJtMHowT3d2ZlI2elM3Tzg3bGVVakhuem1VQm94QyIsImVtYWlsIjoidGhleWNhbnRyZXZlYWx1c0BnbWFpbC5jb20iLCJuYW1hIjoiSGVuZHJ5IFRhbmFrYSIsIm5vX2hhbmRwaG9uZSI6IjA4NTI2MTUxMDIwMiIsImxvZ19pZCI6IjMwIn19.dDI7NWQ8sWAo2HS-rIWJ0bkndeW93PUmDrMuh9_T3cc",
-      "response_package": {
-         "response_query": "INSERT INTO lapor (created_at,updated_at,uid_pegawai,id_kecamatan,id_kelurahan,id_jenis) VALUES (?,?,?,?,?,?) RETURNING id",
-         "response_values": [
-            "2021-09-28 14:52:30",
-            "2021-09-28 14:52:30",
-            "8113652d-4cb7-e850-d487-281a1762042a",
-            "1",
-            "1",
-            "2"
-         ],
-         "response_unique": 7,
-         "response_message": "Data berhasil ditambahkan",
-         "response_result": 1,
-         "detail": {
-            "response_query": "INSERT INTO lapor_lahir (nik_ortu,nama_ortu,tempat_lahir,tanggal_lahir,nama_anak,alamat,created_at,updated_at,id_lapor) VALUES (?,?,?,?,?,?,?,?,?) RETURNING id",
-            "response_values": [
-               "2232312",
-               "Li Zuan Da",
-               "Medan",
-               "10-10-2021",
-               "Sukiman",
-               "Medan Petisah",
-               "2021-09-28 14:52:30",
-               "2021-09-28 14:52:30",
-               7
-            ],
-            "response_unique": 1,
-            "response_message": "Data berhasil ditambahkan",
-            "response_result": 1
-         }
-      },
-      "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
-   }
-   ```
-   
-4. Pelaporan Pindah
-
-   **Request**
-   ```
-   curl --request POST \
-   --url http://127.0.0.1/CapeeL/Pelaporan \
-   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzMjgxNTQwOCwibmJmIjoxNjMyODE1NDE4LCJleHAiOjE2MzI4MTU0MzgsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjgxMTM2NTJkLTRjYjctZTg1MC1kNDg3LTI4MWExNzYyMDQyYSIsImZvdG8iOiIiLCJwYXNzd29yZCI6IiQyeSQxMCRGYTlvWU95Yi53dElaMXBMbXN6NGNlRnJtMHowT3d2ZlI2elM3Tzg3bGVVakhuem1VQm94QyIsImVtYWlsIjoidGhleWNhbnRyZXZlYWx1c0BnbWFpbC5jb20iLCJuYW1hIjoiSGVuZHJ5IFRhbmFrYSIsIm5vX2hhbmRwaG9uZSI6IjA4NTI2MTUxMDIwMiIsImxvZ19pZCI6IjMwIn19.jWjDIaXEzYDvZBQbAb10AgzMk_e5JiRmIx67PRQtvxs' \
-   --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
-   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
-   --form request=tambah_pelaporan \
-   --form nik=2232312 \
-   --form 'nama=Li Zuan Da' \
-   --form 'alamat=Medan Petisah' \
-   --form jenis_pindah=SEMENTARA \
-   --form jenis=3 \
-   --form kecamatan=1 \
-   --form kelurahan=1 \
-   --form status_keluarga=PEMBANTU
-   ```
-
-   **Response**
-   ```
-   {
-      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzMjgxNjAyMSwibmJmIjoxNjMyODE1NDE4LCJleHAiOjE2MzI4MTYwODEsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjgxMTM2NTJkLTRjYjctZTg1MC1kNDg3LTI4MWExNzYyMDQyYSIsImZvdG8iOiIiLCJwYXNzd29yZCI6IiQyeSQxMCRGYTlvWU95Yi53dElaMXBMbXN6NGNlRnJtMHowT3d2ZlI2elM3Tzg3bGVVakhuem1VQm94QyIsImVtYWlsIjoidGhleWNhbnRyZXZlYWx1c0BnbWFpbC5jb20iLCJuYW1hIjoiSGVuZHJ5IFRhbmFrYSIsIm5vX2hhbmRwaG9uZSI6IjA4NTI2MTUxMDIwMiIsImxvZ19pZCI6IjMwIn19.22-VZY0OF9F_salFpeYRq3Gx-s7nKsizK-CKTBFYXLk",
-      "response_package": {
-         "response_query": "INSERT INTO lapor (created_at,updated_at,uid_pegawai,id_kecamatan,id_kelurahan,id_jenis) VALUES (?,?,?,?,?,?) RETURNING id",
-         "response_values": [
-            "2021-09-28 15:00:21",
-            "2021-09-28 15:00:21",
-            "8113652d-4cb7-e850-d487-281a1762042a",
-            "1",
-            "1",
-            "3"
-         ],
-         "response_unique": 11,
-         "response_message": "Data berhasil ditambahkan",
-         "response_result": 1,
-         "detail": {
-            "response_query": "INSERT INTO lapor_pindah (nik,nama,status_keluarga,jenis_pindah,alamat,created_at,updated_at,id_lapor) VALUES (?,?,?,?,?,?,?,?) RETURNING id",
-            "response_values": [
-               "2232312",
-               "Li Zuan Da",
-               "PEMBANTU",
-               "SEMENTARA",
-               "Medan Petisah",
-               "2021-09-28 15:00:21",
-               "2021-09-28 15:00:21",
-               11
-            ],
-            "response_unique": 1,
-            "response_message": "Data berhasil ditambahkan",
-            "response_result": 1
-         }
-      },
-      "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
-   }
-   ```
-5. Pelaporan Delete
-**Request**
-```
-   curl --request POST \
-   --url http://127.0.0.1/CapeeL/Pelaporan \
-   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzMjgxNTQwOCwibmJmIjoxNjMyODE1NDE4LCJleHAiOjE2MzI4MTU0MzgsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjgxMTM2NTJkLTRjYjctZTg1MC1kNDg3LTI4MWExNzYyMDQyYSIsImZvdG8iOiIiLCJwYXNzd29yZCI6IiQyeSQxMCRGYTlvWU95Yi53dElaMXBMbXN6NGNlRnJtMHowT3d2ZlI2elM3Tzg3bGVVakhuem1VQm94QyIsImVtYWlsIjoidGhleWNhbnRyZXZlYWx1c0BnbWFpbC5jb20iLCJuYW1hIjoiSGVuZHJ5IFRhbmFrYSIsIm5vX2hhbmRwaG9uZSI6IjA4NTI2MTUxMDIwMiIsImxvZ19pZCI6IjMwIn19.jWjDIaXEzYDvZBQbAb10AgzMk_e5JiRmIx67PRQtvxs' \
-   --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
-   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
-   --form request=delete_pelaporan \
-   --form id=10 \
-   ```
-7. Pelaporan History
-
-   **Request**
-   ```
-   curl --request GET \
-   --url http://127.0.0.1/CapeeL/Pelaporan \
-   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzMjgxNTQwOCwibmJmIjoxNjMyODE1NDE4LCJleHAiOjE2MzI4MTU0MzgsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjgxMTM2NTJkLTRjYjctZTg1MC1kNDg3LTI4MWExNzYyMDQyYSIsImZvdG8iOiIiLCJwYXNzd29yZCI6IiQyeSQxMCRGYTlvWU95Yi53dElaMXBMbXN6NGNlRnJtMHowT3d2ZlI2elM3Tzg3bGVVakhuem1VQm94QyIsImVtYWlsIjoidGhleWNhbnRyZXZlYWx1c0BnbWFpbC5jb20iLCJuYW1hIjoiSGVuZHJ5IFRhbmFrYSIsIm5vX2hhbmRwaG9uZSI6IjA4NTI2MTUxMDIwMiIsImxvZ19pZCI6IjMwIn19.jWjDIaXEzYDvZBQbAb10AgzMk_e5JiRmIx67PRQtvxs' \
-   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm
-   ```
-   
-   **Response**
-   ```
-   {
-      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzMjgxNjI4OSwibmJmIjoxNjMyODE1NDE4LCJleHAiOjE2MzI4MTYzNDksImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjgxMTM2NTJkLTRjYjctZTg1MC1kNDg3LTI4MWExNzYyMDQyYSIsImZvdG8iOiIiLCJwYXNzd29yZCI6IiQyeSQxMCRGYTlvWU95Yi53dElaMXBMbXN6NGNlRnJtMHowT3d2ZlI2elM3Tzg3bGVVakhuem1VQm94QyIsImVtYWlsIjoidGhleWNhbnRyZXZlYWx1c0BnbWFpbC5jb20iLCJuYW1hIjoiSGVuZHJ5IFRhbmFrYSIsIm5vX2hhbmRwaG9uZSI6IjA4NTI2MTUxMDIwMiIsImxvZ19pZCI6IjMwIn19.zzdq_pYRHTdKG11qRC2ADnYkO0CYhf8jq6o_JRfwfvw",
-      "response_package": {
-         "response_query": "SELECT lapor.id,lapor.id_jenis,lapor.id_kecamatan,lapor.id_kelurahan FROM lapor WHERE lapor.uid_pegawai = ? AND lapor.deleted_at IS NULL",
-         "response_values": [
-            "8113652d-4cb7-e850-d487-281a1762042a"
-         ],
+         "response_message": "Selamat Anda sudah melakukan pengajuan data untuk layanan Kartu Keluarga. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih",
+         "response_result": null,
          "response_data": [
-            {
-               "id": 1,
-               "id_jenis": 1,
-               "id_kecamatan": 1,
-               "id_kelurahan": 1,
-               "nama_jenis": "Laporan Kematian",
-               "detail": [
-                  {
-                     "nik": "2232312",
-                     "nama_lengkap": "Li Zuan Da",
-                     "tempat_lahir": "Medan",
-                     "tanggal_lahir": "1990-10-10",
-                     "tempat_meninggal": "Medan",
-                     "tanggal_meninggal": "2021-09-16",
-                     "jam_meninggal": "10:10:10",
-                     "nama_keluarga": "Paijo",
-                     "no_handphone_keluarga": "085300290191"
-                  }
-               ]
-            }
-         ],
-         "response_result": 1
+            "TkRjPQ=="
+         ]
+      },
+      "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
+   }
+   ```
+
+3. Pengesahan Anak
+
+   **Request**
+   ```
+   curl --request POST \
+   --url http://127.0.0.1/simampoeh/Pelaporan2/ \
+   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDIxNjM1NSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyMTYzODUsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.nzUJAIDD-1YV4uGt43X3BDn5TRBt7FN7HZfzhg9nlBg' \
+   --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
+   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+   --form request=tambah_sahanak \
+   --form anak_nik=1271062205920002 \
+   --form anak_jenkel=LAKI-LAKI \
+   --form anak_kelahiran_ke=66 \
+   --form anak_nomor_akta=AL.538.666666 \
+   --form anak_tanggal_akta=2013-08-28 \
+   --form 'anak_dinas_akta=Kota Medan' \
+   --form jenis=31 \
+   --form kirim=N \
+   --form id_provinsi=2 \
+   --form id_kabupaten=3 \
+   --form id_kecamatan=1 \
+   --form id_kelurahan=4 \
+   --form 'alamat=Jln Kapodang II' \
+   --form kode_pos=123 \
+   --form id_pelayanan=4
+   ```
+
+   **Response**
+   ```
+   {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDI4MTE0NiwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyODEyMDYsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.3par4RFgPRJIMQWsvHWky95XmIai338AWJ19wunVxcg",
+      "response_package": {
+         "response_message": "Selamat Anda sudah melakukan pengajuan data untuk layanan Akta Pengesahan Anak. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih",
+         "response_result": null,
+         "response_data": [
+            "TXpFPQ=="
+         ]
       },
       "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
    }
    ```
    
-   
-   
-5. Pelaporan History
+4. KTP
 
    **Request**
    ```
-   curl --request GET \
-   --url http://127.0.0.1/CapeeL/Pelaporan \
-   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzMjgxNTQwOCwibmJmIjoxNjMyODE1NDE4LCJleHAiOjE2MzI4MTU0MzgsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjgxMTM2NTJkLTRjYjctZTg1MC1kNDg3LTI4MWExNzYyMDQyYSIsImZvdG8iOiIiLCJwYXNzd29yZCI6IiQyeSQxMCRGYTlvWU95Yi53dElaMXBMbXN6NGNlRnJtMHowT3d2ZlI2elM3Tzg3bGVVakhuem1VQm94QyIsImVtYWlsIjoidGhleWNhbnRyZXZlYWx1c0BnbWFpbC5jb20iLCJuYW1hIjoiSGVuZHJ5IFRhbmFrYSIsIm5vX2hhbmRwaG9uZSI6IjA4NTI2MTUxMDIwMiIsImxvZ19pZCI6IjMwIn19.jWjDIaXEzYDvZBQbAb10AgzMk_e5JiRmIx67PRQtvxs' \
-   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm
+   curl --request POST \
+   --url http://127.0.0.1/simampoeh/Pelaporan2/ \
+   --header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDIxNjM1NSwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyMTYzODUsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.nzUJAIDD-1YV4uGt43X3BDn5TRBt7FN7HZfzhg9nlBg' \
+   --header 'Content-Type: multipart/form-data; boundary=---011000010111000001101001' \
+   --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+   --form request=tambah_ktp \
+   --form nik=1271062205920002 \
+   --form alasan=rusak \
+   --form jenis=84 \
+   --form kirim=N \
+   --form id_provinsi=1 \
+   --form id_kabupaten=1 \
+   --form id_kecamatan=1 \
+   --form id_kelurahan=1 \
+   --form 'alamat=Jln. Kapodang II' \
+   --form kode_pos=123 \
+   --form jenkel=LAKI-LAKI \
+   --form id_pelayanan=4
    ```
-   
+
    **Response**
    ```
    {
-      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL3NpbXJzdjJcL2NsaWVudCIsImlhdCI6MTYzMjgxNjI4OSwibmJmIjoxNjMyODE1NDE4LCJleHAiOjE2MzI4MTYzNDksImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjgxMTM2NTJkLTRjYjctZTg1MC1kNDg3LTI4MWExNzYyMDQyYSIsImZvdG8iOiIiLCJwYXNzd29yZCI6IiQyeSQxMCRGYTlvWU95Yi53dElaMXBMbXN6NGNlRnJtMHowT3d2ZlI2elM3Tzg3bGVVakhuem1VQm94QyIsImVtYWlsIjoidGhleWNhbnRyZXZlYWx1c0BnbWFpbC5jb20iLCJuYW1hIjoiSGVuZHJ5IFRhbmFrYSIsIm5vX2hhbmRwaG9uZSI6IjA4NTI2MTUxMDIwMiIsImxvZ19pZCI6IjMwIn19.zzdq_pYRHTdKG11qRC2ADnYkO0CYhf8jq6o_JRfwfvw",
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDI4MTIyNiwibmJmIjoxNjM0MjE2MzY1LCJleHAiOjE2MzQyODEyODYsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.-q9pwOOmlbfyACbFm8NUx2BM1rP6DD6OJqnJS1fQLjw",
       "response_package": {
-         "response_query": "SELECT lapor.id,lapor.id_jenis,lapor.id_kecamatan,lapor.id_kelurahan FROM lapor WHERE lapor.uid_pegawai = ? AND lapor.deleted_at IS NULL",
-         "response_values": [
-            "8113652d-4cb7-e850-d487-281a1762042a"
-         ],
+         "response_message": "Selamat Anda sudah melakukan pengajuan data untuk layanan Kartu Tanda Penduduk. Pengajuan Anda akan segera diproses. Silakan cek email atau whatsapp Anda untuk informasi selanjutnya. Terima kasih",
+         "response_result": null,
          "response_data": [
-            {
-               "id": 1,
-               "nama_jenis": "Laporan Kematian",
-               "nik" : "123132123123",
-               "nama" : "asdasdasdasdas",
-               "tgl_submit" "12321313"
-            },
-            {
-               "id": 1,
-               "nama_jenis": "Laporan Kematian",
-               "nik" : "123132123123",
-               "nama" : "asdasdasdasdas",
-               "tgl_submit" "12321313"
-            },
-            {
-               "id": 1,
-               "nama_jenis": "Laporan Kematian",
-               "nik" : "123132123123",
-               "nama" : "asdasdasdasdas",
-               "tgl_submit" "12321313"
-            }
-         ],
-         "response_result": 1
+            "T0RRPQ=="
+         ]
       },
       "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
    }

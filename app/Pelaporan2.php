@@ -401,7 +401,6 @@ class Pelaporan2 extends Utility
                 parent::kirim_wa($_SESSION['no_handphone'], $message);
 
                 $parameterBuilder = array(
-                    'proceed' => $AktaSah,
                     'response_message' => $message,
                     'response_result' => $TambahPengajuan['response_result'],
                     'response_data' => array($jenis)
