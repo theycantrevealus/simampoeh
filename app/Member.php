@@ -39,7 +39,92 @@ class Member extends Utility {
             case 'register':
                 return self::register($parameter);
                 break;
+            case 'update_profile':
+                return self::update_profile($parameter);
+                break;
+            case 'update_password':
+                return self::update_password($parameter);
+                break;
+            default:
+                return array();
         }
+    }
+
+    private function update_password($parameter) {
+        $Authorization = new Authorization();
+        $UserData = $Authorization->readBearerToken($parameter['access_token']);
+
+        $password_lama = parent::encrypt(parent::anti_injection($parameter['currentPassword']));
+        $password_baru = parent::encrypt(parent::anti_injection($parameter['newPassword']));
+
+        $OLD = self::$query->select('member', array(
+            'uid' , 'email', 'password', 'nama', 'gambar', 'nik', 'no_kk',
+            'status_hapus', 'status_login', 'id_status', 'waktu_input',
+            'tanggal_lahir', 'tempat_lahir', 'jenis_kelamin', 'agama', 'no_handphone',
+            'id_provinsi', 'nama_provinsi',
+            'id_kabupaten', 'nama_kabupaten',
+            'id_kecamatan', 'nama_kecamatan',
+            'id_kelurahan', 'nama_kelurahan',
+            'alamat', 'kode_pos'
+        ))
+            ->where(array(
+                'member.uid' => '= ?',
+                'AND',
+                'member.password' => '= ?'
+            ), array(
+                $UserData['data']->uid, $password_lama
+            ))
+            ->execute();
+
+        if(count($OLD['response_data']) > 0) {
+            $Proceed = self::$query->update('member', array(
+                'password' => $password_baru
+            ))
+                ->where(array(
+                    'member.uid' => '= ?'
+                ), array(
+                    $UserData['data']->uid
+                ))
+                ->execute();
+            return array(
+                'response_package' => array(
+                    'response_message' => ($Proceed['response_result'] > 0) ? 'Profile berhasil diubah' : 'Profile gagal diubah',
+                    'response_result' => $Proceed['response_result']
+                )
+            );
+        } else {
+            return array(
+                'response_package' => array(
+                    'response_message' => 'Password lama salah',
+                    'response_result' => 0
+                )
+            );
+        }
+    }
+
+    private function update_profile($parameter) {
+        $Authorization = new Authorization();
+        $UserData = $Authorization->readBearerToken($parameter['access_token']);
+
+        $email = parent::anti_injection($parameter['email']);
+        $no_handphone = parent::anti_injection($parameter['no_handphone']);
+
+        $Proceed = self::$query->update('member', array(
+            'email' => $email,
+            'no_handphone' => $no_handphone
+        ))
+            ->where(array(
+                'member.uid' => '= ?'
+            ), array(
+                $UserData['data']->uid
+            ))
+            ->execute();
+        return array(
+            'response_package' => array(
+                'response_message' => ($Proceed['response_result'] > 0) ? 'Profile berhasil diubah' : 'Profile gagal diubah',
+                'response_result' => $Proceed['response_result']
+            )
+        );
     }
 
 
@@ -159,7 +244,7 @@ class Member extends Utility {
                             Halo <b>$nama</b>. Terima kasih sudah mendaftar di<br>
                             <h3>SIBISA - DINAS KEPENDUDUKAN DAN CATATAN SIPIL MEDAN</h3>
                             Silahkan klik link berikut untuk membuat password dan aktivasi akun Anda.<br><br>
-                            <a href='$uri/aktivasi-$d[uid]' style='padding:10px 20px; background:#3E4095;color:#FFF; font-size:1.2rem; border-radius:10px; text-decoration:none;'>AKTIVASI AKUN</a>";
+                            <a href='$uri/aktivasi-$uid' style='padding:10px 20px; background:#3E4095;color:#FFF; font-size:1.2rem; border-radius:10px; text-decoration:none;'>AKTIVASI AKUN</a>";
 
                         $isi_pesan = parent::isi_email($pesan);
 
