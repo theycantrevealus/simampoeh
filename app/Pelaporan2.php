@@ -712,7 +712,7 @@ class Pelaporan2 extends Utility
             'nik' => $nik
         ));
 
-        //if($hasil['response_package']['response_result'] > 0) {
+        if($hasil['response_package']['response_result'] > 0) {
             $json_object = $hasil['response_package']['response_data'][0];
             $nama = $json_object->NAMA_LGKP;
             $nama = str_replace("'","''",$nama);
@@ -1059,13 +1059,13 @@ class Pelaporan2 extends Utility
                 );
             }
 
-        /*} else {
+        } else {
             $parameterBuilder = array(
                 'response_message' => $hasil['response_package']['response_message'],
                 'response_result' => $hasil['response_package']['response_result'],
                 'response_data' => $hasil['response_package']['response_data']
             );
-        }*/
+        }
 
         return $parameterBuilder;
 
