@@ -1375,7 +1375,7 @@ class Pelaporan2 extends Utility
             $kirim = parent::anti_injection($parameter['kirim']);
 
             //SETTING BERAT BAYI DIGABUNGKAN
-            $anak_berat_bayi = $anak_berat_bayi.'.'.$anak_berat_bayi_koma;
+            //$anak_berat_bayi = $anak_berat_bayi.'.'.$anak_berat_bayi_koma;
             $uid_data = parent::gen_uuid();
             $AktaLahir = self::$query->insert('aktalahir', array(
                 'uid' => $uid_data,
