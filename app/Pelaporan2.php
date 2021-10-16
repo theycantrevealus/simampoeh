@@ -144,6 +144,9 @@ class Pelaporan2 extends Utility
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
 
+        $temp_parameter = $parameter;   //for backup request
+        $parameter = json_decode($parameter['data'], true);
+
         $nik = parent::anti_injection($parameter['anak_nik']);
         $Master = new Master(self::$pdo);
         $hasil = $Master->get_nik(array(
@@ -426,6 +429,9 @@ class Pelaporan2 extends Utility
     private function tambah_angkatanak($parameter) {
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
+
+        $temp_parameter = $parameter;   //for backup request
+        $parameter = json_decode($parameter['data'], true);
 
         $nik = parent::anti_injection($parameter['nik']);
         $Master = new Master(self::$pdo);
@@ -1075,6 +1081,9 @@ class Pelaporan2 extends Utility
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
 
+        $temp_parameter = $parameter;   //for backup request
+        $parameter = json_decode($parameter['data'], true);
+
         $nik = parent::anti_injection($parameter['nik']);
 
 
@@ -1613,6 +1622,9 @@ class Pelaporan2 extends Utility
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
 
+        $temp_parameter = $parameter;   //for backup request
+        $parameter = json_decode($parameter['data'], true);
+
         $parameterBuilder = array();
 
         $nik = parent::anti_injection($parameter['nik']);
@@ -1893,6 +1905,9 @@ class Pelaporan2 extends Utility
     private function tambah_aktakawin($parameter) {
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
+
+        $temp_parameter = $parameter;   //for backup request
+        $parameter = json_decode($parameter['data'], true);
 
         $organisasi_penghayat = parent::anti_injection(str_replace("'","''",$parameter['organisasi_penghayat']));
         $badan_peradilan = parent::anti_injection(str_replace("'","''",$parameter['badan_peradilan']));
@@ -2308,6 +2323,9 @@ class Pelaporan2 extends Utility
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
 
+        $temp_parameter = $parameter;   //for backup request
+        $parameter = json_decode($parameter['data'], true);
+
         $hubungan = parent::anti_injection($parameter['hubungan']);
         $nik = parent::anti_injection($parameter['nik']);
         $nama = parent::anti_injection($parameter['nama']);
@@ -2583,6 +2601,9 @@ class Pelaporan2 extends Utility
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
 
+        $temp_parameter = $parameter;   //for backup request
+        $parameter = json_decode($parameter['data'], true);
+
         $nik = parent::anti_injection($parameter['nik']);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,"http://siakmedan3.medan.depdagri.go.id/ajax/sibisa/get-nik");
@@ -2833,6 +2854,9 @@ class Pelaporan2 extends Utility
     private function tambah_suratpindah($parameter) {
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
+
+        $temp_parameter = $parameter;   //for backup request
+        $parameter = json_decode($parameter['data'], true);
 
         $nik = parent::anti_injection($parameter['nik']);
         $Master = new Master(self::$pdo);
