@@ -11,6 +11,14 @@ abstract class Utility {
         return base64_encode(base64_encode($parameter));
     }
 
+    public function anti_null($parameter) {
+        if(!isset($parameter) && empty($parameter)) {
+            return '';
+        } else {
+            return $parameter;
+        }
+    }
+
     public function isi_email($content) {
         $pesan="
         <!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
