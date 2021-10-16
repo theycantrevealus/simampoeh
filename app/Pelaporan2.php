@@ -1333,6 +1333,10 @@ class Pelaporan2 extends Utility
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
 
+        $temp_parameter = $parameter;
+        $parameter = json_decode($parameter['data'], true);
+
+
         $nik = parent::anti_injection($parameter['nik']);
 
 
