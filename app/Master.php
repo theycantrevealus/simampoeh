@@ -64,6 +64,9 @@ class Master extends Utility
             case 'agama':
                 return self::term_data(5);
                 break;
+            case 'kewarganegaraan':
+                return self::term_data(3);
+                break;
             case 'penolong_kelahiran':
                 return self::term_data(8);
                 break;
