@@ -32,6 +32,10 @@ class Pelaporan2 extends Utility
     public function __POST__($parameter = array())
     {
         switch ($parameter['request']) {
+
+            case 'history_saya':
+                return self::history_saya($parameter);
+                break;
             case 'tambah_aktalahir':
                 return self::tambah_aktalahir($parameter);
                 break;
@@ -81,6 +85,43 @@ class Pelaporan2 extends Utility
             default:
                 return array();
         }
+    }
+
+
+    private function history_saya($parameter) {
+        $Authorization = new Authorization();
+        $UserData = $Authorization->readBearerToken($parameter['access_token']);
+
+        $data = self::$query->select('pengajuan', array(
+            'uid', 'id_status', 'jenis', 'kode', 'waktu_input'
+        ))
+            ->join('pelayanan_jenis', array(
+                'nama as nama_pelayanan'
+            ))
+            ->join('pengajuan_status', array(
+                'nama as nama_status'
+            ))
+            ->on(array(
+                array('pengajuan.jenis', '=', 'pelayanan_jenis.id'),
+                array('pengajuan.id_status', '=', 'pengajuan_status.id')
+            ))
+            ->where(array(
+                'pengajuan.uid_member' => '= ?'
+            ), array(
+                $UserData['data']->uid
+            ))
+            ->execute();
+
+        foreach ($data['response_data'] as $key => $value) {
+            $data['response_data'][$key]['waktu_input'] = date('d f Y', strtotime($value['waktu_input']));
+        }
+
+        return array(
+            'response_package' => array(
+                'response_result' => count($data['response_data']),
+                'response_data' => (isset($data['response_data']) ? $data['response_data'] : array())
+            )
+        );
     }
 
 
