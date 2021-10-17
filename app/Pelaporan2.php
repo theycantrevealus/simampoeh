@@ -117,10 +117,8 @@ class Pelaporan2 extends Utility
         }
 
         return array(
-            'response_package' => array(
-                'response_result' => count($data['response_data']),
-                'response_data' => (isset($data['response_data']) ? $data['response_data'] : array())
-            )
+            'response_result' => count($data['response_data']),
+            'response_data' => (isset($data['response_data']) ? $data['response_data'] : array())
         );
     }
 
