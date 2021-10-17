@@ -608,31 +608,29 @@ curl --request POST \
 **Response**
 ```
 {
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDQ1ODg3MSwibmJmIjoxNjM0NDU4ODgxLCJleHAiOjE2MzQ0NTg5MDEsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.CDXVVTEgqHHPe0lWMs3_daafFXWZQ-V-c7HEJ0X8eGQ",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC80NS4xMjcuMTM0LjU0XC9zaW1hbXBvZWhcL2NsaWVudCIsImlhdCI6MTYzNDQ1OTA0NiwibmJmIjoxNjM0NDU4ODgxLCJleHAiOjE2MzQ0NTkxMDYsImF1ZCI6InVzZXJzX2xpYnJhcnkiLCJkYXRhIjp7InVpZCI6IjZiZTIwYjQ4LWQzODItNjIyMi0xNmRmLWU0OTNlNDE4ZTkxYyIsImZvdG8iOm51bGwsIm5payI6IjEyNzEwNjIyMDU5MjAwMDIiLCJwYXNzd29yZCI6IlRWUkplZz09IiwiZW1haWwiOiJqeWVyLmRydW1tZXJAZ21haWwuY29tIiwibmFtYSI6IkpPTkFUQU4gU0lBTlRVUkkiLCJub19oYW5kcGhvbmUiOiIwODIzNzA3OTg3MjciLCJrZWNhbWF0YW4iOiI2Iiwia2VsdXJhaGFuIjoiMTAwMSIsImxvZ19pZCI6MX19.apsbOVBEUiE261Dnw0Dd4mj5-bqBqh3kPpvL4NLc500",
   "response_package": {
-    "response_package": {
-      "response_result": 2,
-      "response_data": [
-        {
-          "uid": "7bc8d960-29ff-c1dd-533b-9a76628d5233",
-          "id_status": 3,
-          "jenis": 34,
-          "kode": "WRXPYY",
-          "waktu_input": "16 October 2021",
-          "nama_pelayanan": "Akta Pengangkatan Anak (Baru)",
-          "nama_status": "SEDANG DIVERIFIKASI OPERATOR"
-        },
-        {
-          "uid": "1e0e5529-013a-24fe-d8d8-18f012eec416",
-          "id_status": 1,
-          "jenis": 34,
-          "kode": "MZJVKZ",
-          "waktu_input": "16 October 2021",
-          "nama_pelayanan": "Akta Pengangkatan Anak (Baru)",
-          "nama_status": "PENDAFTARAN"
-        }
-      ]
-    }
+    "response_result": 2,
+    "response_data": [
+      {
+        "uid": "7bc8d960-29ff-c1dd-533b-9a76628d5233",
+        "id_status": 3,
+        "jenis": 34,
+        "kode": "WRXPYY",
+        "waktu_input": "16 October 2021",
+        "nama_pelayanan": "Akta Pengangkatan Anak (Baru)",
+        "nama_status": "SEDANG DIVERIFIKASI OPERATOR"
+      },
+      {
+        "uid": "1e0e5529-013a-24fe-d8d8-18f012eec416",
+        "id_status": 1,
+        "jenis": 34,
+        "kode": "MZJVKZ",
+        "waktu_input": "16 October 2021",
+        "nama_pelayanan": "Akta Pengangkatan Anak (Baru)",
+        "nama_status": "PENDAFTARAN"
+      }
+    ]
   },
   "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
 }
