@@ -1970,7 +1970,7 @@ class Pelaporan2 extends Utility
         $nama_istri = parent::anti_injection(str_replace("'","''",$parameter['nama_istri']));
         $nik_suami_ayah = parent::anti_injection(str_replace("'","''",$parameter['nik_suami_ayah']));
         $nama_suami_ayah = parent::anti_injection(str_replace("'","''",$parameter['nama_suami_ayah']));
-        $nik_suami_ibu = parent::anti_injection(str_replace("'","''",$parameter['nik_suami__ibu']));
+        $nik_suami_ibu = parent::anti_injection(str_replace("'","''",$parameter['nik_suami_ibu']));
         $nama_suami_ibu = parent::anti_injection(str_replace("'","''",$parameter['nama_suami_ibu']));
         $nik_istri_ayah = parent::anti_injection(str_replace("'","''",$parameter['nik_istri_ayah']));
         $nama_istri_ayah = parent::anti_injection(str_replace("'","''",$parameter['nama_istri_ayah']));
