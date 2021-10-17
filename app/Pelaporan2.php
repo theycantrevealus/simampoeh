@@ -113,7 +113,7 @@ class Pelaporan2 extends Utility
             ->execute();
 
         foreach ($data['response_data'] as $key => $value) {
-            $data['response_data'][$key]['waktu_input'] = date('d f Y', strtotime($value['waktu_input']));
+            $data['response_data'][$key]['waktu_input'] = date('d F Y', strtotime($value['waktu_input']));
         }
 
         return array(
