@@ -70,6 +70,15 @@ class Master extends Utility
             case 'penolong_kelahiran':
                 return self::term_data(8);
                 break;
+            case 'jenis_kepindahan':
+                return self::term_data(16);
+                break;
+            case 'status_pindah_kk':
+                return self::term_data(17);
+                break;
+            case 'alasan_pindah':
+                return self::term_data(18);
+                break;
             case 'pelayanan_jenis_syarat':
                 return self::pelayanan_jenis_syarat($parameter);
                 break;
