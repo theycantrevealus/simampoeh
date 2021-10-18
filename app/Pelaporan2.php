@@ -771,8 +771,8 @@ class Pelaporan2 extends Utility
                 $nama = $parameter['nama'];
             }
 
-            $id_kecamatan = parent::anti_injection($parameter['id_kecamatan2']);
-            $id_kelurahan = parent::anti_injection($parameter['id_kelurahan2']);
+            $id_kecamatan = intval(parent::anti_injection($parameter['id_kecamatan2']));
+            $id_kelurahan = intval(parent::anti_injection($parameter['id_kelurahan2']));
 
             $a=explode("|",$id_kecamatan);
             $id_kecamatan=$a[0];
