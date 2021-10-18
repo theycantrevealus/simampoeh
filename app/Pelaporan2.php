@@ -744,7 +744,6 @@ class Pelaporan2 extends Utility
     private function tambah_kartukeluarga($parameter) {
         $Authorization = new Authorization();
         $UserData = $Authorization->readBearerToken($parameter['access_token']);
-        $parameter = json_decode($parameter['data'], true);
 
         $temp_parameter = $parameter;   //for backup request
         $parameter = json_decode($parameter['data'], true);
