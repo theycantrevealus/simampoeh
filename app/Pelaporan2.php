@@ -3062,23 +3062,23 @@ class Pelaporan2 extends Utility
                 }
 
                 if (isset($parameter['id_anggota'])){
-                    $id_anggota = $parameter['id_anggota'];
+                    /*$id_anggota = $parameter['id_anggota'];
                     $data_anggota = array();
 
-                    $anggota = explode(",",$id_anggota);
+                    //$anggota = explode(",",$id_anggota);
                     //print_r($anggota);
-                    foreach ($anggota as $key => $value) {
-                        $temp_arr = explode("-", $value);
+                    foreach ($parameter['id_anggota'] as $key => $value) {
+                        //$temp_arr = explode("-", $value);
 
                         //print_r($temp_arr[0]);
                         array_push($data_anggota,array(
-                                "nik"=>$temp_arr[0],
-                                "nama"=>$temp_arr[1]
+                                "nik" => $value['nik'],
+                                "nama" => $value['nama']
                             )
                         );
-                    }
+                    }*/
 
-                    foreach ($data_anggota as $key => $value) {
+                    foreach ($parameter['id_anggota'] as $key => $value) {
                         $SuratPindahAnak = self::$query->insert('suratpindah_anak', array(
                             'nik' => $value['nik'],
                             'nama' => $value['nama'],
