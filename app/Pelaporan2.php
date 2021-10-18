@@ -186,7 +186,7 @@ class Pelaporan2 extends Utility
         $temp_parameter = $parameter;   //for backup request
         $parameter = json_decode($parameter['data'], true);
 
-        $nik = parent::anti_injection($parameter['anak_nik']);
+        $nik = parent::anti_injection($parameter['nik']);
         $Master = new Master(self::$pdo);
         $hasil = $Master->get_nik(array(
             'nik' => $nik
