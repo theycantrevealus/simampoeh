@@ -635,3 +635,150 @@ curl --request POST \
   "license": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXVQmq3+UqbhC3rLCXSEu\/\/miV\nFXhkr+zoK17NTfA9VbdVT95Ag+CLi8hEAnkffpPEacLAIoVjOgtzT4wlWTpkUHCR\nLlVqw6mjJsqF4EWH4b4N\/eJ+7S0O+vAJi7cxscOaU6zs9Dm+lPNvN4AmRi05xOHW\nDhZ8i8+VWEP\/azAO1wIDAQAB\n-----END PUBLIC KEY-----\n"
 }
 ```
+
+
+16. Cek KK
+
+**Request**
+```
+curl --request POST \
+  --url http://127.0.0.1/simampoeh/Master/ \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --cookie PHPSESSID=63gclihstfp1bgum9pctmg3udm \
+  --data nik=1271062205920002 \
+  --data request=nik \
+  --data kk_info=Y
+```
+
+**Response**
+```
+{
+  "token": null,
+  "response_package": {
+    "response_result": 1,
+    "response_message": "",
+    "response_data": [
+      {
+        "NIK": "1271062205920002",
+        "NAMA_LGKP": "JONATAN SIANTURI",
+        "JENIS_KLMIN": 1,
+        "TMPT_LHR": "KOTA BANGUN",
+        "TGL_LHR": "1992-05-22",
+        "AGAMA": "KRISTEN",
+        "PDDK_AKH": "TAMAT SD\/SEDERAJAT",
+        "JENIS_PKRJN": "WIRASWASTA",
+        "STAT_KWN": "KAWIN",
+        "STAT_HBKEL": "KEPALA KELUARGA",
+        "STAT_HBKEL_TMP": 1,
+        "KWRNGRN": "INDONESIA",
+        "KWRNGRN_TMP": 1,
+        "NO_PASPOR": null,
+        "TGL_AKH_PASPOR": null,
+        "NAMA_LGKP_AYAH": "MANGASI SIANTURI",
+        "NAMA_LGKP_IBU": "(disembunyikan)",
+        "NO_PROP": 12,
+        "NO_KAB": 71,
+        "NO_KEC": 6,
+        "NO_KEL": 1001,
+        "NAMA_PROP": "SUMATERA UTARA",
+        "NAMA_KAB": "KOTA MEDAN",
+        "NAMA_KEC": "MEDAN DELI",
+        "NAMA_KEL": "TITI PAPAN",
+        "FLAG_STATUS": "AKTIF",
+        "GOL_DRH": "O",
+        "NIK_IBU": null,
+        "NIK_AYAH": null,
+        "NO_AKTA_LHR": "1271-KW-05102020-0007",
+        "NO_AKTA_KWN": null,
+        "TGL_KWN": null,
+        "NO_AKTA_CRAI": null,
+        "TGL_CRAI": null,
+        "TGL_ENTRI": null,
+        "TGL_UBAH": null,
+        "DATANG_DARI": null,
+        "TUJUAN_DATANG": null,
+        "JNS_DOK": null,
+        "NO_DOK": null,
+        "TGL_DFT": null,
+        "TMPT_DTBIT": null,
+        "TGL_DTBIT": null,
+        "TGL_AKH_DOK": null,
+        "TMPT_DTNG_PERT": null,
+        "TGL_DTNG_PERT": null,
+        "NO_STLD": null,
+        "NAMA_SPSOR": null,
+        "ALAMAT_SPSOR": null,
+        "TIPE_SPSOR": null,
+        "NO_KTP": null,
+        "TELEPON": null,
+        "NO_KK": "1271062210200001",
+        "TGL_BIO": "2020-10-22 11:30:06",
+        "UMUR": null,
+        "SMS_PHONE": null,
+        "EMAIL": "A@gmail.com",
+        "KARTU_KELUARGA": {
+          "NO_PROP": 12,
+          "NO_KAB": 71,
+          "NO_KEC": 6,
+          "NO_KEL": 1001,
+          "NO_KK": "1271062210200001",
+          "ALAMAT": "GG SAHABAT\/FILLA DELPIA LK IX",
+          "NO_RT": "-",
+          "NO_RW": "-",
+          "DUSUN": "-",
+          "KODE_POS": "-",
+          "NAMA_KEP": "JONATAN SIANTURI",
+          "WILAYAH": {
+            "NO_KEL": 1001,
+            "NAMA_KEL": "TITI PAPAN",
+            "KECAMATAN": {
+              "NO_KEC": 6,
+              "NAMA_KEC": "MEDAN DELI",
+              "KABUPATEN": {
+                "NO_KAB": 71,
+                "NAMA_KAB": "KOTA MEDAN",
+                "PROPINSI": {
+                  "NO_PROP": 12,
+                  "NAMA_PROP": "SUMATERA UTARA"
+                }
+              }
+            }
+          }
+        },
+        "ANGGOTA_KELUARGA": [
+          {
+            "NO_PROP": 12,
+            "NO_KAB": 71,
+            "NO_KEC": 6,
+            "NO_KEL": 1001,
+            "NO_KK": "1271062210200001",
+            "NIK": "1271062205920002",
+            "NAMA_LGKP": "JONATAN SIANTURI",
+            "STAT_HBKEL": 1
+          },
+          {
+            "NO_PROP": 12,
+            "NO_KAB": 71,
+            "NO_KEC": 6,
+            "NO_KEL": 1001,
+            "NO_KK": "1271062210200001",
+            "NIK": "1271065310930002",
+            "NAMA_LGKP": "HANA SETIA",
+            "STAT_HBKEL": 3
+          },
+          {
+            "NO_PROP": 12,
+            "NO_KAB": 71,
+            "NO_KEC": 6,
+            "NO_KEL": 1001,
+            "NO_KK": "1271062210200001",
+            "NIK": "1271061012200002",
+            "NAMA_LGKP": "YEHEZKIEL AARON SIANTURI",
+            "STAT_HBKEL": 4
+          }
+        ]
+      }
+    ]
+  }
+}
+```

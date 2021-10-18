@@ -148,6 +148,13 @@ class Master extends Utility
 
         $json_object = json_decode(curl_exec($ch));
 
+        if(isset($parameter['kk_info']) && $parameter['kk_info'] === 'Y') {
+            $kk = self::get_kk(array(
+                'kk' => $json_object->NO_KK
+            ));
+            $json_object->ANGGOTA_KELUARGA = $kk['response_package']['response_data'][0]->ANGGOTA_KK;
+        }
+
         curl_close ($ch);
 
         return array(
