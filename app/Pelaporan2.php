@@ -1957,7 +1957,7 @@ class Pelaporan2 extends Utility
         $tanggal_kawin = parent::anti_injection($parameter['tanggal_kawin']);
         $id_agama = parent::anti_injection($parameter['id_agama']);
         $tanggal_pengadilan = parent::anti_injection($parameter['tanggal_pengadilan']);
-        $jumlah_anak = parent::anti_injection($parameter['jumlah_anak']);
+        $jumlah_anak = intval(parent::anti_injection($parameter['jumlah_anak']));
 
         $jenis = parent::anti_injection($parameter['jenis']);
 
