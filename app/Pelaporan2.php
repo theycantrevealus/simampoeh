@@ -3200,7 +3200,7 @@ class Pelaporan2 extends Utility
 
                 $parameterBuilder = array(
                     'response_message' => $message,
-                    'response_result' => $TambahPengajuan['response_result'],
+                    'response_result' => $SuratPindah['response_result'],
                     'response_data' => array($jenis)
                 );
             } else {
