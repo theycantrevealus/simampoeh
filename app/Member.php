@@ -301,7 +301,9 @@ class Member extends Utility {
             );
         }
 
-        return $parameterBuilder;
+        return array(
+            'response_package' => $parameterBuilder
+        );
     }
 
 
