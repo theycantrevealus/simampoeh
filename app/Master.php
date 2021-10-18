@@ -237,11 +237,10 @@ class Master extends Utility
     }
 
     public function get_kabupaten($parameter) {
-        $provinsi = parent::anti_injection($parameter['id_provinsi']);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,__TARGET_SYNC__ . '/lok-kabupaten');
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,"id_provinsi=12");
+        curl_setopt($ch, CURLOPT_POSTFIELDS,"id_provinsi=$parameter[id_provinsi]");
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -276,8 +275,8 @@ class Master extends Utility
         curl_setopt($ch, CURLOPT_URL,__TARGET_SYNC__ . '/lok-kecamatan');
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array(
-            'id_provinsi' => 12,
-            'id_kabupaten' => 71
+            'id_provinsi' => $parameter['id_provinsi'],
+            'id_kabupaten' => $parameter['id_kabupaten']
         )));
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -309,14 +308,14 @@ class Master extends Utility
     public function get_kelurahan($parameter) {
         $provinsi = parent::anti_injection($parameter['id_provinsi']);
         $kabupaten = parent::anti_injection($parameter['id_kabupaten']);
-        $kecamatan = parent::anti_injection($parameter['parent']);
+        $kecamatan = parent::anti_injection($parameter['id_kecamatan']);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,__TARGET_SYNC__ . '/lok-kelurahan');
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array(
-            'id_provinsi' => 12,
-            'id_kabupaten' => 71,
+            'id_provinsi' => $provinsi,
+            'id_kabupaten' => $kabupaten,
             'id_kecamatan' => $kecamatan
         )));
 
