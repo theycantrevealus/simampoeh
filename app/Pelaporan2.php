@@ -33,6 +33,10 @@ class Pelaporan2 extends Utility
     {
         switch ($parameter['request']) {
 
+            case 'biaya':
+                return self::biaya($parameter);
+                break;
+
             case 'history_saya':
                 return self::history_saya($parameter);
                 break;
@@ -85,6 +89,44 @@ class Pelaporan2 extends Utility
             default:
                 return array();
         }
+    }
+
+    private function biaya($parameter) {
+        $Authorization = new Authorization();
+        $UserData = $Authorization->readBearerToken($parameter['access_token']);
+        $data = self::$query->select('trx_pembayaran_bank_sumut', array(
+            'no_sts',
+            'jatuh_tempo'
+        ))
+            ->join('pengajuan', array(
+                'uid'
+            ))
+            ->join('pelayanan_jenis', array(
+                'id', 'nama as nama_jenis'
+            ))
+            ->join('member', array(
+                'uid'
+            ))
+            ->on(array(
+                array('trx_pembayaran_bank_sumut.uid_pengajuan', '=', 'pengajuan.uid'),
+                array('pengajuan.jenis', '=', 'pelayanan_jenis.id'),
+                array('pengajuan.uid_member', '=', 'member.uid')
+            ))
+            ->where(array(
+                'trx_pembayaran_bank_sumut.deleted_at' => 'IS NULL',
+                'AND',
+                'trx_pembayaran_bank_sumut.tgl_bayar' => 'IS NULL',
+                'AND',
+                'member.uid' => '= ?'
+            ), array(
+                $UserData['data']->uid
+            ))
+            ->execute();
+        return array(
+            'response_data' => isset($data['response_data']) ? $data['response_data'] : array(),
+            'response_result' => count($data['response_data']),
+            'response_message' => 'Nah'
+        );
     }
 
 
