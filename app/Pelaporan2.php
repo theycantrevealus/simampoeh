@@ -122,6 +122,9 @@ class Pelaporan2 extends Utility
                 $UserData['data']->uid
             ))
             ->execute();
+        foreach ($data['response_data'] as $key => $value) {
+            $data['response_data'][$key]['jatuh_tempo'] = date('d F Y', strtotime($value['jatuh_tempo']));
+        }
         return array(
             'response_data' => isset($data['response_data']) ? $data['response_data'] : array(),
             'response_result' => count($data['response_data']),
