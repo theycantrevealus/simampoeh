@@ -123,7 +123,6 @@ class Pelaporan2 extends Utility
             ))
             ->execute();
         return array(
-            'query' => $data['response_query'],
             'response_data' => isset($data['response_data']) ? $data['response_data'] : array(),
             'response_result' => count($data['response_data']),
             'response_message' => 'Nah'
