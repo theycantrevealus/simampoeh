@@ -248,7 +248,7 @@ class Member extends Utility {
 
                         $isi_pesan = parent::isi_email($pesan);
 
-                        $data = array("mailTo" => "$parameter[email]","mailSubject" => "Pendaftaran Aplikasi SiBisa Disdukcapil Medan","mailHtml"=>"$pesan");
+                        $data = array("mailTo" => "$parameter[email]","mailSubject" => "Pendaftaran Aplikasi SiBisa Disdukcapil Medan","mailHtml"=>"$isi_pesan");
 
                         $data_string = json_encode($data);
                         $ch = curl_init();
