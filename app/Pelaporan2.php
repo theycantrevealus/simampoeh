@@ -1251,7 +1251,7 @@ class Pelaporan2 extends Utility
                         $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                         $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                        $vdir_upload = '../../berkas/ktp/';
+                        $vdir_upload = '../../../berkas/ktp/';
                         if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                             mkdir($vdir_upload);
                         }
@@ -1979,7 +1979,10 @@ class Pelaporan2 extends Utility
                 header("location:tambah-aktaakuanak?jenis=$jenis");
             }
         } else {
-            $parameterBuilder = $hasil;
+            $parameterBuilder = array(
+                'hasil' => $hasil,
+                'nik' => $nik
+            );
         }
 
         return $parameterBuilder;
