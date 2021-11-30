@@ -151,9 +151,11 @@ class Pelaporan2 extends Utility
                 array('pengajuan.id_status', '=', 'pengajuan_status.id')
             ))
             ->where(array(
-                'pengajuan.uid_member' => '= ?'
+                'pengajuan.uid_member' => '= ?',
+                'AND',
+                'pengajuan.status_hapus' => '= ?'
             ), array(
-                $UserData['data']->uid
+                $UserData['data']->uid, 'N'
             ))
             ->execute();
 
