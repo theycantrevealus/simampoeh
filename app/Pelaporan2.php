@@ -339,7 +339,7 @@ class Pelaporan2 extends Utility
                         $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                         $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                        $vdir_upload = '../../../berkas/aktaesah/';
+                        $vdir_upload = '../../../../berkas/aktaesah/';
                         if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                             mkdir($vdir_upload);
                         }
@@ -624,7 +624,7 @@ class Pelaporan2 extends Utility
                         $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                         $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                        $vdir_upload = '../../../berkas/aktaangkat/';
+                        $vdir_upload = '../../../../berkas/aktaangkat/';
                         if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                             mkdir($vdir_upload);
                         }
@@ -950,7 +950,7 @@ class Pelaporan2 extends Utility
                         $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                         $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                        $vdir_upload = '../../../berkas/kk/';
+                        $vdir_upload = '../../../../berkas/kk/';
                         if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                             mkdir($vdir_upload);
                         }
@@ -1251,7 +1251,7 @@ class Pelaporan2 extends Utility
                         $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                         $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                        $vdir_upload = '../../../berkas/ktp/';
+                        $vdir_upload = '../../../../berkas/ktp/';
                         if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                             mkdir($vdir_upload);
                         }
@@ -1537,7 +1537,7 @@ class Pelaporan2 extends Utility
                         $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                         $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                        $vdir_upload = '../../../berkas/aktalahir/';
+                        $vdir_upload = '../../../../berkas/aktalahir/';
                         if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                             mkdir($vdir_upload);
                         }
@@ -1820,7 +1820,7 @@ class Pelaporan2 extends Utility
                             $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                             $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                            $vdir_upload = '../../../berkas/aktaaku/';
+                            $vdir_upload = '../../../../berkas/aktaaku/';
                             if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                                 mkdir($vdir_upload);
                             }
@@ -2144,7 +2144,7 @@ class Pelaporan2 extends Utility
                     $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                     $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                    $vdir_upload = '../../../berkas/aktakawin/';
+                    $vdir_upload = '../../../../berkas/aktakawin/';
                     if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                         mkdir($vdir_upload);
                     }
@@ -2526,7 +2526,7 @@ class Pelaporan2 extends Utility
                     $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                     $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                    $vdir_upload = '../../../berkas/aktamati/';
+                    $vdir_upload = '../../../../berkas/aktamati/';
                     if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                         mkdir($vdir_upload);
                     }
@@ -2780,7 +2780,7 @@ class Pelaporan2 extends Utility
                     $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                     $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                    $vdir_upload = '../../../berkas/kia/';
+                    $vdir_upload = '../../../../berkas/kia/';
                     if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                         mkdir($vdir_upload);
                     }
@@ -3078,7 +3078,7 @@ class Pelaporan2 extends Utility
                         $nama_file       = $AndrTemp['response_data'][0]['file_name'];
                         $nama_file_unik  = $uid_data.$acak.$nama_file;
 
-                        $vdir_upload = '../../../berkas/suratpindah/';
+                        $vdir_upload = '../../../../berkas/suratpindah/';
                         if(!is_dir($vdir_upload) && !file_exists($vdir_upload)) {
                             mkdir($vdir_upload);
                         }
