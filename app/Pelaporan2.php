@@ -157,6 +157,9 @@ class Pelaporan2 extends Utility
             ), array(
                 $UserData['data']->uid, 'N'
             ))
+            ->order(array(
+                'waktu_input' => 'DESC'
+            ))
             ->execute();
 
         foreach ($data['response_data'] as $key => $value) {
@@ -2958,11 +2961,11 @@ class Pelaporan2 extends Utility
 
             $nama = $json_object->NAMA_LGKP;
             $nama = str_replace("'","''",$nama);
-            $alamat = strtoupper($parameter['alamat_tujuan']);
+            $alamat = strtoupper($parameter['alamat_pindah']);
 
             $alasan_lainnya = "";
             if ($parameter['alasan'] == "75"){
-                $alasan_lainnya = $parameter['alasan_pindah_lainnya'];
+                $alasan_lainnya = $parameter['alasan_lainnya'];
             }
 
             if ($json_object == ""){
@@ -2976,10 +2979,10 @@ class Pelaporan2 extends Utility
             $alasan = parent::anti_injection($parameter['alasan']);
             $rt_tujuan = parent::anti_injection($parameter['rt_tujuan']);
             $rw_tujuan = parent::anti_injection($parameter['rw_tujuan']);
-            $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
-            $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
-            $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
-            $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
+            $id_kelurahan = parent::anti_injection($parameter['id_kelurahan_pindah']);
+            $id_kecamatan = parent::anti_injection($parameter['id_kecamatan_pindah']);
+            $id_kabupaten = parent::anti_injection($parameter['id_kabupaten_pindah']);
+            $id_provinsi = parent::anti_injection($parameter['id_provinsi_pindah']);
 
             $a=explode("|",$id_provinsi);
             $id_provinsi=$a[0];
@@ -2997,7 +3000,7 @@ class Pelaporan2 extends Utility
             $id_kelurahan=$a[0];
             $nama_kelurahan_tujuan=$a[1];
 
-            $kode_pos = parent::anti_injection($parameter['kode_pos_tujuan']);
+            $kode_pos = parent::anti_injection($parameter['kodepos_tujuan']);
             $telepon = parent::anti_injection($parameter['telepon']);
             $jenis_pindahan = parent::anti_injection($parameter['jenis_pindahan']);
             $kk_bagi_tidak_pindah = parent::anti_injection($parameter['kk_bagi_tidak_pindah']);
@@ -3170,12 +3173,12 @@ class Pelaporan2 extends Utility
                     }
                 }
 
-                $id_provinsi = parent::anti_injection($parameter['id_provinsi2']);
-                $id_kabupaten = parent::anti_injection($parameter['id_kabupaten2']);
-                $id_kecamatan = parent::anti_injection($parameter['id_kecamatan2']);
-                $id_kelurahan = parent::anti_injection($parameter['id_kelurahan2']);
+                $id_provinsi = parent::anti_injection($parameter['id_provinsi']);
+                $id_kabupaten = parent::anti_injection($parameter['id_kabupaten']);
+                $id_kecamatan = parent::anti_injection($parameter['id_kecamatan']);
+                $id_kelurahan = parent::anti_injection($parameter['id_kelurahan']);
                 $alamat = parent::anti_injection($parameter['alamat']);
-                $kode_pos = parent::anti_injection($parameter['kode_pos']);
+                $kode_pos = parent::anti_injection($parameter['kodepos']);
 
 
                 $a=explode("|",$id_provinsi);
