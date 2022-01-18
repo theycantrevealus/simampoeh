@@ -59,7 +59,7 @@ class Master extends Utility
                 return self::term_data(6);
                 break;
             case 'shdk':
-                return self::term_data(51);
+                return self::term_data(15);
                 break;
             case 'agama':
                 return self::term_data(5);
